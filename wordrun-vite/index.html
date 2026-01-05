@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <title>WordRun! - Word Chain Puzzle</title>
+    <script type="module" src="/src/main.ts"></script>
+
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      html, body {
+        height: 100vh;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background: #0e0e12;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+        user-select: none;
+        -webkit-user-select: none;
+        -webkit-touch-callout: none;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      #game-container {
+        position: relative;
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+        background: #0e0e12;
+        touch-action: manipulation;
+      }
+
+      /* Loading indicator */
+      .loading {
+        color: white;
+        font-size: 18px;
+        text-align: center;
+      }
+
+      /* PWA Styles */
+      @media screen and (max-width: 480px) {
+        body {
+          font-size: 14px;
+        }
+      }
+
+      /* Disable zoom on input focus for iOS */
+      input[type="text"], 
+      input[type="email"], 
+      input[type="password"], 
+      textarea {
+        font-size: 16px !important;
+      }
+
+      /* Custom scrollbars for desktop */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.1);
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 4px;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: rgba(255, 255, 255, 0.5);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="game-container">
+    <div class="loading">WordRun! (index.html)</div>
+  </div>
+  </body>
+</html>

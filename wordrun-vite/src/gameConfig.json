@@ -1,0 +1,119 @@
+{
+  "screenSize": {
+    "width": {
+      "value": 768,
+      "type": "number",
+      "description": "Screen width (mobile portrait)"
+    },
+    "height": {
+      "value": 1152,
+      "type": "number",
+      "description": "Screen height (mobile portrait)"
+    }
+  },
+  "debugConfig": {
+    "debug": {
+      "value": false,
+      "type": "boolean",
+      "description": "Enable debug mode"
+    }
+  },
+  "renderConfig": {
+    "pixelArt": {
+      "value": false,
+      "type": "boolean",
+      "description": "Whether to enable pixel art rendering"
+    }
+  },
+  "gameplayConfig": {
+    "maxLevelsPerLand": {
+      "value": 25,
+      "type": "number",
+      "description": "Number of levels per land"
+    },
+    "totalLevels": {
+      "value": 3000,
+      "type": "number",
+      "description": "Total levels in game"
+    },
+    "livesPerLand": {
+      "value": 5,
+      "type": "number",
+      "description": "Lives per land"
+    },
+    "skipsPerLevel": {
+      "value": 3,
+      "type": "number",
+      "description": "Skip tokens per level"
+    },
+    "maxHintTokens": {
+      "value": 5,
+      "type": "number",
+      "description": "Maximum hint tokens"
+    },
+    "typoForgivenessWindow": {
+      "value": 2000,
+      "type": "number",
+      "description": "Typo forgiveness window in ms"
+    },
+    "minWordLengthForTypo": {
+      "value": 4,
+      "type": "number",
+      "description": "Minimum word length for typo forgiveness"
+    }
+  },
+  "scoringConfig": {
+    "basePointsPerWord": {
+      "value": 100,
+      "type": "number",
+      "description": "Base points per correct word"
+    },
+    "wrongWordPenalty": {
+      "value": 50,
+      "type": "number",
+      "description": "Penalty for wrong word"
+    },
+    "hintPenalty": {
+      "value": 25,
+      "type": "number",
+      "description": "Penalty per hint letter"
+    },
+    "skipPenalty": {
+      "value": 100,
+      "type": "number",
+      "description": "Penalty for using skip"
+    },
+    "lockdownTax": {
+      "value": 25,
+      "type": "number",
+      "description": "Tax per locked word"
+    },
+    "pressureBonus": {
+      "value": 15,
+      "type": "number",
+      "description": "Bonus per word after lockdown"
+    }
+  },
+  "penaltyBoxConfig": {
+    "firstPenalty": {
+      "value": 15,
+      "type": "number",
+      "description": "First penalty box duration in minutes"
+    },
+    "secondPenalty": {
+      "value": 60,
+      "type": "number",
+      "description": "Second penalty box duration in minutes"
+    },
+    "thirdPenalty": {
+      "value": 240,
+      "type": "number",
+      "description": "Third penalty box duration in minutes"
+    },
+    "fourthPenalty": {
+      "value": 960,
+      "type": "number",
+      "description": "Fourth+ penalty box duration in minutes"
+    }
+  }
+}

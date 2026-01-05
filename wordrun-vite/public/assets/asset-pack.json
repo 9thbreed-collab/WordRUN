@@ -1,0 +1,75 @@
+{
+  "fonts": {
+    "files": [
+      {
+        "url": "https://cdn-game-mcp-test.gambo.ai/shared/supercell-magic_0.ttf",
+        "type": "font",
+        "key": "SupercellMagic",
+        "fontType": "truetype"
+      },
+      {
+        "url": "https://cdn-game-mcp-test.gambo.ai/shared/retro-pixel-arcade.otf.woff2",
+        "type": "font",
+        "key": "RetroPixel",
+        "fontType": "opentype"
+      }
+    ]
+  },
+  "ui_assets": {
+    "files": [
+      {
+        "url": "assets/ui/pixel_style/container_pixel.png",
+        "type": "image",
+        "key": "ui_pixel_container"
+      },
+      {
+        "url": "assets/ui/pixel_style/container_pixel_clickable.png",
+        "type": "image", 
+        "key": "ui_pixel_container_clickable"
+      },
+      {
+        "url": "assets/ui/pixel_style/container_pixel_slot.png",
+        "type": "image",
+        "key": "ui_pixel_container_slot"
+      },
+      {
+        "url": "assets/ui/pixel_style/container_pixel_progress_fill.png",
+        "type": "image",
+        "key": "ui_pixel_container_progress_fill"
+      },
+      {
+        "url": "assets/ui/3d_style/container_3d.png",
+        "type": "image",
+        "key": "ui_3d_container"
+      },
+      {
+        "url": "assets/ui/3d_style/container_3d_clickable.png",
+        "type": "image",
+        "key": "ui_3d_container_clickable"
+      },
+      {
+        "url": "assets/ui/3d_style/container_3d_slot.png",
+        "type": "image",
+        "key": "ui_3d_container_slot"
+      },
+      {
+        "url": "assets/ui/3d_style/container_3d_progress_fill.png",
+        "type": "image",
+        "key": "ui_3d_container_progress_fill"
+      }
+    ]
+  },
+  "sound_effects": {
+    "files": [
+    ]
+  },
+  "background_musics": {
+    "files": [
+    ]
+  },
+  "meta": {
+    "app": "LINKED MINDS - Data Driven",
+    "version": 2,
+    "showAllFilesInBlocks": false
+  }
+}

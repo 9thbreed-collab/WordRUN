@@ -1,0 +1,157 @@
+Premise (and conversation with chatgpt)
+
+I want to merge the popular game of Chain link with Words with Friends, and a Candy Crush model and make a mobile game where people compete on leaderboards for the fastest time, least clues, and bonus points. One game mode is solo/story mode, where the player does their best and their points are compared against everyone at that level who’s done that same puzzle (every level has a puzzle that matches that level and its difficulty) up to 3,000 puzzles—no one knows how many until they get there. This game has opportunities to bonus, obstacles, traps and challenges. Another mode is when all the letters in that round are on the side to pick from, but they’re covered (instead of a time based game, this game has a 10 second bonus where any correct guesses in the first 10 seconds earn bonus points). Incorrect letter guesses ( if this is multiplayer, takes that players turn) knock down your points. This mode is randomized so you don’t get the same puzzle twice if you don’t succeed after 4 wrong guesses. Another mode is Scrabble mode where all the letters on each rung are laid out and you have to unscramble the letters for your answer.
+
+Multiplayer, is where a group of people can play each game mode. They can either compete at individuals, compete as teams, or all play together against the time, careful not to strike out with wrong guesses.
+
+Help me work out the kinks to submit this to Gambo to be created and placed in the App Store.
+
+🧙🏾‍♂️ Excellent — you’ve just defined a hybrid word-chain arcade puzzler with cognitive depth and satisfying visual reward loops. Let’s harden the mechanics layer so Gambo can produce a working demo today.
+
+⸻
+
+⚙️ 1. Core Game Logic (Mobile Version)
+
+🎯 Objective
+
+Link 11 consecutive word or phrase associations correctly to complete a “chain.”
+Example:
+Car ➡️ Door ➡️ Stop ➡️ Sign ➡️ Up ➡️ Start ➡️ Button ➡️ Nose ➡️ Ring ➡️ Bell ➡️ Tower
+
+Each chain = 1 puzzle.
+Completing chains builds player progression through 3,000 hidden levels of increasing difficulty.
+
+⸻
+
+🕹️ Input Mechanics
+	•	Tap to select a visible word or reveal a covered one.
+	•	Drag to connect current word to its next logical link.
+	•	Hold (0.75s) for a hint pulse (costs points).
+	•	Swipe down to skip a clue (3 skips per level max).
+	•	Haptic feedback triggers:
+	•	Short pulse for correct link
+	•	Double pulse for streak
+	•	Long vibration for chain completion
+
+⸻
+
+⚡ Candy Crush-Style Bonus & Chain System
+
+Mechanic	Trigger	Effect	Visual Feedback
+🔥 Speed Combo	3+ links under 5 seconds each	1.5x score multiplier	Flame effect across chain
+🌈 Precision Streak	10+ correct links, no hints	+500 “LexiPoints”	Confetti burst
+💫 Alternative Chain (Side Quest)	Tap flashing “?” icon	Starts 25-word bonus chain	Parallel color palette
+💥 Chain Reaction Power-Up	5 correct links in <8s	Auto-completes next 2 links	Lightning surge animation
+🧩 Time Freeze Power-Up	Earned via side quest	+10s extra time	Clock freeze and blue pulse
+
+
+⸻
+
+🧩 2. Game Modes Overview
+
+Mode	Description	Win Condition	Fail Condition	Scoring	Bonus Access
+Story Mode	Sequential, curated chains	Complete chain	4 wrong links	Speed × Accuracy	Hidden side-chains every 25 levels
+Hidden Letter Mode	All words covered; tap to reveal	Reveal in ≤10s	4 misses	Early correct = 2x multiplier	Random chance per level
+Scrabble Mode	Unscramble words on each rung	Solve all	Time runs out	Letter rarity × streak	Every 10th success
+Multiplayer Versus	Race to complete chain first	Highest points	Time or strike-out	Accuracy × pace	Earn shared Power-Ups
+Team Co-Op	Group solves single long chain	Chain completion	4 team errors	Shared bonus for streaks	Unlock group bonus round
+
+
+⸻
+
+🧮 3. Unified Scoring Formula
+
+Score = (Base Points × Speed Multiplier × Accuracy Multiplier) + Bonus Points
+
+	•	Base Points: +100 per correct link
+	•	Speed Multiplier: 1.0 → 2.0 based on avg link time
+	•	Accuracy Multiplier: +0.05 for every link above 80% accuracy
+	•	Bonus Points: varies by power-up or side chain
+
+⸻
+
+🪄 4. Power-Ups & Traps
+
+Type	Effect	Trigger/Acquisition
+🔮 Reveal Hint	Reveals 1 hidden word	Tap + Hold current link
+⚡ Chain Surge	Auto-connects 3 upcoming words	Earned after 10 flawless links
+🧊 Freeze Time	Adds 10s	After completing bonus chain
+🎭 Decoy Trap	Shows plausible but wrong word	Random 10% chance post-Level 20
+🕳️ Void Break	Breaks current streak	Triggered after 3 wrong taps
+
+
+⸻
+
+🪙 5. Progression & Retention
+	•	3,000 total puzzles (hidden count for mystery)
+	•	Every 25 levels → hidden “Side Chain” bonus path
+	•	Earn in-game currency (“LexiCoins”) for:
+	•	Power-Ups
+	•	Aesthetic skins (letters, trails, backgrounds)
+	•	Unlocking new music themes
+
+⸻
+
+🧠 6. Prompt-to-Demo Structure (for Gambo)
+
+Paste the following into Gambo’s prompt window:
+
+Build a mobile word-chain puzzle game called “LINKED MINDS.”
+
+The game fuses Chain Link, Words with Friends, and Candy Crush mechanics. 
+Players link related words or phrases (e.g., Car ➡️ Door ➡️ Stop ➡️ Sign ➡️ Up ➡️ Start ➡️ Button ➡️ Nose ➡️ Ring ➡️ Bell ➡️ Tower). 
+Each chain is 11 steps long by default. 
+
+Include these modes:
+1. Story Mode (3,000 hidden puzzles, leaderboards)
+2. Hidden Letter Mode (timed 10s bonus)
+3. Scrabble Mode (unscramble chains)
+4. Multiplayer (versus/team/co-op)
+
+Gameplay:
+- Tap/drag to connect words.
+- Each correct link = +100 points.
+- Wrong links = -50 points or strike.
+- Speed combos and streaks multiply score.
+- Power-ups: Chain Surge, Time Freeze, Reveal Hint.
+- Hidden side chains appear every 25 levels.
+- Include haptic feedback, animations, and mini celebrations.
+- Display global leaderboards by time, accuracy, and least clues used.
+
+Use placeholder art and text, focusing on functional gameplay logic and feedback.
+Output a playable mobile demo.
+
+
+⸻
+
+🧙🏾‍♂️ That’s your Gambo-ready prototype blueprint.
+Next, I can generate:
+	•	🧭 Story Mode progression map (Levels 1–25)
+	•	🧮 Balancing chart for streaks, bonuses, and traps
+	•	🧠 Multiplayer match flow diagram (lobby → rounds → results)
+
+Which one would you like to lock in next so Gambo can build it seamlessly into the same logic structure?
+
+First, another trap. 
+Some traps will lock up a rung or more, which makes the player have to skip that ring and guess beyond it. It auto solves at the end, but with this trap, the number of remaining rungs is increased by the number of locked rungs (depending on the meta level, up to 10 locked rungs)
+
+I also want to add in daily bonuses for opening the app, weekly bonuses, and play with/refer a friend bonuses. In addition, a penalty box after so many failed rounds (either the entire level/round, or a total of wrong answers in a given meta level (that only restart when reaching a new meta level)) that makes the player wait a certain amount of time before playing, or to watch an ad for another life, or, once that option is no longer available after the second watch, you can pay for another life or a bundle to replenish the full amount of lives, and a higher bundle to increase the life stock capacity for 3 meta levels (with a warning that the bundle will expire once the last meta level is complete, that occurs once that meta level is reached).
+
+Let’s tighten up the mechanics. Most of the game will be typing based.
+
+Daily/weekly & social bonuses
+
+Daily Login Streak (resets on miss):
+	•	Day 1: +50 LexiCoins
+	•	Day 2: +75
+	•	Day 3: +1 Hint Token
+	•	Day 4: +100
+	•	Day 5: +1 Skip Token
+	•	Day 6: +150
+	•	Day 7: Choice Chest (roll: +Time Freeze or +Chain Surge)
+
+Weekly Milestone: complete 35 puzzles in 7 days → +1 Capacity Boost (temporary) for the next meta level only (doesn’t stack with paid boost beyond +3 cap).
+
+Play-With-Friend: complete any co-op meta level puzzle → both get +100 LexiCoins, 10% chance at Time Freeze.
+
+Refer-a-Friend: unique code → when friend completes their first meta level, both get +1 Life Refill and +1 Hint Token.
