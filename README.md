@@ -1,37 +1,55 @@
 # WordRun
 
-A mobile word-association puzzle game built with Phaser 3, combining word-chain mechanics with Candy Crush-style progression.
+A mobile word-association puzzle game combining typing-based word-chain mechanics with competitive leaderboards and Candy Crush-style progression.
 
 ## Overview
 
-WordRun challenges players to complete chains of 11 associated words (e.g., Car → Door → Stop → Sign → Up → Start → Button → Nose → Ring → Bell → Tower) across 3,000 levels organized into 120 themed "lands" of 25 levels each. The game features typing-based gameplay with typo forgiveness, a lives system with penalty boxes, and multiple game modes.
+WordRun challenges players to complete chains of 11 associated words (e.g., Car → Door → Stop → Sign → Up → Start → Button → Nose → Ring → Bell → Tower) across 3,000 levels organized into 120 themed "lands" of 25 levels each. Players compete on global leaderboards while typing through word associations at speed, with story elements infused directly into gameplay progression.
 
 ## Current Development Status
 
-**Phase**: Production - Code Refactoring (Week 1-2)
-**Version**: 0.0.01 (Component Extraction Phase)
+**Phase**: Pre-Production - Research & Strategy (Phase 2)
+**Version**: 0.0.02 (Strategic Reboot)
+**Status**: Market research complete; story/lore integration in progress
 
-### Recent Progress (v0.0.01 - 2026-01-05)
-- Extracted 4 components from GameplayScene.ts: ComboBar, RuutCharacter, HintSystem, PowerUpInventory
-- Created comprehensive test suite for all extracted components
-- Implemented dependency injection pattern for better testability
-- Added proper lifecycle management (init/shutdown) to prevent memory leaks
-- Established component architecture patterns for future refactoring
+### Strategic Pivot (v0.0.02 - 2026-01-07)
 
-### Implemented Features
-- Core word-chain typing gameplay with Levenshtein distance typo forgiveness
-- Scene-based architecture with 19 Phaser scenes
-- DataManager with Supabase integration for player state persistence
-- Lives system (5 lives per land) with penalty box escalation [15, 60, 240, 960] minutes
+The project has undergone a strategic reboot, shifting from technical-first development to a research-informed design approach. Development philosophy changed from "make it work" to "make it great" through four strategic pillars:
+
+**The Four Pillars of Redevelopment**:
+1. **Market Research & Positioning** ✓ (Complete) - Validated "Competitive Word-Chain Puzzle" positioning in $10bn+ puzzle market
+2. **Story & Lore Integration** (Next Priority) - Deep narrative framework infused into gameplay
+3. **Monetization Strategy** (50% Complete) - Hybrid IAP + ads model researched; design pending
+4. **Design Excellence** (Pending) - UI/UX overhaul based on market insights and story integration
+
+### Market Research Key Findings
+
+- **Market Opportunity**: Typing-based word-chain games represent underserved blue ocean niche within $10bn+ puzzle market
+- **Competitive Positioning**: "Competitive Word-Chain Puzzle" differentiates from passive word search (Wordscapes) and turn-based multiplayer (Words With Friends)
+- **Monetization Model**: Hybrid IAP + rewarded video ads shows 37% revenue advantage over single-model games
+- **Retention Drivers**: Leaderboards proven to lift D30 retention by 26%; critical success factor
+- **CPI Benchmarks**: iOS $3-4.50, Android $1.10-2 (18% YoY increase emphasizes need for organic growth)
+- **Live-Ops Required**: 84% of mobile IAP revenue from live-ops games; seasonal events drive 25% revenue spikes
+
+### Core Features (Implemented)
+
+- Core word-chain typing gameplay with Levenshtein distance typo forgiveness (1 character within 2 seconds)
+- Scene-based architecture with Phaser 3 game engine
+- Supabase backend integration for player state persistence
+- Lives system (5 per land) with penalty box escalation [15, 60, 240, 960] minutes
 - Combo system with drainage tiers for sustained scoring multipliers
 - Power-ups: Hints, Skips, Surge, Freeze
 - Trap system with locked rungs
-- Multiple game modes: Story Mode, Hidden Letter Mode, Scrabble Mode (Multiplayer in progress)
+- Multiple game modes: Story Mode, Hidden Letter Mode, Scrabble Mode
 - 3,000 levels of puzzle content across 120 themed lands
 
-### Current Focus
-- **Week 1-2 Refactoring**: Component extraction from GameplayScene.ts (4 of 5 components complete)
-- **Next Steps**: Extract WordBox component, integrate all components into GameplayScene.ts, run test coverage report
+### Current Focus: Story & Lore Integration (Pillar 2)
+
+**Next Session Priorities**:
+1. Character development (Ruut backstory, supporting NPCs, character arc progression)
+2. World-building (120 lands thematic framework, 12 seasonal land groups)
+3. Narrative arc structure (beginning/middle/end across 3,000 levels)
+4. Delivery methods (NPC speech cards, in-game dialogue, animated cutscenes)
 
 ## Technology Stack
 
@@ -101,29 +119,95 @@ Open http://localhost:5175 in your browser after running `npm run dev`.
 
 ```
 WordRunProject/
-├── wordrun-vite/           # Main game project
+├── wordrun-vite/              # Main game project
 │   ├── src/
-│   │   ├── scenes/         # Phaser scenes (19 files)
-│   │   ├── services/       # Runtime services (TrapRuntime, Router, etc.)
-│   │   ├── gameplay/       # Gameplay systems (NEW: HintSystem, PowerUpInventory)
-│   │   ├── ui/             # UI components (NEW: ComboBar, RuutCharacter)
-│   │   ├── dev/            # Development tools (DebugHUD, LogBus)
-│   │   ├── test/           # Vitest tests (NEW: Component tests)
-│   │   ├── main.ts         # Phaser bootstrap entry point
-│   │   ├── config.ts       # Global game configuration
-│   │   ├── gameConfig.json # Data-driven configuration
-│   │   ├── content.ts      # Puzzle/level content
-│   │   └── DataManager.ts  # Supabase data layer
+│   │   ├── src_archive_2026-01-06/  # Archived components pending design system
+│   │   ├── main.ts            # Phaser bootstrap entry point
+│   │   ├── config.ts          # Global game configuration
+│   │   └── JuiceScene.ts      # Experimental scene
 │   ├── public/
-│   │   └── assets/         # Game assets (sprites, fonts, UI)
+│   │   └── assets/            # Game assets (sprites, fonts, UI)
 │   ├── package.json
 │   ├── vite.config.ts
 │   └── tsconfig.json
-├── CLAUDE.md               # Architecture documentation
-├── DevTec.md              # Mobile optimization guide
-├── GEMINI.md              # Project assessment
-└── WordRunContext.txt     # Game design document
+├── CLAUDE.md                  # Architecture & strategic guidance
+├── AGENTS.md                  # Multi-agent coordination (synced with CLAUDE.md)
+├── GEMINI.md                  # Multi-agent coordination (synced with CLAUDE.md)
+├── DevTec.md                  # Mobile optimization technical roadmap
+├── WordRunContext.txt         # Original game design document
+├── Market-Research-Brief-2026.md  # Comprehensive market analysis (73,000 words)
+├── v0.0.0-session-summary.md  # Documentation session (2026-01-05)
+├── v0.0.01-session-summary.md # Component extraction session (2026-01-05)
+└── v0.0.02-session-summary.md # Strategic reboot session (2026-01-07)
 ```
+
+## Key Gameplay Mechanics
+
+- **Typing Engine**: Word input with Levenshtein distance forgiveness (1 character within 2 seconds for words ≥4 chars)
+- **Scoring**: Base points (100/word) × speed multiplier (1.0-2.0) × accuracy × combo
+- **Lives System**: 5 lives per land; lose a life on level failure
+- **Penalty Box**: Escalating wait times [15, 60, 240, 960] minutes when out of lives
+- **Combo System**: Build combos by quickly completing words; combo drains over time in tiers
+- **Leaderboards**: Global and land-specific weekly leaderboards (26% retention lift proven by research)
+- **Power-ups**:
+  - Hints (-25 points): Reveal next word
+  - Skips (-100 points): Advance without solving
+  - Surge: Temporary combo boost
+  - Freeze: Pause combo drainage
+- **Traps**: Locked rungs that force strategic skip decisions
+
+## Strategic Roadmap
+
+### Phase 1: Research & Strategy (Phase 2 - IN PROGRESS)
+- [x] Market research complete (competitive landscape, monetization benchmarks, retention drivers)
+- [x] Competitive positioning validated ("Competitive Word-Chain Puzzle" blue ocean)
+- [ ] Story & lore integration framework (character development, world-building, narrative arc)
+- [ ] Monetization design finalized (IAP catalog, ad placement strategy, live-ops calendar)
+- [ ] Design system created (visual benchmarking, component library, typing UX research)
+
+### Phase 2: Design & Content (Phase 3 - UPCOMING)
+- [ ] Visual design aligned with market research (Candy Crush/Wordscapes quality benchmarks)
+- [ ] Story integration into gameplay (NPC dialogue, themed lands, narrative progression)
+- [ ] Monetization implementation (IAP store, rewarded video ads, battle pass system)
+- [ ] Content strategy refinement (12 seasonal land groups, 4-week event cycles)
+
+### Phase 3: Production (Phase 4 - PAUSED)
+- [ ] Component-based refactoring (resume after design system complete)
+- [ ] Asset optimization (texture atlases, lazy loading for 120 lands)
+- [ ] Mobile device testing (typing UX validation, performance profiling)
+- [ ] Visual polish (animations, transitions, particle effects)
+
+### Phase 4: Soft Launch (Tier-2 Markets)
+- [ ] Soft launch in Canada & Australia (4-6 week validation window)
+- [ ] Success criteria: D7 >18%, ARPDAU >$0.10, CPI <$4 iOS / <$2 Android
+- [ ] A/B testing (penalty box monetization, IAP timing, ad frequency)
+
+### Phase 5: Global Launch
+- [ ] Design system finalized based on soft launch learnings
+- [ ] Live-ops infrastructure scaled (seasonal events, weekly leaderboards, daily quests)
+- [ ] Influencer marketing campaign (nano/micro creators, TikTok/YouTube seeding)
+- [ ] ASO optimization (App Store featured placement targeting)
+
+## Target Metrics (Research-Validated)
+
+### Retention Targets
+- **D1**: 35-40% (vs 26-28% benchmark) - Strong FTUE + typo forgiveness
+- **D7**: 18-22% (vs 6.7% benchmark) - Leaderboard engagement (26% lift)
+- **D30**: 8-10% (vs 6.6% benchmark) - Seasonal events + social competition
+- **Session Length**: 15-18 min (3-5 chains per session)
+- **Sessions/Day**: 3-4 (lives system drives return windows)
+
+### Monetization Targets
+- **ARPDAU**: $0.10-$0.15 (soft launch), $0.15-$0.20 (global launch)
+- **IAP Conversion**: 3-5% by D14 (soft launch), 5-7% by D14 (global launch)
+- **Battle Pass Attach**: 5-8% (66% of top-20% games use battle pass)
+- **Whale LTV**: $50+ by D90 (22% of payers spend $100+ benchmark)
+
+### Technical Targets
+- **Performance**: 60 FPS on mid-range devices (iPhone 11, Galaxy A52)
+- **Bundle Size**: <2MB initial load (optimal user acquisition)
+- **RAM Usage**: <150MB through object pooling
+- **CPI**: <$3.50 iOS, <$1.50 Android (organic ASO emphasis)
 
 ## Configuration
 
@@ -152,82 +236,14 @@ Configure Supabase credentials in environment variables or `src/supabase.ts`:
 
 The DataManager handles all backend communication with caching and offline support.
 
-## Key Gameplay Mechanics
-
-- **Typing Engine**: Word input with Levenshtein distance forgiveness (1 character within 2 seconds for words ≥4 chars)
-- **Scoring**: Base points (100/word) × speed multiplier (1.0-2.0) × accuracy × combo
-- **Lives System**: 5 lives per land; lose a life on level failure
-- **Penalty Box**: Escalating wait times [15, 60, 240, 960] minutes when out of lives
-- **Combo System**: Build combos by quickly completing words; combo drains over time in tiers
-- **Power-ups**:
-  - Hints (-25 points): Reveal next word
-  - Skips (-100 points): Advance without solving
-  - Surge: Temporary combo boost
-  - Freeze: Pause combo drainage
-- **Traps**: Locked rungs that force strategic skip decisions
-
-## Component Architecture (NEW)
-
-The project is transitioning to a component-based architecture to improve maintainability and testability:
-
-### Extracted Components (v0.0.01)
-
-| Component | Location | Purpose | Tests |
-|-----------|----------|---------|-------|
-| ComboBar | src/ui/ComboBar.ts | Combo visualization, drainage, tier mechanics | ComboBar.test.ts |
-| RuutCharacter | src/ui/RuutCharacter.ts | Character sprite, skins, mood animations | RuutCharacter.test.ts |
-| HintSystem | src/gameplay/HintSystem.ts | Hint UI, cooldown, ad-based refills | HintSystem.test.ts |
-| PowerUpInventory | src/gameplay/PowerUpInventory.ts | Power-up state, button management | PowerUpInventory.test.ts |
-
-### Component Design Patterns
-
-- **Dependency Injection**: Components accept dependencies via constructor for testability
-- **Lifecycle Management**: All components implement `init()` and `shutdown()` methods
-- **Callback-Based Integration**: Components use callbacks for gameplay integration (separation of concerns)
-- **TypeScript Strict Mode**: All components use explicit types for type safety
-
-## Next Milestones
-
-### Phase 1: Code Refactoring (Weeks 1-2) - IN PROGRESS
-- [x] Extract ComboBar component
-- [x] Extract RuutCharacter component
-- [x] Extract HintSystem component
-- [x] Extract PowerUpInventory component
-- [ ] Extract WordBox component (next session)
-- [ ] Integrate components into GameplayScene.ts
-- [ ] Add object pooling for word boxes and particles
-- [ ] Run test coverage report and optimize
-
-### Phase 2: Asset Optimization (Weeks 3-4)
-- [ ] Create texture atlases from individual PNGs
-- [ ] Implement lazy loading for 120 lands (12 groups of 10)
-- [ ] Set up texture compression (PVRTC/ASTC for iOS, ETC2 for Android)
-
-### Phase 3: Mobile Testing (Weeks 5-6)
-- [ ] Test on real iOS and Android devices
-- [ ] Optimize virtual keyboard handling for typing gameplay
-- [ ] Implement haptic feedback
-- [ ] Add touch gesture shortcuts (swipe-to-skip, tap-to-hint)
-
-### Phase 4: Visual Polish (Weeks 7-8)
-- [ ] Integrate GSAP or Anime.js for UI animations
-- [ ] Implement screen transitions between scenes
-- [ ] Add particle effects for combos and power-ups
-- [ ] Implement "juice" techniques (screen shake, scale pop, trails)
-
-### Phase 5: Build Optimization (Weeks 9-10)
-- [ ] Configure code splitting in Vite
-- [ ] Optimize bundle size (target: <2MB initial load)
-- [ ] Performance profiling and optimization (target: 60 FPS)
-- [ ] Final device testing and bug fixes
-
 ## Documentation
 
-- **[CLAUDE.md](CLAUDE.md)**: Comprehensive architecture guide for developers
-- **[DevTec.md](DevTec.md)**: Mobile game optimization best practices and 8-week roadmap
+- **[CLAUDE.md](CLAUDE.md)**: Comprehensive architecture guide and strategic framework
+- **[Market-Research-Brief-2026.md](Market-Research-Brief-2026.md)**: Evidence-based market analysis (60+ sources, 73,000 words)
+- **[DevTec.md](DevTec.md)**: Mobile game optimization best practices and technical roadmap
 - **[GEMINI.md](GEMINI.md)**: Multi-agent development approach and project assessment
 - **[WordRunContext.txt](WordRunContext.txt)**: Original game design document
-- **[Session Summaries](v0.0.01-session-summary.md)**: Development session history
+- **[Session Summaries](v0.0.02-session-summary.md)**: Development session history (v0.0.0, v0.0.01, v0.0.02)
 
 ## Contributing
 
@@ -239,5 +255,6 @@ Proprietary - All rights reserved
 
 ---
 
-**Latest Session**: 2026-01-05 (Component Extraction & Testing Infrastructure)
-**Next Focus**: Extract WordBox component, integrate all components into GameplayScene.ts
+**Latest Session**: 2026-01-07 (Project Reboot - Strategic Pivot)
+**Current Focus**: Story & Lore Integration (Pillar 2) - Character development, world-building, narrative arc
+**Philosophy**: Research market → Design for excellence → Build with quality → Launch strategically

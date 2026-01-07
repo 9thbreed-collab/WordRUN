@@ -3,9 +3,7 @@ import { defineConfig } from 'vite';
 export default defineConfig({
   server: {
     port: 5175,
-    strictPort: true,
-    host: true,
-    hmr: { clientPort: 443 }
+    strictPort: true
   },
   preview: {
     port: 4175,

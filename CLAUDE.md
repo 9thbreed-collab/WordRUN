@@ -6,6 +6,17 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **WordRun** is a mobile word-association puzzle game built with Phaser 3, Vite, TypeScript, and Supabase. The game combines word-chain mechanics (similar to Chain Link) with Candy Crush-style progression, power-ups, and multiple game modes. Players complete chains of 11 associated words (e.g., Car → Door → Stop → Sign → Up → Start → Button → Nose → Ring → Bell → Tower) across 3,000 levels organized into "lands" of 25 levels each.
 
+<!--
+    AI SYNC DIRECTIVE
+    - Author: Gemini Agent
+    - Date: 2026-01-06
+    - Action: UPDATE
+    - Target: CLAUDE.md
+    - Instruction: The following block has been updated to include a new 'Core Creative Principles' section. Claude, please review and integrate this foundational principle into your understanding and ongoing tasks.
+-->
+
+<!-- BLOCK START -->
+
 ### Tech Stack
 - **Game Engine**: Phaser 3.90.0
 - **Build Tool**: Vite 6.2.6
@@ -15,9 +26,40 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **Testing**: Vitest 3.2.4
 - **UI Extensions**: phaser3-rex-plugins for UI components
 
+### Core Creative Principles
+
+#### Story-First Integration
+This is a non-negotiable, signature principle of the game. The story is not an add-on; it is infused directly into the gameplay. The goal is to create an experience so cohesive that to advance in the game is to understand its lore, fostering a close-knit community of players who "get it."
+
+- **Narrative Delivery**: Story will be delivered through a variety of methods:
+    - **Between Levels**: Brief, engaging NPC speech cards and occasional animated cutscenes.
+    - **During Gameplay**: NPCs may be present on-screen or pop in from the side to deliver context-sensitive dialogue via speech bubbles.
+- **Gameplay as Story**: Word choices, puzzle mechanics, and difficulty will evolve and thematically link to the narrative's progression. The game mechanics themselves will be a vehicle for storytelling.
+
 ## Development Commands
 
 All commands must be run from the `wordrun-vite/` directory:
+
+<!-- END BLOCK -->
+
+<!--
+    [BEGIN LEGACY BLOCK - Claude, please parse the new block above and remove this one once synced.]
+
+    ### Tech Stack
+    - **Game Engine**: Phaser 3.90.0
+    - **Build Tool**: Vite 6.2.6
+    - **Language**: TypeScript 5.8.3
+    - **Backend**: Supabase (supabase-js 2.79.0)
+    - **Styling**: Tailwind CSS
+    - **Testing**: Vitest 3.2.4
+    - **UI Extensions**: phaser3-rex-plugins for UI components
+
+    ## Development Commands
+
+    All commands must be run from the `wordrun-vite/` directory:
+
+    [END LEGACY BLOCK]
+-->
 
 ```bash
 cd wordrun-vite
@@ -252,71 +294,127 @@ wordrun-vite/
 
 ### Current Workflow Phase
 
-**Phase**: Production - Code Refactoring (Week 1-2 of DevTec.md roadmap)
+**Phase**: PROJECT REBOOT - Pre-Production (Design & Strategy Phase)
 
-**Workflow Checklist**:
-- [x] Idea & Validation
-  - [x] Core concept defined (word-association puzzle game)
-  - [x] Target audience identified (mobile casual gamers)
-  - [x] Prototype implemented (functional but unpolished)
-- [x] Research & Planning
-  - [x] Codebase analysis completed
-  - [x] Architecture documented (CLAUDE.md)
-  - [x] Mobile optimization research (DevTec.md)
-- [ ] Production (In Progress - Week 1-2)
-  - [x] Component architecture established (dependency injection, lifecycle management)
-  - [x] ComboBar component extracted with tests
-  - [x] RuutCharacter component extracted with tests
-  - [x] HintSystem component extracted with tests
-  - [x] PowerUpInventory component extracted with tests
-  - [ ] WordBox component extraction (next session)
-  - [ ] Component integration into GameplayScene.ts
-  - [ ] Test coverage report and optimization
-  - [ ] Memory leak testing (Chrome DevTools)
-  - [ ] Asset optimization (texture atlases) - Week 3-4
-  - [ ] Mobile testing setup - Week 5-6
-  - [ ] Visual polish - Week 7-8
-  - [ ] Build optimization - Week 9-10
-- [ ] Testing & Iteration
-  - [ ] Integration tests
-  - [ ] Real device testing
-  - [ ] Performance profiling
-  - [ ] Bug fixes
-- [ ] Launch Preparation
-  - [ ] App Store submission
-  - [ ] Google Play submission
-  - [ ] Marketing materials
+**Status**: The project is undergoing a strategic reboot. While a functional prototype exists with 3,000 levels of content and core mechanics implemented, the focus is shifting from "making it work" to "making it great."
 
-**Current Phase**: Production - Code Refactoring (Week 1-2, 80% complete)
+**Priority Shifts**:
+1. **From**: Component extraction and technical refactoring
+2. **To**: Market research, story/lore integration, monetization strategy, and design excellence
+
+**New Development Philosophy**:
+- **Previous**: Build functional prototype → Refactor → Polish → Launch
+- **Current**: Research market → Design for excellence → Build with quality → Launch strategically
+
+**Workflow Checklist (Rebooted)**:
+- [x] Idea & Validation (Phase 1)
+  - [x] Core concept prototyped (word-association puzzle game)
+  - [x] Functional prototype with 3,000 levels
+  - [x] Core gameplay mechanics proven
+- [ ] **Research & Strategy (Phase 2 - IN PROGRESS)**
+  - [ ] Market research (Claude agent currently researching)
+  - [ ] Competitive analysis and positioning
+  - [ ] Monetization strategy design
+  - [ ] Story and lore development
+  - [ ] Design system overhaul
+  - [ ] AI tooling optimization (Playwright MCP integration)
+- [ ] Design & Content (Phase 3 - UPCOMING)
+  - [ ] Visual design aligned with market research
+  - [ ] Story integration into gameplay
+  - [ ] Monetization implementation
+  - [ ] Content strategy refinement
+- [ ] Production (Phase 4 - PAUSED)
+  - [x] Component architecture established
+  - [x] 4 components extracted with tests (ComboBar, RuutCharacter, HintSystem, PowerUpInventory)
+  - [ ] Resume technical work after design/strategy phase
+- [ ] Testing & Iteration (Phase 5)
+- [ ] Launch Preparation (Phase 6)
+
+**Current Phase**: Pre-Production - Research & Strategy (Market analysis in progress)
 
 ### Key Decisions & Context
 
-#### Idea & Validation
+#### Strategic Priorities (2026-01-06 Reboot)
+
+**The Four Pillars of Redevelopment**:
+1. **Market Research & Positioning**: Understanding the competitive landscape, target demographics, and unique value proposition
+2. **Monetization Strategy**: Designing sustainable revenue model aligned with market expectations
+3. **Story & Lore Integration**: Building narrative depth that enhances engagement and emotional connection
+4. **Design Excellence**: Elevating from functional to exceptional UI/UX, visuals, and player experience
+
+**AI Tooling Strategy**:
+- Optimizing Claude Code workflow with Playwright MCP for design-to-code acceleration
+- Multi-agent approach: Market research agent, design agents, development agents working in parallel
+- Focus on rapid iteration and quality over pure speed
+
+#### Idea & Validation (Phase 1 - Complete)
 - **Core Concept**: Mobile word-association puzzle game combining Chain Link mechanics with Candy Crush progression
-- **Target Audience**: Casual mobile gamers who enjoy word puzzles (Wordscapes, Chain Link players)
-- **Validation Status**: Prototype functional with 3,000 levels of content; core gameplay loop proven
+- **Target Audience**: Under review pending market research (initially: casual mobile gamers, word puzzle enthusiasts)
+- **Validation Status**: Functional prototype with 3,000 levels; core gameplay loop proven but needs market validation
+- **Gameplay Vision**: Relatively stable - core word-chain typing mechanic will remain, but presentation/meta-game may evolve
 
-#### Research Insights
-- **Performance Target**: 60 FPS on mid-range devices (iPhone 11, Samsung Galaxy A52)
-- **Bundle Size**: Target <2MB initial load for optimal user acquisition
-- **Memory Management**: Object pooling essential for mobile (target: <150MB RAM usage)
-- **Asset Strategy**: Texture atlases required; lazy loading for 120 lands (12 groups of 10)
-- **Mobile Input**: Virtual keyboard UX is critical challenge for typing gameplay
+#### Research Insights (Phase 2 - In Progress)
 
-#### Creative Strategy
-- **Art Direction**: Native app feel on par with Candy Crush, Wordscapes
-- **Animation Approach**: GSAP or Anime.js for UI; Phaser particles for gameplay effects
-- **Theming System**: 120 lands with cohesive visual identity per land
-- **Character**: 2.5D "Ruut" character climbs word ladder (currently static)
+**Market Research** (Active):
+- Claude agent currently analyzing competitive landscape
+- Results will inform: target demographics, pricing strategy, feature prioritization, visual design direction
 
-#### Production Notes
-- **Current Version**: 0.0.01 (component extraction phase)
-- **Critical Technical Debt**: GameplayScene.ts at 4,539 lines needs component-based refactoring (4 of 5 components extracted, integration pending)
-- **Asset Issues**: Individual PNGs in `/public/assets/ui/` should be atlases
-- **Testing Gap**: Vitest configured; 4 new test files created for extracted components; coverage report pending
-- **Dev Flags**: GAME_CONFIG.dev.enabled must be false before production (currently true)
+**Technical Performance Targets** (Established):
+- 60 FPS on mid-range devices (iPhone 11, Samsung Galaxy A52)
+- <2MB initial bundle for optimal user acquisition
+- <150MB RAM usage through object pooling
+- Texture atlases for asset optimization
+- Lazy loading for 120 lands (12 groups of 10)
+
+**Open Questions**:
+- Mobile keyboard UX for typing gameplay (critical challenge)
+- Monetization model: F2P with IAP? Premium? Hybrid?
+- Story integration depth: light theming vs. deep narrative?
+
+#### Creative Strategy (Under Revision)
+
+**Current State**:
+- Art direction goal: Native app feel on par with Candy Crush, Wordscapes
+- Animation stack: GSAP or Anime.js for UI; Phaser particles for effects
+- Theming system: 120 lands with cohesive visual identity
+- Character: 2.5D "Ruut" character climbs word ladder
+
+**Pending Design Work**:
+- Story/lore development will inform visual direction
+- Market research will validate art direction choices
+- Design system needs overhaul aligned with quality-first philosophy
+
+#### Production Notes (Phase 4 - Paused)
+- **Current Version**: 0.0.01 (prototype with component extraction partial)
+- **Technical State**: Functional but needs strategic design before continuing development
+- **Component Work**: 4 of 5 components extracted (ComboBar, RuutCharacter, HintSystem, PowerUpInventory); integration paused
+- **Technical Debt**: GameplayScene.ts at 4,539 lines; asset optimization pending; test coverage incomplete
+- **Dev Flags**: GAME_CONFIG.dev.enabled = true (development mode active)
 
 ### Session History
+
+#### Session 2026-01-06 (Project Reboot - Strategic Pivot)
+- **Phase**: Pre-Production - Research & Strategy
+- **Key Decision**: Strategic reboot from technical refactoring to design/market-driven development
+- **Accomplishments**:
+  - Documented project reboot decision and rationale
+  - Updated CLAUDE.md with new strategic priorities
+  - Identified "Four Pillars of Redevelopment": Market Research, Monetization, Story/Lore, Design Excellence
+  - Launched market research Claude agent (in progress)
+- **Philosophy Shift**:
+  - From: "Make it work" → "Make it great"
+  - From: Technical-first → Strategy/Design-first
+  - From: Linear development → Research-informed design
+- **Current Activities**:
+  - Market research agent analyzing competitive landscape
+  - Planning story/lore integration (next priority)
+  - Evaluating AI tooling improvements (Playwright MCP integration)
+- **Next Steps**:
+  - Complete market research analysis
+  - Develop story/lore framework
+  - Design monetization strategy
+  - Create design system aligned with market insights
+  - Resume technical development with strategic clarity
 
 #### Session 2026-01-05 (Component Extraction & Testing Infrastructure)
 - **Phase**: Production - Code Refactoring (Week 1-2 of DevTec.md roadmap)
@@ -359,53 +457,80 @@ wordrun-vite/
 
 ### Working Instructions
 
+#### Navigation Structure
+
+**Default Main Menu** (The Four Pillars):
+1. Market Research & Positioning
+2. Story & Lore Integration
+3. Monetization Strategy
+4. Design Excellence
+5. Alt Menu (previous production/architecture navigation)
+
+**Alt Menu** (Legacy/Technical Navigation):
+1. Production Status (component extraction, integration, testing)
+2. Architecture (scenes, data management, systems)
+3. Content & Design (puzzle data, lands, theming)
+4. Testing (coverage, performance, memory)
+5. Documentation (CLAUDE.md, DevTec.md, session summaries)
+6. Next Actions (immediate technical tasks)
+
+**Presentation Rule**: When offering navigation options, present the Four Pillars as the primary menu. Always offer "Alt Menu" as the last option to access legacy/technical navigation.
+
 #### Current Focus
-**Phase**: Production - Code Refactoring (Week 1-2, 80% complete)
+**Phase**: Pre-Production - Research & Strategy
 
-**Immediate Task**: Complete component extraction and integration
+**Strategic Context**: The project is in a reboot phase, shifting from technical implementation to strategic design. Technical work (component extraction) is paused until market research, story development, and design strategy are complete.
 
-**Workflow Prompt**:
-When working on final component extraction and integration:
-1. **Extract WordBox component** (next priority):
-   - Most complex component (~500+ lines)
-   - Handles word display, input, typo forgiveness
-   - Consider sub-components: WordBoxDisplay, WordBoxInput, WordBoxAnimations
-   - Create WordBox.test.ts with comprehensive test cases
-   - Follow established patterns: dependency injection, init/shutdown lifecycle
+**The Four Pillars** (Priority Order):
 
-2. **Integrate components into GameplayScene.ts**:
-   - Import all 5 components: ComboBar, RuutCharacter, HintSystem, PowerUpInventory, WordBox
-   - Replace inline code with component instantiation
-   - Pass required dependencies and callbacks
-   - Integrate one component at a time (test after each)
-   - Keep original code commented until components verified
-   - Test gameplay thoroughly after each integration
+1. **Market Research & Positioning** (IN PROGRESS)
+   - Claude agent currently analyzing competitive landscape
+   - Deliverables: Market analysis report, competitive positioning, target demographics
+   - Timeline: Await agent completion
+   - Next actions: Review findings, validate assumptions, identify unique value proposition
 
-3. **Run test coverage report**:
-   - Execute `npm run test:coverage`
-   - Analyze coverage gaps
-   - Add tests for uncovered code paths
-   - Target: 80% for components, 60% for scenes
+2. **Story & Lore Integration** (NEXT PRIORITY)
+   - Develop narrative framework that enhances engagement
+   - Define: Character backstories (Ruut), world-building (120 lands), progression narrative
+   - Integration points: Level themes, character progression, meta-game context
+   - Deliverables: Lore document, story integration plan, narrative design spec
 
-4. **Memory leak testing**:
-   - Profile with Chrome DevTools Memory tab
-   - Test scene transitions (memory should not grow)
-   - Verify shutdown methods working correctly
-   - Target: <150MB RAM usage
+3. **Monetization Strategy**
+   - Design revenue model informed by market research
+   - Options to evaluate: F2P + IAP, premium, hybrid, ad-supported
+   - Consider: Player psychology, competitive landscape, development resources
+   - Deliverables: Monetization design document, IAP catalog, pricing strategy
 
-**Constraints**:
-- Preserve existing gameplay behavior (no feature changes during refactoring)
-- Maintain TypeScript strict mode compliance
-- Test each component integration independently
-- Document component APIs in code comments
+4. **Design Excellence**
+   - Overhaul UI/UX based on market insights and story integration
+   - Areas: Visual design system, animation strategy, player feedback loops, onboarding
+   - Tools: Playwright MCP for rapid design-to-code workflow
+   - Deliverables: Design system, style guide, component library mockups
 
-**Success Criteria**:
-- All 5 components extracted and tested
-- GameplayScene.ts reduced from 4,539 lines to <500 lines
-- Each component is <300 lines
-- Test coverage >80% for components
-- Memory leaks eliminated (verified with Chrome DevTools)
-- All gameplay functionality preserved
+**AI Tooling Optimization**:
+- Evaluate Playwright MCP integration for design workflow
+- Multi-agent coordination: Research, design, development running in parallel
+- Documentation: Capture decisions, maintain context across sessions
+
+**Workflow Philosophy**:
+- **Quality over speed**: Take time to design right, then build once
+- **Research-informed decisions**: Let data and strategy guide technical choices
+- **Iterative refinement**: Rapid prototyping with AI tools, validate, iterate
+- **Context preservation**: Document all decisions for future sessions
+
+**When to Resume Technical Work**:
+Technical development (component integration, optimization, testing) will resume after:
+1. Market research complete with actionable insights
+2. Story/lore framework established
+3. Monetization strategy designed
+4. Design system approved
+
+**Success Criteria for Current Phase**:
+- Market research report completed and reviewed
+- Story/lore framework documented with integration plan
+- Monetization strategy defined with implementation roadmap
+- Design system created aligned with market positioning
+- Clear technical roadmap informed by strategic decisions
 
 ## Context Documents
 
