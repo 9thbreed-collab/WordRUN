@@ -9,8 +9,8 @@ WordRun challenges players to complete chains of 11 associated words (e.g., Car 
 ## Current Development Status
 
 **Phase**: Pre-Production - Research & Strategy (Phase 2)
-**Version**: 0.0.03 (AI Tooling Optimization)
-**Status**: Market research complete; Playwright MCP validated; story/lore integration next priority
+**Version**: 0.0.04 (Emotional Design Research)
+**Status**: Market research complete; Emotional design framework established; story/lore integration next priority
 
 ### Strategic Pivot (v0.0.02 - 2026-01-07)
 
@@ -19,8 +19,8 @@ The project has undergone a strategic reboot, shifting from technical-first deve
 **The Four Pillars of Redevelopment**:
 1. **Market Research & Positioning** ✓ (Complete) - Validated "Competitive Word-Chain Puzzle" positioning in $10bn+ puzzle market
 2. **Story & Lore Integration** (Next Priority) - Deep narrative framework infused into gameplay
-3. **Monetization Strategy** (50% Complete) - Hybrid IAP + ads model researched; design pending
-4. **Design Excellence** (Pending) - UI/UX overhaul based on market insights and story integration
+3. **Monetization Strategy** (75% Complete) - Hybrid IAP + ads model researched; ethical framing established; IAP catalog pending
+4. **Design Excellence** (50% Complete) - Emotional design framework established (Norman's three levels); visual design pending
 
 ### Market Research Key Findings
 
@@ -45,11 +45,17 @@ The project has undergone a strategic reboot, shifting from technical-first deve
 
 ### Current Focus: Story & Lore Integration (Pillar 2)
 
+**Emotional Design Foundation** (v0.0.04):
+- 58,000-word research report synthesizing Don Norman and Tim Gabe principles
+- Top 10 prioritized actions for emotional engagement
+- Norman's three levels (visceral, behavioral, reflective) applied to WordRun
+- Success metrics: D1 >40%, D7 >20%, D30 >10%, 60fps >95%
+
 **Next Session Priorities**:
-1. Character development (Ruut backstory, supporting NPCs, character arc progression)
-2. World-building (120 lands thematic framework, 12 seasonal land groups)
-3. Narrative arc structure (beginning/middle/end across 3,000 levels)
-4. Delivery methods (NPC speech cards, in-game dialogue, animated cutscenes)
+1. Character development (Ruut personality: determined, expressive, encouraging; 3-4 celebration animations)
+2. World-building (120 lands with emotional color palettes; 12 seasonal groups)
+3. Narrative arc (light → medium → rich story density tiers)
+4. Delivery methods (3-5 sec NPC dialogues skippable; 30-60 sec cutscenes replayable)
 
 ## Technology Stack
 
@@ -136,10 +142,14 @@ WordRunProject/
 ├── DevTec.md                  # Mobile optimization technical roadmap
 ├── WordRunContext.txt         # Original game design document
 ├── Market-Research-Brief-2026.md  # Comprehensive market analysis (73,000 words)
+├── emotional-design-research-report.md  # Emotional design principles (58,000 words)
+├── WORDRUN-TOP-10-EMOTIONAL-DESIGN-ACTIONS.md  # Prioritized implementation guide
+├── EMOTIONAL_DESIGN_CHECKLIST.md  # High-schooler friendly audit tool
 ├── v0.0.0-session-summary.md  # Documentation session (2026-01-05)
 ├── v0.0.01-session-summary.md # Component extraction session (2026-01-05)
 ├── v0.0.02-session-summary.md # Strategic reboot session (2026-01-07)
-└── v0.0.03-session-summary.md # AI tooling optimization session (2026-01-08)
+├── v0.0.03-session-summary.md # AI tooling optimization session (2026-01-08)
+└── v0.0.04-session-summary.md # Emotional design research session (2026-01-09)
 ```
 
 ## Key Gameplay Mechanics
@@ -163,6 +173,7 @@ WordRunProject/
 - [x] Market research complete (competitive landscape, monetization benchmarks, retention drivers)
 - [x] Competitive positioning validated ("Competitive Word-Chain Puzzle" blue ocean)
 - [x] AI tooling optimization (Playwright MCP integration validated)
+- [x] Emotional design research (Norman's three levels, Tim Gabe insights, Top 10 actions)
 - [ ] Story & lore integration framework (character development, world-building, narrative arc)
 - [ ] Monetization design finalized (IAP catalog, ad placement strategy, live-ops calendar)
 - [ ] Design system created (visual benchmarking, component library, typing UX research)
@@ -257,7 +268,8 @@ Proprietary - All rights reserved
 
 ---
 
-**Latest Session**: 2026-01-08 (AI Tooling Optimization - Playwright MCP Integration Test)
-**Current Focus**: Story & Lore Integration (Pillar 2) - Character development, world-building, narrative arc
+**Latest Session**: 2026-01-09 (Emotional Design Research - Psychology of Player Engagement)
+**Current Focus**: Story & Lore Integration (Pillar 2) - Character development informed by reflective design principles
 **Philosophy**: Research market → Design for excellence → Build with quality → Launch strategically
-**Tooling Ready**: Playwright MCP validated for competitive benchmarking, design prototyping, and typing UX research
+**Emotional Core**: Accomplishment + Curiosity + Calm Confidence + Delight
+**Framework**: Norman's Three Levels (Visceral, Behavioral, Reflective) + Top 10 Prioritized Actions
