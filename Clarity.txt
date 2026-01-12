@@ -1,0 +1,19 @@
+Thoughts that need be addressed and placed in my ai workflow files.  
+Organize these thoughts and build a clear path to get this entire project completed quickly.
+ Emotional design throughout the whole thing The lore (integrating it into the game) Language via the lore— and a language expert AI to create “languages” according to the lore Story informs design of levels, and gameplay in terms of visual design, powerups, skins earned, words used, language spoken regionally (in the game) without being in the forefront of the game, story-forward, but instead deeply woven into environmental story telling. Skins ( I have a ChatGPT session about this to refer to)
+Starter skins
+Name generator
+Gameplay upgrades/inventory
+Store and other menu things, etc. Level building for backgrounds, maps, and powerups & traps ( I have a ChatGPT session about this to refer to) Game juice
+Seasonal modes, that will ad the right particles on the screens/ even snow on the levels
+Music, sound fx, haptics, embellishments npc cut scenes vs mode  I need to gameplan it all in a way that grants the highest efficiency using all three ai, while taking as little time to build as possible Word Villas references, along with Steven’s sausage roll, Candy Crush,  AI models to include into the “Do What Spotify does” aspect and bring a connectivity to the game. and an AI that looks at gameplay from the inside and reports bugs, cheats, performance, growth and retention, and improvement suggestions.
+
+Most of these things can be categorized in: emotional design, functionality, personalization (especially with the Spotify aspect), and game juice (things that go beyond apps, but specifically into how games play and feel), and immersive story telling. It may be difficult to prioritize one over the other in order of operations because they all depend on each other. Functionality is only slightly above the others because if it doesn’t work, it’s all for naught, yet, if it’s not designed well, functionality won’t matter. And if the story is shoehorned in after the design, it will be disconnected. So what I believe is that the story must take precedence, and the emotional design and functionality come together behind it, and, finally personalization and game juice come after that. Because story informs everything else, emotional design as its own thing will take influence from the story and the functionality is intertwined with design (which means, they may have to be built simultaneously), and the rest is polish.
+
+Do what Spotify did… (that I referenced above)
+Use AI to analyze the player, their habits etc. and give them personalized messages that reflect them and who they are in between gameplay from time to time, that’s shareable to their other socials.
+
+This will also translate to the development of their ruut sprout in reinforcement of the Fruit of the Spirit, expressed in the lore, story, and greater culture of the game. https://youtu.be/Tpg0pxKHrCA?si=Hzhf_u2vE6jT3UnI
+
+
+Later (for reference) in going to create ads with the character’s placed in viral memes and content types (see ad ideas) then place gameplay into the video before the end title screen that says, play now. (Optional, a Ruut pops up out of focus and too close to the screen and wipes off fog… idk)  I want to systematize this game building process by templating things after getting the standard of quality established, then copy paste and modify to expand the game.

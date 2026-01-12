@@ -292,6 +292,28 @@ wordrun-vite/
 
 ## Project State
 
+### NEXT SESSION CRITICAL REMINDER
+
+**USER'S NEXT SESSION PLAN (2026-01-13+)**:
+The user intends to create a **SPECIALIZED AGENT FOR DEVELOPING IN-GAME NATIONAL LANGUAGES** based on national cultural attributes. This is a critical continuation of the Story & Lore Integration work completed in session v0.0.05.
+
+**What This Agent Will Do**:
+- Design fictional languages for each of the 9 nations (Aethelgard, Carnea, Salomia, Gilead, Niridia, Tobin, Kanaan, Patmos, Corinthia)
+- Map spiritual attributes (Love, Joy, Peace, etc.) to linguistic features
+- Generate word pools aligned with regional themes
+- Create dialect phrases and greeting patterns
+- Ensure language influences word selection in gameplay
+
+**Required Context Files**:
+- v0.0.05-session-summary.md (this session's story framework)
+- WorldState_And_TravelRoutes.md (9 nations with attributes)
+- AlignedStorySynopsisBeats_v2.md (how language drives puzzles)
+- WORDRUN-AI-DEVELOPMENT-PLAN.md Section 6.2.1 (LandTheme.languageRegion schema)
+
+**Integration Point**: The language system will plug into the `StoryIntegration` service specified in the AI Development Plan, influencing word selection per land/level.
+
+---
+
 ### Current Workflow Phase
 
 **Phase**: PROJECT REBOOT - Pre-Production (Design & Strategy Phase)
@@ -392,6 +414,44 @@ wordrun-vite/
 - **Dev Flags**: GAME_CONFIG.dev.enabled = true (development mode active)
 
 ### Session History
+
+#### Session 2026-01-12 (Story & Lore Integration - Narrative Foundation Complete)
+- **Phase**: Pre-Production - Story & Lore Integration (Pillar 2 of Four Pillars)
+- **Accomplishments**:
+  - Created complete story framework with 9 nations and dual spiritual attributes (Fruit of Spirit + Works of Flesh)
+  - Wrote Lore&StoryDraft1.md: Ancient language discovery, 9 explorers, antagonist setup, protagonist's journey
+  - Documented AlignedStorySynopsisBeats_v2.md: Detective-Thriller-Myth genre integration with 8 story beats
+  - Created WorldState_And_TravelRoutes.md: Political dynamics (Normal vs Aggressive states), protagonist's routes
+  - Produced WORDRUN-AI-DEVELOPMENT-PLAN.md: 65-page (1,960 lines) multi-agent MVP execution strategy
+  - Defined 9 nations with attributes: Aethelgard (Love/Hatred), Carnea (Joy/Drunkenness), Salomia (Peace/Strife), Gilead (Longsuffering/Wrath), Niridia (Gentleness/Murders), Tobin (Goodness/Envyings), Kanaan (Faith/Idolatry), Patmos (Meekness/Witchcraft), Corinthia (Temperance/Adultery)
+  - Documented character animation specs in IdleAnimationPrompts.md with 8 regional skin variations
+  - Analyzed genre_analysis_detective_thriller_myth.md for story construction patterns
+  - Organized RuutCharacter/ visual assets: 3D models, animations, run cycles, skins
+- **Key Story Decisions**:
+  - Two-act structure: Act 1 (package delivery/mystery) → Midpoint (antagonist reveal) → Act 2 (fugitive spreading truth)
+  - World state evolution: Normal (8 enemies, 5 allies, 23 neutral) → Aggressive (17 enemies, 11 tense, 8 neutral)
+  - Protagonist routes: First half (Corinthia → Carnea → Salomia → Tobin), Second half (reverse with degraded relations)
+  - Cliffhanger ending: 3 nations sever relations despite victory, ongoing conflict
+  - Universal language reveals both loving attributes and destructive attributes
+  - Word puzzles aligned with each nation's spiritual "accent"
+- **Development Plan Components**:
+  - 5-agent coordination: StoryAgent, DesignAgent, CodingAgent, TestAgent, PolishAgent + Human Orchestrator
+  - 5-hour MVP timeline: Hour 0-1 (story foundation), Hour 1-3 (parallel build), Hour 3-4 (integration), Hour 4-5 (polish)
+  - Story integration framework: LandTheme schema, CharacterProfile schema, DialogueTrigger system, placeholder strategy
+  - Template-based expansion: LevelTemplate, LandTemplate, TemplateValidator (target: 50 levels/hour)
+  - AI monitoring architecture: PlayerSession tracking, BugDetectionService, CheatDetectionService, PersonalizationService
+  - Quality baseline definition: Comprehensive checklist for visual polish, gameplay feel, audio, story integration, performance, emotional design
+- **Technical Specifications**:
+  - Story data structures (TypeScript interfaces): LandTheme, CharacterProfile, DialogueTrigger, PlayerSession, PlayerProfile
+  - StoryIntegration service methods: getLevelNarrative(), showNPCDialogue(), applyLandTheme(), getThemedWordPool(), shouldShowNPCDuringLevel()
+  - Handoff directory structure: /01_story/, /02_design/, /03_code/, /04_test/, /05_polish/, /sync/
+  - Validation system: Level template validation, Land template validation, quality baseline comparison
+- **Next Steps**:
+  - Create specialized agent for developing in-game national languages based on cultural attributes (NEXT SESSION PRIORITY)
+  - Finalize first 5 lands' story content (or quality placeholders)
+  - Develop detailed Ruut character profile with backstory and growth arc
+  - Execute 5-hour multi-agent MVP sprint (5 fully polished levels from Land 1)
+  - Begin Pillar 3 (Monetization Strategy) and Pillar 4 (Design Excellence) in parallel
 
 #### Session 2026-01-09 (Emotional Design Research - Psychology of Player Engagement)
 - **Phase**: Pre-Production - Design Excellence Support (Phase 2)
@@ -593,12 +653,20 @@ Technical development (component integration, optimization, testing) will resume
 - **GEMINI.md**: Project assessment and planned multi-agent development approach
 - **DevTec.md**: Mobile game optimization best practices and 8-week roadmap
 - **WordRunContext.txt**: Original game design document with mechanics, scoring formulas, and mode descriptions
+- **Clarity.txt**: Director's vision document outlining priorities and development philosophy
 - **Market-Research-Brief-2026.md**: Comprehensive 73,000-word competitive landscape analysis (v0.0.02)
 - **emotional-design-research-report.md**: 58,000-word emotional design principles synthesis (v0.0.04)
 - **WORDRUN-TOP-10-EMOTIONAL-DESIGN-ACTIONS.md**: Prioritized implementation guide with 4-phase roadmap (v0.0.04)
 - **EMOTIONAL_DESIGN_CHECKLIST.md**: High-schooler friendly design audit tool (v0.0.04)
+- **WORDRUN-AI-DEVELOPMENT-PLAN.md**: 65-page multi-agent MVP execution strategy with 5-hour timeline (v0.0.05)
+- **Lore&StoryDraft1.md**: Core narrative concept with 9 nations and universal language (v0.0.05)
+- **AlignedStorySynopsisBeats_v2.md**: Detective-Thriller-Myth story structure with 8 beats (v0.0.05)
+- **WorldState_And_TravelRoutes.md**: Political dynamics and protagonist's journey across 9 nations (v0.0.05)
+- **genre_analysis_detective_thriller_myth.md**: Genre construction guide and story patterns (v0.0.05)
+- **IdleAnimationPrompts.md**: Character animation specifications for Ruut and regional skins (v0.0.05)
 - **v0.0.0-session-summary.md**: Documentation & Research session (2026-01-05)
 - **v0.0.01-session-summary.md**: Component Extraction & Testing Infrastructure session (2026-01-05)
 - **v0.0.02-session-summary.md**: Strategic Reboot - Market Research session (2026-01-07)
 - **v0.0.03-session-summary.md**: AI Tooling Optimization - Playwright MCP Integration session (2026-01-08)
 - **v0.0.04-session-summary.md**: Emotional Design Research session (2026-01-09)
+- **v0.0.05-session-summary.md**: Story & Lore Integration session (2026-01-12)
