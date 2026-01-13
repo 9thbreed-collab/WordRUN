@@ -64,29 +64,41 @@ The antagonist's propaganda and political machinations cause alliances to shatte
 
 ---
 
-## Part 3: Protagonist's Travel Routes
+## Part 3: Protagonist's Travel Routes (Comprehensive 9-Nation Tours)
 
-The routes are determined by the political realities of each half of the game. Travel is assumed to be possible between **Ally** and **Neutral** nations, and highly dangerous but possible through **Tense** nations. **Enemy** borders are closed entirely.
+The routes are determined by the political realities of each half of the game. The protagonist must navigate a complex web of transport links that have been disrupted by political tensions. Travel is only possible between **Ally** and **Neutral** nations in the first half. In the second half, the protagonist, empowered by the language, can also force passage through **Tense** and even **Enemy** territories.
 
 *   **Protagonist's Home Nation:** Corinthia (Temperance/Adultery)
 *   **Package's Destination Nation:** Tobin (Goodness/Envyings)
 
-### First Half Route: "The Delivery"
+### First Half Route: The Convoluted Delivery
 
-The protagonist must find a path from Corinthia to Tobin. He must leverage the alliances and neutral relationships of the "Normal State."
+The protagonist's initial goal is to deliver the package to Tobin. However, due to failing international relations, direct routes are impossible. He is forced to take a long, convoluted trade circuit that, through a series of discoveries and setbacks, takes him through all nine nations.
 
-**Path: Corinthia → Carnea → Salomia → Tobin**
+**Path: A winding tour dictated by available transport and unfolding mystery.**
 
-1.  **Corinthia to Carnea (Ally):** The journey begins by crossing into Corinthia's only allied nation. This first step is relatively easy, introducing the protagonist to the concept of international travel and cultural differences in a low-stakes environment.
-2.  **Carnea to Salomia (Neutral):** From the celebratory lands of Carnea, the protagonist travels to the politically tense Salomia. As a neutral party from a neutral nation, he can navigate their internal `Strife` without being seen as a threat, learning about how a nation's flaws affect its people.
-3.  **Salomia to Tobin (Ally):** The final leg of the delivery. He travels from Salomia to its ally, Tobin. Arriving here signifies the completion of his initial quest and leads directly into the game's midpoint reversal.
+1.  **Corinthia → Carnea (Ally):** The journey starts simply. The only open international port in Corinthia services its dysfunctional ally, Carnea.
+2.  **Carnea → Patmos (Neutral):** The protagonist discovers the direct route to Tobin's region is closed. The only available long-haul passage is a northern trade route. The first stop is the superstitious nation of Patmos.
+3.  **Patmos → Gilead (Neutral):** Continuing on the trade circuit, he travels to the stern and wrathful nation of Gilead.
+4.  **Gilead → Kanaan (Ally):** The trade route follows the "Holy Warrior" alliance pact, leading him to the faithful but idolatrous Kanaan.
+5.  **Kanaan → Aethelgard (Neutral):** Here, the protagonist uncovers a clue suggesting the package's origin is tied to Aethelgard. He diverts from the trade route to investigate.
+6.  **Aethelgard → Corinthia (North Port - Neutral):** In Aethelgard, he hits a dead end. The nation is an enemy of his ultimate destination, Tobin. His only neutral port of call is, ironically, his home nation of **Corinthia**. He is forced to take a ferry to a remote northern port.
+7.  **Corinthia Internal Blockade:** Upon arrival, he learns his path home is blocked. The nation's internal `Adultery` has led to social strife, causing districts to shut their borders to each other. He is stuck in the north, unable to reach his home in the south. It is here he learns the package's final destination is Tobin, and the only open border is now via Salomia.
+8.  **Corinthia (North Port) → Niridia (Neutral):** Forced back into international travel, his only available path from the northern port is to the deceptively gentle Niridia.
+9.  **Niridia → Salomia (Neutral):** From Niridia, he travels to the lands of Salomia, a nation allied with his goal.
+10. **Salomia → Tobin (Ally):** After a journey that has taken him through every nation, including a fruitless stop in his own, he finally reaches the destination, Tobin, and delivers the package, leading to the midpoint confrontation.
 
-### Second Half Route: "The Escape and Restoration"
+### Second Half Route: The Gauntlet of Restoration
 
-After the midpoint in Tobin, the protagonist must return home to Corinthia. The world has shifted to the "Aggressive State," and his original path is no longer safe. His new mission is to spread the truth, forcing him to confront the new hostility head-on.
+Fleeing Tobin after his awakening, the protagonist's goal is to return home to Corinthia for the final confrontation. His path is a deliberate crusade, a reverse "gauntlet" run through the now-hostile world. He must use the power of the language to open paths that are politically closed.
 
-**Path: Tobin → Salomia → Carnea → Corinthia**
+**Path: A purposeful crusade carving a path through a hostile world.**
 
-1.  **Tobin to Salomia (Tense):** His first step is the most dangerous. The once-allied nations are now suspicious of each other. The protagonist must navigate a hostile border and a land where Tobin's `Envyings` and Salomia's `Strife` are being actively weaponized against each other. His goal is to use the language to remind them of their shared values.
-2.  **Salomia to Carnea (Tense):** He continues into another newly hostile territory. The peace-seeking Salomia now views Carnea's excesses as a corrupting influence, while Carnea sees Salomia's internal strife as a threat. The journey is fraught with mistrust.
-3.  **Carnea to Corinthia (Tense):** The final leg home is a journey between fractured allies. Corinthia's paranoia has curdled its relationship with Carnea. The protagonist must cross a border defined by suspicion and hypocrisy to reach his hometown, which is now the epicenter of the antagonist's plot. This path forces him to confront the decay of the world firsthand, making his mission to restore truth all the more urgent.
+1.  **Tobin → Gilead (Enemy):** His first act of defiance. Instead of fleeing to a safer nation, he uses the language to cross the now-hostile border into Gilead, confronting the `Wrath` he bypassed before.
+2.  **Gilead → Kanaan (Enemy):** He travels to Gilead's former ally to try and heal the schism that the antagonist created, forcing his way through another closed border.
+3.  **Kanaan → Aethelgard (Tense):** He journeys to the heart of `Hatred`, navigating a tense and paranoid nation to spread the language of empathy.
+4.  **Aethelgard → Patmos (Tense):** He moves to the land of `Witchcraft`, using the true spiritual language to counteract the dark superstitions that have been inflamed by the antagonist.
+5.  **Patmos → Niridia (Enemy):** He crosses another enemy border to the land of `Murders`, using the language of truth to expose the secrets that allow their violent system to persist.
+6.  **Niridia → Salomia (Tense):** He returns to the land of `Strife`, which is now teetering on the edge of total collapse, and uses the language of Peace to broker temporary truces.
+7.  **Salomia → Carnea (Tense):** He travels to Carnea, finding their `Joy` has been completely replaced by the hollowness of their `Drunkenness` and uses the language to show them a more lasting source of happiness.
+8.  **Carnea → Corinthia (Tense):** Finally, having started fires of restoration in all eight nations, he travels to his home nation of Corinthia. The border is Tense, and the society is collapsing from its own hypocrisy. He arrives not as a lost courier, but as a figure of power, ready for the final confrontation.

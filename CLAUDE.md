@@ -294,23 +294,27 @@ wordrun-vite/
 
 ### NEXT SESSION CRITICAL REMINDER
 
-**USER'S NEXT SESSION PLAN (2026-01-13+)**:
-The user intends to create a **SPECIALIZED AGENT FOR DEVELOPING IN-GAME NATIONAL LANGUAGES** based on national cultural attributes. This is a critical continuation of the Story & Lore Integration work completed in session v0.0.05.
+**USER'S NEXT SESSION PLAN (2026-01-14+)**:
+The user should create the **LAND DISTRIBUTION MATRIX** - a comprehensive mapping of all 120 lands to the 9 nations with story beat assignments. This is the final foundational piece needed before content production can begin.
 
-**What This Agent Will Do**:
-- Design fictional languages for each of the 9 nations (Aethelgard, Carnea, Salomia, Gilead, Niridia, Tobin, Kanaan, Patmos, Corinthia)
-- Map spiritual attributes (Love, Joy, Peace, etc.) to linguistic features
-- Generate word pools aligned with regional themes
-- Create dialect phrases and greeting patterns
-- Ensure language influences word selection in gameplay
+**What This Matrix Will Define**:
+- Which of the 9 nations each land belongs to (Lands 1-120 mapped to Aethelgard, Carnea, Salomia, etc.)
+- Which act each land belongs to (First Half: Lands 1-60, Second Half: Lands 61-120)
+- Border relationship for each land ('ally', 'neutral', 'tense', 'enemy')
+- Story beat assignment for each land (distribute 8 core beats across 120 lands)
+- Language mode for each land ('A' Transformed, 'B' Base, 'C' Rebellion)
+- Difficulty progression aligned with narrative progression
 
 **Required Context Files**:
-- v0.0.05-session-summary.md (this session's story framework)
-- WorldState_And_TravelRoutes.md (9 nations with attributes)
-- AlignedStorySynopsisBeats_v2.md (how language drives puzzles)
-- WORDRUN-AI-DEVELOPMENT-PLAN.md Section 6.2.1 (LandTheme.languageRegion schema)
+- v0.0.07-session-summary.md (expanded travel routes with 9-nation tours)
+- v0.0.06-session-summary.md (national language design system)
+- WorldState_And_TravelRoutes.md (political relations and travel routes)
+- AlignedStorySynopsisBeats_v2.md (8 story beats to distribute)
+- WORDRUN-AI-DEVELOPMENT-PLAN.md Section 6.2.1 (LandTheme schema)
 
-**Integration Point**: The language system will plug into the `StoryIntegration` service specified in the AI Development Plan, influencing word selection per land/level.
+**Deliverable Format**: Create `LandDistributionMatrix.md` with a table containing all 120 lands mapped to nation, act, border type, story beat, language mode, and difficulty tier.
+
+**Integration Point**: This matrix becomes the master reference for all content development, enabling the multi-agent MVP sprint to produce levels with proper story/linguistic context.
 
 ---
 
@@ -414,6 +418,32 @@ The user intends to create a **SPECIALIZED AGENT FOR DEVELOPING IN-GAME NATIONAL
 - **Dev Flags**: GAME_CONFIG.dev.enabled = true (development mode active)
 
 ### Session History
+
+#### Session 2026-01-13 (Story Route Refinement & Agent Creation)
+- **Phase**: Pre-Production - Story & Lore Integration (Pillar 2 continued)
+- **Accomplishments**:
+  - Expanded protagonist travel routes from 4-nation simple paths to comprehensive 9-nation tours
+  - Revised WorldState_And_TravelRoutes.md with detailed journey narrative
+  - Created permanent national-language-designer agent (.claude/agents/national-language-designer.md)
+  - Configured agent with Gemini research tools, trigger conditions, and context document loading
+- **Travel Route Transformations**:
+  - First Half: "The Convoluted Delivery" - 10-stop mystery-driven journey through all 9 nations (Corinthia → Carnea → Patmos → Gilead → Kanaan → Aethelgard → Corinthia North Port → Niridia → Salomia → Tobin)
+  - Second Half: "The Gauntlet of Restoration" - 8-stop purposeful crusade using language power to force passage through enemy borders (Tobin → Gilead → Kanaan → Aethelgard → Patmos → Niridia → Salomia → Carnea → Corinthia)
+  - Narrative justifications: Failing international relations force detours, Corinthia internal blockade traps protagonist, second half becomes deliberate crusade
+- **Agent Specifications**:
+  - Name: national-language-designer (Opus model)
+  - Capabilities: Fictional language design mapping Fruit of Spirit + Works of Flesh to linguistic features
+  - Tools: Gemini headless research access, word pool generation, dialect pattern creation
+  - Triggers: Language/dialect/linguistics mentions, themed word pool requests, NPC dialogue creation
+- **Story Integration Impact**:
+  - All 9 nations now have narrative presence justifying 120 lands (13-14 lands per nation)
+  - Creates story beats for every nation across both acts
+  - First half focuses on mystery and forced diversions; second half on purposeful crusade and restoration
+- **Next Steps**:
+  - Create Land Distribution Matrix (120 lands → 9 nations with story beat assignments)
+  - Design NPC roster using national-language-designer agent
+  - Expand 8 core story beats into 120 land-specific sub-beats
+  - Develop first 5 lands full content with linguistic flavor
 
 #### Session 2026-01-12 (Story & Lore Integration - Narrative Foundation Complete)
 - **Phase**: Pre-Production - Story & Lore Integration (Pillar 2 of Four Pillars)
@@ -661,7 +691,9 @@ Technical development (component integration, optimization, testing) will resume
 - **WORDRUN-AI-DEVELOPMENT-PLAN.md**: 65-page multi-agent MVP execution strategy with 5-hour timeline (v0.0.05)
 - **Lore&StoryDraft1.md**: Core narrative concept with 9 nations and universal language (v0.0.05)
 - **AlignedStorySynopsisBeats_v2.md**: Detective-Thriller-Myth story structure with 8 beats (v0.0.05)
-- **WorldState_And_TravelRoutes.md**: Political dynamics and protagonist's journey across 9 nations (v0.0.05)
+- **WorldState_And_TravelRoutes.md**: Political dynamics and protagonist's journey across 9 nations (v0.0.07 - expanded routes)
+- **NationalLanguageDesignSystem.md**: Comprehensive fictional language specifications for all 9 nations (v0.0.06)
+- **NationalWordPools.md**: Ready-to-use vocabulary pools organized by nation and mode (v0.0.06)
 - **genre_analysis_detective_thriller_myth.md**: Genre construction guide and story patterns (v0.0.05)
 - **IdleAnimationPrompts.md**: Character animation specifications for Ruut and regional skins (v0.0.05)
 - **v0.0.0-session-summary.md**: Documentation & Research session (2026-01-05)
@@ -670,3 +702,5 @@ Technical development (component integration, optimization, testing) will resume
 - **v0.0.03-session-summary.md**: AI Tooling Optimization - Playwright MCP Integration session (2026-01-08)
 - **v0.0.04-session-summary.md**: Emotional Design Research session (2026-01-09)
 - **v0.0.05-session-summary.md**: Story & Lore Integration session (2026-01-12)
+- **v0.0.06-session-summary.md**: National Language Design System session (2026-01-12)
+- **v0.0.07-session-summary.md**: Story Route Refinement & Agent Creation session (2026-01-13)

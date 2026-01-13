@@ -9,8 +9,8 @@ WordRun challenges players to complete chains of 11 associated words (e.g., Car 
 ## Current Development Status
 
 **Phase**: Pre-Production - Research & Strategy (Phase 2)
-**Version**: 0.0.05 (Story & Lore Integration)
-**Status**: Story framework complete (9 nations, universal language); Multi-agent MVP plan ready; Cultural language agent next session
+**Version**: 0.0.07 (Story Route Refinement & Agent Creation)
+**Status**: Story framework complete; National languages designed; 9-nation travel routes finalized; Land Distribution Matrix next session
 
 ### Strategic Pivot (v0.0.02 - 2026-01-07)
 
@@ -18,7 +18,7 @@ The project has undergone a strategic reboot, shifting from technical-first deve
 
 **The Four Pillars of Redevelopment**:
 1. **Market Research & Positioning** ✓ (Complete) - Validated "Competitive Word-Chain Puzzle" positioning in $10bn+ puzzle market
-2. **Story & Lore Integration** ✓ (85% Complete) - 9-nation world with Detective-Thriller-Myth structure; Cultural language agent next session
+2. **Story & Lore Integration** (90% Complete) - 9-nation world with Detective-Thriller-Myth structure; National languages designed; Land Distribution Matrix next session
 3. **Monetization Strategy** (75% Complete) - Hybrid IAP + ads model researched; ethical framing established; IAP catalog pending
 4. **Design Excellence** (50% Complete) - Emotional design framework established (Norman's three levels); visual design pending
 
@@ -45,20 +45,25 @@ The project has undergone a strategic reboot, shifting from technical-first deve
 
 ### Current Focus: Story & Lore Integration (Pillar 2)
 
-**Story Framework Complete** (v0.0.05):
+**Story Framework Complete** (v0.0.05 - v0.0.07):
 - 9-nation world with dual spiritual attributes (Fruit of Spirit + Works of Flesh)
 - Detective-Thriller-Myth genre integration (Se7en, True Detective inspired)
 - Universal language discovery narrative with 8 story beats
 - Two-act structure: Package delivery mystery → Fugitive spreading truth
 - Political dynamics: Normal state (8 enemies, 5 allies, 23 neutral) → Aggressive state (17 enemies, 11 tense, 8 neutral)
-- Protagonist's journey: Corinthia → Carnea → Salomia → Tobin (first half), reverse route with degraded relations (second half)
+- Protagonist's comprehensive journeys through all 9 nations:
+  - First Half: "The Convoluted Delivery" - Mystery-driven 10-stop tour (Corinthia → ... → Tobin)
+  - Second Half: "The Gauntlet of Restoration" - Purposeful 8-stop crusade (Tobin → ... → Corinthia)
+- National language design system complete (9 languages, mode-based variations, word pools)
+- Cultural language designer agent created for ongoing linguistic content work
 - 65-page multi-agent MVP development plan (5-hour timeline with 5 specialized AI agents)
 
 **Next Session Priority**:
-1. **Create specialized cultural language agent** - Design fictional languages for 9 nations based on spiritual attributes
-2. Finalize first 5 lands' story content (or quality placeholders)
-3. Develop detailed Ruut character profile with growth arc
-4. Execute 5-hour multi-agent MVP sprint (5 fully polished levels from Land 1)
+1. **Create Land Distribution Matrix** - Map all 120 lands to nations, acts, border types, story beats, language modes
+2. Design NPC roster with regional linguistic flavor using national-language-designer agent
+3. Expand 8 core story beats into 120 land-specific sub-beats
+4. Develop first 5 lands full content with linguistic flavor
+5. Execute 5-hour multi-agent MVP sprint (5 fully polished levels from Land 1)
 
 ## Technology Stack
 
@@ -151,15 +156,20 @@ WordRunProject/
 ├── WORDRUN-AI-DEVELOPMENT-PLAN.md  # 65-page multi-agent MVP strategy (5-hour timeline)
 ├── Lore&StoryDraft1.md  # Core narrative with 9 nations and universal language
 ├── AlignedStorySynopsisBeats_v2.md  # Detective-Thriller-Myth story structure
-├── WorldState_And_TravelRoutes.md  # Political dynamics and journey routes
+├── WorldState_And_TravelRoutes.md  # Political dynamics and 9-nation journey routes (v0.0.07 - expanded)
+├── NationalLanguageDesignSystem.md  # Fictional language specifications for all 9 nations (v0.0.06)
+├── NationalWordPools.md  # Vocabulary pools organized by nation and mode (v0.0.06)
 ├── genre_analysis_detective_thriller_myth.md  # Genre construction guide
 ├── IdleAnimationPrompts.md  # Character animation specifications
+├── .claude/agents/national-language-designer.md  # Cultural language designer agent (v0.0.07)
 ├── v0.0.0-session-summary.md  # Documentation session (2026-01-05)
 ├── v0.0.01-session-summary.md # Component extraction session (2026-01-05)
 ├── v0.0.02-session-summary.md # Strategic reboot session (2026-01-07)
 ├── v0.0.03-session-summary.md # AI tooling optimization session (2026-01-08)
 ├── v0.0.04-session-summary.md # Emotional design research session (2026-01-09)
-└── v0.0.05-session-summary.md # Story & lore integration session (2026-01-12)
+├── v0.0.05-session-summary.md # Story & lore integration session (2026-01-12)
+├── v0.0.06-session-summary.md # National language design session (2026-01-12)
+└── v0.0.07-session-summary.md # Story route refinement & agent creation (2026-01-13)
 ```
 
 ## Key Gameplay Mechanics
@@ -278,9 +288,10 @@ Proprietary - All rights reserved
 
 ---
 
-**Latest Session**: 2026-01-12 (Story & Lore Integration - Narrative Foundation Complete)
-**Current Focus**: Cultural Language Agent Development (Next Session) - Design fictional languages for 9 nations
+**Latest Session**: 2026-01-13 (Story Route Refinement & Agent Creation)
+**Current Focus**: Land Distribution Matrix (Next Session) - Map 120 lands to 9 nations with story beat assignments
 **Philosophy**: Story informs design → Design + Functionality parallel → Personalization + Game juice polish
-**Narrative Structure**: Detective-Thriller-Myth with 9 nations, universal language, two-act journey
+**Narrative Structure**: Detective-Thriller-Myth with 9 nations, universal language, comprehensive 9-nation tours (both acts)
 **Development Approach**: Multi-agent AI coordination (5 specialized agents, 5-hour MVP sprint)
-**Next Milestone**: 5 fully polished levels (Land 1: "Verdant Beginnings") establishing quality baseline
+**Story Progress**: 9 languages designed, travel routes finalized, national-language-designer agent created
+**Next Milestone**: Land Distribution Matrix → First 5 lands full content → 5 fully polished levels establishing quality baseline
