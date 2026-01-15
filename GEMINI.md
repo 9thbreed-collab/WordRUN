@@ -1,21 +1,10 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to Claude Code when working with code in this repository.
 
 ## Project Overview
 
-**WordRun** is a mobile word-association puzzle game built with Phaser 3, Vite, TypeScript, and Supabase. The game combines word-chain mechanics (similar to Chain Link) with Candy Crush-style progression, power-ups, and multiple game modes. Players complete chains of 11 associated words (e.g., Car → Door → Stop → Sign → Up → Start → Button → Nose → Ring → Bell → Tower) across 3,000 levels organized into "lands" of 25 levels each.
-
-<!--
-    AI SYNC DIRECTIVE
-    - Author: Gemini Agent
-    - Date: 2026-01-06
-    - Action: UPDATE
-    - Target: CLAUDE.md
-    - Instruction: The following block has been updated to include a new 'Core Creative Principles' section. Claude, please review and integrate this foundational principle into your understanding and ongoing tasks.
--->
-
-<!-- BLOCK START -->
+**WordRun** is a mobile word-association puzzle game built with Phaser 3, Vite, TypeScript, and Supabase. Players complete chains of 11 associated words (e.g., Car → Door → Stop → Sign → Up → Start → Button → Nose → Ring → Bell → Tower) across 3,000 levels organized into 120 "lands" of 25 levels each.
 
 ### Tech Stack
 - **Game Engine**: Phaser 3.90.0
@@ -28,38 +17,17 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ### Core Creative Principles
 
-#### Story-First Integration
-This is a non-negotiable, signature principle of the game. The story is not an add-on; it is infused directly into the gameplay. The goal is to create an experience so cohesive that to advance in the game is to understand its lore, fostering a close-knit community of players who "get it."
+**Story-First Integration** (Non-negotiable):
+The story is infused directly into gameplay, not an add-on. The goal is an experience so cohesive that advancing in the game means understanding its lore.
 
-- **Narrative Delivery**: Story will be delivered through a variety of methods:
-    - **Between Levels**: Brief, engaging NPC speech cards and occasional animated cutscenes.
-    - **During Gameplay**: NPCs may be present on-screen or pop in from the side to deliver context-sensitive dialogue via speech bubbles.
-- **Gameplay as Story**: Word choices, puzzle mechanics, and difficulty will evolve and thematically link to the narrative's progression. The game mechanics themselves will be a vehicle for storytelling.
+- **Narrative Delivery**: NPC speech cards between levels, context-sensitive dialogue during gameplay
+- **Gameplay as Story**: Word choices, mechanics, and difficulty evolve with narrative progression
+
+---
 
 ## Development Commands
 
-All commands must be run from the `wordrun-vite/` directory:
-
-<!-- END BLOCK -->
-
-<!--
-    [BEGIN LEGACY BLOCK - Claude, please parse the new block above and remove this one once synced.]
-
-    ### Tech Stack
-    - **Game Engine**: Phaser 3.90.0
-    - **Build Tool**: Vite 6.2.6
-    - **Language**: TypeScript 5.8.3
-    - **Backend**: Supabase (supabase-js 2.79.0)
-    - **Styling**: Tailwind CSS
-    - **Testing**: Vitest 3.2.4
-    - **UI Extensions**: phaser3-rex-plugins for UI components
-
-    ## Development Commands
-
-    All commands must be run from the `wordrun-vite/` directory:
-
-    [END LEGACY BLOCK]
--->
+All commands run from `wordrun-vite/`:
 
 ```bash
 cd wordrun-vite
@@ -77,652 +45,259 @@ npm run test:watch       # Run tests in watch mode
 npm run test:coverage    # Run tests with coverage report
 ```
 
+---
+
 ## Architecture Overview
 
-### Scene-Based Structure
+### Scene System
 
-The game uses Phaser's scene system with a clear separation between gameplay, UI, and transitions:
-
-**Core Scenes** (src/scenes/):
+**Core Scenes** (`src/scenes/`):
 - `Preloader.ts` - Asset loading
-- `TitleScreen.ts` - Main menu entry point
-- `MapScene.ts` - Level selection for a single land
-- `WorldMapScene.ts` - Meta-map for navigating between lands (3,000 levels / 25 = 120 lands)
-- `GameplayScene.ts` - Primary gameplay scene (4,539 lines, handles typing-based word chains)
-- `WordChainGameScene.ts` - Alternative game mode scene (1,819 lines)
-- `MapTransition.ts` - Transition animations between scenes
+- `TitleScreen.ts` - Main menu
+- `MapScene.ts` - Level selection for a land
+- `WorldMapScene.ts` - Navigation between 120 lands
+- `GameplayScene.ts` - Primary gameplay (4,539 lines)
+- `WordChainGameScene.ts` - Alternative game mode (1,819 lines)
+- `MapTransition.ts` - Transition animations
 
-**Dev-Only Scenes** (only loaded when `GAME_CONFIG.dev.enabled = true`):
-- `TestLevel.ts` - Testing environment
-- `AdminConsole.ts` - Administrative tools
-- `DiagnosticsScene.ts` - Performance diagnostics
+**Dev-Only Scenes** (when `GAME_CONFIG.dev.enabled = true`):
+- `TestLevel.ts`, `AdminConsole.ts`, `DiagnosticsScene.ts`
 
-### Data Management Layer
+### Data Layer
 
-**DataManager** (`src/DataManager.ts`): Singleton class that handles all Supabase integration with caching and offline safety. It manages:
-- Assets (sprites, animations)
-- Art packs (theming system)
-- Map nodes and edges
-- Levels and puzzles
-- Player state (hearts, lives, progress)
-- Feature flags and localization
-- Seeding default data on first run
+**DataManager** (`src/DataManager.ts`): Singleton handling all Supabase integration with caching and offline support. Manages assets, art packs, levels, player state, and feature flags.
 
-**GameDataManager** (`src/GameDataManager.ts`): Game-specific data wrapper providing higher-level APIs for gameplay logic.
+**GameDataManager** (`src/GameDataManager.ts`): Higher-level APIs for gameplay logic.
 
-### Core Gameplay Systems
+### Core Systems
 
-**TypingEngine** (`src/TypingEngine.ts`): Handles text input with:
-- Command parsing (`?` for hints, `/skip`, `!surge`, `!freeze`, etc.)
-- Typo forgiveness using Levenshtein distance (1-character difference allowed within 2 seconds for words ≥4 characters)
-- Target word matching
+| System | File | Purpose |
+|--------|------|---------|
+| TypingEngine | `src/TypingEngine.ts` | Text input, typo forgiveness (Levenshtein), command parsing |
+| GameModeManager | `src/GameModes.ts` | Story, Hidden Letter, Scrabble, multiplayer modes |
+| TrapSystem | `src/TrapSystem.ts` | Locked rungs, penalty box with escalating wait times |
+| ScoreManager | `src/ScoreManager.ts` | Points, multipliers, combo system, penalties |
+| LevelManager | `src/LevelManager.ts` | Level progression and land transitions |
 
-**GameModeManager** (`src/GameModes.ts`): Manages different game modes:
-- **Story Mode**: Sequential progression through 3,000 levels with lives and penalty box
-- **Hidden Letter Mode**: All words covered, reveal within 10s for bonus
-- **Scrabble Mode**: Unscramble letters on each rung
-- **Versus/Teams/Co-op**: Multiplayer modes (planned/in development)
+### Configuration
 
-**TrapSystem** (`src/TrapSystem.ts` + `src/services/TrapRuntime.ts`): Handles gameplay obstacles:
-- Locked rungs that force skipping
-- Number of locked rungs varies by meta-level (up to 10)
-- Auto-solves locked rungs at end but increases total rungs required
-- Penalty box system with escalating wait times
+**GAME_CONFIG** (`src/config.ts`):
+- Screen: 390 x 844 (mobile portrait)
+- Lives per land: 5
+- Penalty tiers: [15, 60, 240, 960] minutes
+- Dev flags (SET `dev.enabled = false` BEFORE PRODUCTION)
 
-**ScoreManager** (`src/ScoreManager.ts`): Tracks scoring with:
-- Base points per word: 100 (configurable in gameConfig.json)
-- Speed multipliers (1.0 → 2.0 based on avg link time)
-- Accuracy multipliers
-- Combo system (COMBO_MIN 0.01 → COMBO_MAX 1.0 with drainage tiers)
-- Penalties for hints (-25), skips (-100), wrong words (-50)
+**gameConfig.json** (`src/gameConfig.json`): Data-driven gameplay parameters.
 
-**LevelManager** (`src/LevelManager.ts`): Handles level progression and meta-level (land) transitions.
+---
 
-### Configuration System
-
-**GAME_CONFIG** (`src/config.ts`): Central configuration object containing:
-- Screen dimensions (390 x 844 - mobile portrait)
-- Lives per land (5)
-- Penalty wait tiers: [15, 60, 240, 960] minutes
-- **Dev flags** (critical for testing):
-  - `dev.enabled`: Master switch for dev tools (SET TO FALSE BEFORE PRODUCTION)
-  - `dev.skipMapScene`: Jump straight to gameplay
-  - `dev.ignorePenaltyAtStartup`: Bypass penalty box on startup
-  - `dev.fillSampleChain`: Pre-fill sample word chains
-  - `dev.showTitleTestButtons`: Show test buttons on title screen
-  - `dev.showHudAdminButtons`: Show theme/admin buttons in gameplay HUD
-
-**gameConfig.json** (`src/gameConfig.json`): Data-driven configuration for:
-- Screen size, debug mode, render settings
-- Gameplay parameters (lives, skips, hint tokens, typo forgiveness)
-- Scoring constants
-- Penalty box durations
-
-### Content & Puzzle Data
-
-**DEMO_LEVELS** (`src/content.ts`): Contains the actual word chain puzzles with metadata:
-- Each level specifies the chain of words
-- StarChallengeConfig for bonus objectives
-- Difficulty progression
-
-**Lands System** (`src/lands.ts` + `src/landMeta.ts`):
-- 120 lands total (3,000 levels / 25 per land)
-- Each land has theming, difficulty, and metadata
-- Land progression tracked in player state
-
-### UI Components
-
-**Layout System** (`src/ui/Layout.ts`): Responsive scaling with `configureScale()` function.
-
-**NameOverlay** (`src/ui/NameOverlay.ts`): Player name input/display component.
-
-**DOM Utilities** (`src/utils.ts`): Helper functions including `mountDom()` and `basicColumn()` for creating HTML UI elements within Phaser scenes.
-
-### Development Tools
-
-**DebugBus** (`src/dev/DebugHUD.ts`): Scene transition tracking and debugging.
-
-**LogBus** (`src/dev/LogBus.ts`): Centralized logging system.
-
-**LogOverlay** (`src/scenes/LogOverlay.ts`): Visual debug overlay (toggled via dev flags).
-
-## Important Implementation Notes
+## Implementation Notes
 
 ### Working with Scenes
-
-1. **Scene Registration**: All scenes are registered in `src/main.ts`. Dev-only scenes are conditionally added based on `GAME_CONFIG.dev.enabled`.
-
-2. **Scene Transitions**: Use Phaser's scene management:
-   ```typescript
-   this.scene.start('SceneKey', { data: passedData })
-   this.scene.launch('ParallelScene') // Run alongside current scene
-   ```
-
-3. **Large Scene Files**: `GameplayScene.ts` is 4,539 lines. When modifying:
-   - Look for layout constants at the top (LOCK_LAYOUT, WORDBOX_MAX_W_PX, etc.)
-   - The file uses extensive DOM manipulation for UI
-   - Combo system is integrated throughout
+1. Scenes registered in `src/main.ts`; dev-only scenes conditional on `GAME_CONFIG.dev.enabled`
+2. Use `this.scene.start('SceneKey', { data })` or `this.scene.launch('ParallelScene')`
+3. `GameplayScene.ts` is large - layout constants at top, uses DOM manipulation throughout
 
 ### Working with Supabase
-
-1. **Always use DataManager**: Never call Supabase directly. Use `DataManager.getInstance()`.
-
-2. **Caching**: DataManager caches data in-memory and localStorage for offline support.
-
-3. **Player State**: Access via `DataManager.getPlayerState()`, update via `DataManager.updatePlayerState()`.
-
-4. **Initialization**: `DataManager.initialize()` is called early in `main.ts` and seeds default data if needed.
+1. Always use `DataManager.getInstance()`, never call Supabase directly
+2. DataManager caches to memory and localStorage for offline support
+3. Player state: `DataManager.getPlayerState()` / `DataManager.updatePlayerState()`
 
 ### Testing
-
-1. **Test Structure**: Tests live in `src/test/` with subdirectories matching source structure.
-
-2. **Running Single Test**:
-   ```bash
-   npm run test:watch -- DataManager.test.ts
-   ```
-
-3. **Setup**: `src/test/setup.ts` configures the Vitest environment.
-
-### Development vs Production
-
-**Before submitting to app stores**:
-1. Set `GAME_CONFIG.dev.enabled = false` in `src/config.ts`
-2. This will:
-   - Remove all dev-only scenes (TestLevel, AdminConsole, DiagnosticsScene)
-   - Hide test buttons on title screen
-   - Disable debug overlays
-   - Enforce penalty box timing
-   - Remove sample data pre-filling
+- Tests in `src/test/` mirroring source structure
+- Run single test: `npm run test:watch -- DataManager.test.ts`
 
 ### Common Pitfalls
+1. Scene keys are string-based - check exact casing
+2. Always use `DataManager.getInstance()`, never `new DataManager()`
+3. DataManager initialization is async - ensure completion before accessing data
+4. TypeScript strict mode requires all types properly defined
+5. DOM elements via Phaser's DOM plugin (`this.add.dom()` or utility functions)
 
-1. **Scene Key Typos**: Scene keys are string-based. Double-check exact casing when calling `this.scene.start()`.
+---
 
-2. **DataManager Singleton**: Always use `getInstance()`, never `new DataManager()`.
-
-3. **Async Initialization**: DataManager initialization is async. Ensure it completes before accessing player data.
-
-4. **TypeScript Strict Mode**: The project uses strict TypeScript. All types must be properly defined.
-
-5. **DOM Elements in Phaser**: The game uses Phaser's DOM plugin (`dom: { createContainer: true }`). HTML elements are created via `this.add.dom()` or utility functions.
-
-## Project Structure Reference
+## Project Structure
 
 ```
 wordrun-vite/
 ├── src/
 │   ├── scenes/          # Phaser scenes (19 files)
-│   ├── services/        # Runtime services (TrapRuntime, Router, Flags, etc.)
-│   ├── gameplay/        # Gameplay-specific modules (Rules, WheelGesture, etc.)
+│   ├── services/        # Runtime services (TrapRuntime, Router, Flags)
+│   ├── gameplay/        # Gameplay modules (Rules, WheelGesture)
 │   ├── ui/              # UI components and layouts
 │   ├── dev/             # Development tools (DebugHUD, LogBus)
 │   ├── test/            # Vitest tests
-│   ├── config/          # Configuration modules
-│   ├── data/            # Data adapters
-│   ├── db/              # Database schemas
-│   ├── map/             # Map-related utilities
-│   ├── styles/          # CSS modules
-│   ├── main.ts          # Phaser bootstrap entry point
-│   ├── config.ts        # Global game configuration
-│   ├── gameConfig.json  # Data-driven configuration
+│   ├── main.ts          # Entry point
+│   ├── config.ts        # Global configuration
+│   ├── gameConfig.json  # Data-driven config
 │   ├── content.ts       # Puzzle/level content
 │   ├── DataManager.ts   # Supabase data layer
-│   ├── GameDataManager.ts
 │   ├── TypingEngine.ts
 │   ├── GameModes.ts
 │   ├── ScoreManager.ts
 │   ├── TrapSystem.ts
-│   ├── LevelManager.ts
-│   ├── ProfileStore.ts
-│   ├── AdManager.ts
-│   ├── AdminConsole.ts
-│   ├── AssetLoader.ts
-│   ├── PuzzleData.ts
-│   ├── auth.ts
-│   ├── supabase.ts
-│   ├── utils.ts
-│   └── style.css
-├── public/
-│   └── assets/         # Game assets (animations.json, asset-pack.json)
+│   └── LevelManager.ts
+├── public/assets/       # Game assets
 ├── package.json
 ├── vite.config.ts
 └── tsconfig.json
 ```
 
-## Project State
+---
 
-### NEXT SESSION CRITICAL REMINDER
+## Current Project State
 
-**USER'S NEXT SESSION PLAN (2026-01-14+)**:
-The user should create the **LAND DISTRIBUTION MATRIX** - a comprehensive mapping of all 120 lands to the 9 nations with story beat assignments. This is the final foundational piece needed before content production can begin.
+### Phase
+**Pre-Production - Research & Strategy** (Project Reboot)
 
-**What This Matrix Will Define**:
-- Which of the 9 nations each land belongs to (Lands 1-120 mapped to Aethelgard, Carnea, Salomia, etc.)
-- Which act each land belongs to (First Half: Lands 1-60, Second Half: Lands 61-120)
-- Border relationship for each land ('ally', 'neutral', 'tense', 'enemy')
-- Story beat assignment for each land (distribute 8 core beats across 120 lands)
-- Language mode for each land ('A' Transformed, 'B' Base, 'C' Rebellion)
-- Difficulty progression aligned with narrative progression
+Functional prototype exists with 3,000 levels. Focus shifted from "making it work" to "making it great" through strategic design before continuing development.
 
-**Required Context Files**:
-- v0.0.07-session-summary.md (expanded travel routes with 9-nation tours)
-- v0.0.06-session-summary.md (national language design system)
-- WorldState_And_TravelRoutes.md (political relations and travel routes)
-- AlignedStorySynopsisBeats_v2.md (8 story beats to distribute)
+### The Four Pillars
+
+| Pillar | Status | Key Deliverables |
+|--------|--------|------------------|
+| 1. Market Research | Complete | Market-Research-Brief-2026.md (73K words) |
+| 2. Story & Lore | In Progress | 9 nations, 8 story beats, travel routes defined |
+| 3. Monetization | Pending | Awaiting market research integration |
+| 4. Design Excellence | Pending | Emotional design research complete (58K words) |
+
+### Latest Accomplishment (2026-01-15)
+Completed comprehensive multi-agent UI analysis pipeline producing three testable UI configuration options:
+- UI Stack Inventory: Catalogued 22 existing components (AL-001 through AL-022) and analyzed 12 gameplay screenshots
+- Emotional Design Principles: Extracted 10 core principles from 58K-word research report
+- Three Configuration Options: Conservative Balance (baseline, 2-3 weeks), Progressive Delight (enhanced, 3-4 weeks), Experimental Flow (cinematic, 6-8 weeks)
+- Implementation Materials: ChatGPT mockup prompts, AL registry, testing checklist, change point analysis, A/B testing framework
+- Deliverables: WR_UI_A_B_inventory.md, WR_UI_C_D1-D4_options.md, WR_UI_FINAL_D5_E.md
+
+### Next Priority: Land Distribution Matrix
+
+**Deliverable**: Create `LandDistributionMatrix.md` mapping all 120 lands to:
+- Nation (Aethelgard, Carnea, Salomia, Gilead, Niridia, Tobin, Kanaan, Patmos, Corinthia)
+- Act (First Half: Lands 1-60, Second Half: Lands 61-120)
+- Border relationship ('ally', 'neutral', 'tense', 'enemy')
+- Story beat assignment (distribute 8 core beats across 120 lands)
+- Language mode ('A' Transformed, 'B' Base, 'C' Rebellion)
+- Difficulty tier
+
+**Required Context**:
+- WorldState_And_TravelRoutes.md (political relations, travel routes)
+- AlignedStorySynopsisBeats_v2.md (8 story beats)
+- NationalLanguageDesignSystem.md (language specifications)
 - WORDRUN-AI-DEVELOPMENT-PLAN.md Section 6.2.1 (LandTheme schema)
-
-**Deliverable Format**: Create `LandDistributionMatrix.md` with a table containing all 120 lands mapped to nation, act, border type, story beat, language mode, and difficulty tier.
-
-**Integration Point**: This matrix becomes the master reference for all content development, enabling the multi-agent MVP sprint to produce levels with proper story/linguistic context.
 
 ---
 
-### Current Workflow Phase
+## The Nine Nations
 
-**Phase**: PROJECT REBOOT - Pre-Production (Design & Strategy Phase)
+| Nation | Fruit of Spirit | Work of Flesh |
+|--------|----------------|---------------|
+| Aethelgard | Love | Hatred |
+| Carnea | Joy | Drunkenness |
+| Salomia | Peace | Strife |
+| Gilead | Longsuffering | Wrath |
+| Niridia | Gentleness | Murders |
+| Tobin | Goodness | Envyings |
+| Kanaan | Faith | Idolatry |
+| Patmos | Meekness | Witchcraft |
+| Corinthia | Temperance | Adultery |
 
-**Status**: The project is undergoing a strategic reboot. While a functional prototype exists with 3,000 levels of content and core mechanics implemented, the focus is shifting from "making it work" to "making it great."
+---
 
-**Priority Shifts**:
-1. **From**: Component extraction and technical refactoring
-2. **To**: Market research, story/lore integration, monetization strategy, and design excellence
+## Technical Targets
 
-**New Development Philosophy**:
-- **Previous**: Build functional prototype → Refactor → Polish → Launch
-- **Current**: Research market → Design for excellence → Build with quality → Launch strategically
+- **Performance**: 60 FPS on mid-range devices (iPhone 11, Samsung Galaxy A52)
+- **Bundle**: <2MB initial for optimal UA
+- **RAM**: <150MB through object pooling
+- **Assets**: Texture atlases, lazy loading (12 groups of 10 lands)
 
-**Workflow Checklist (Rebooted)**:
-- [x] Idea & Validation (Phase 1)
-  - [x] Core concept prototyped (word-association puzzle game)
-  - [x] Functional prototype with 3,000 levels
-  - [x] Core gameplay mechanics proven
-- [ ] **Research & Strategy (Phase 2 - IN PROGRESS)**
-  - [ ] Market research (Claude agent currently researching)
-  - [ ] Competitive analysis and positioning
-  - [ ] Monetization strategy design
-  - [ ] Story and lore development
-  - [ ] Design system overhaul
-  - [ ] AI tooling optimization (Playwright MCP integration)
-- [ ] Design & Content (Phase 3 - UPCOMING)
-  - [ ] Visual design aligned with market research
-  - [ ] Story integration into gameplay
-  - [ ] Monetization implementation
-  - [ ] Content strategy refinement
-- [ ] Production (Phase 4 - PAUSED)
-  - [x] Component architecture established
-  - [x] 4 components extracted with tests (ComboBar, RuutCharacter, HintSystem, PowerUpInventory)
-  - [ ] Resume technical work after design/strategy phase
-- [ ] Testing & Iteration (Phase 5)
-- [ ] Launch Preparation (Phase 6)
+---
 
-**Current Phase**: Pre-Production - Research & Strategy (Market analysis in progress)
+## Context Documents
 
-### Key Decisions & Context
+### Strategy & Research
+- `Market-Research-Brief-2026.md` - Competitive landscape analysis (73K words)
+- `emotional-design-research-report.md` - Player psychology synthesis (58K words)
+- `WORDRUN-TOP-10-EMOTIONAL-DESIGN-ACTIONS.md` - Prioritized implementation guide
+- `EMOTIONAL_DESIGN_CHECKLIST.md` - Design audit tool
 
-#### Strategic Priorities (2026-01-06 Reboot)
+### Story & World
+- `Lore&StoryDraft1.md` - Core narrative (9 nations, universal language)
+- `AlignedStorySynopsisBeats_v2.md` - Detective-Thriller-Myth structure (8 beats)
+- `WorldState_And_TravelRoutes.md` - Political dynamics, protagonist routes
+- `NationalLanguageDesignSystem.md` - Language specifications per nation
+- `NationalWordPools.md` - Vocabulary pools by nation/mode
 
-**The Four Pillars of Redevelopment**:
-1. **Market Research & Positioning**: Understanding the competitive landscape, target demographics, and unique value proposition
-2. **Monetization Strategy**: Designing sustainable revenue model aligned with market expectations
-3. **Story & Lore Integration**: Building narrative depth that enhances engagement and emotional connection
-4. **Design Excellence**: Elevating from functional to exceptional UI/UX, visuals, and player experience
+### Development
+- `WORDRUN-AI-DEVELOPMENT-PLAN.md` - Multi-agent MVP strategy (65 pages)
+- `DevTec.md` - Mobile optimization roadmap (8 weeks)
+- `WordRunContext.txt` - Original game design document
+- `WordRun_PRD_MVP.md` - MVP Product Requirements Document
 
-**AI Tooling Strategy**:
-- Optimizing Claude Code workflow with Playwright MCP for design-to-code acceleration
-- Multi-agent approach: Market research agent, design agents, development agents working in parallel
-- Focus on rapid iteration and quality over pure speed
+### UI Analysis & Design
+- `WR_UI_A_B_inventory.md` - UI stack & screenshot inventory (22 components, 12 screenshots analyzed)
+- `WR_UI_C_D1-D4_options.md` - 3 testable UI configuration options with emotional design principles
+- `WR_UI_FINAL_D5_E.md` - ChatGPT mockup prompts & implementation reference
 
-#### Idea & Validation (Phase 1 - Complete)
-- **Core Concept**: Mobile word-association puzzle game combining Chain Link mechanics with Candy Crush progression
-- **Target Audience**: Under review pending market research (initially: casual mobile gamers, word puzzle enthusiasts)
-- **Validation Status**: Functional prototype with 3,000 levels; core gameplay loop proven but needs market validation
-- **Gameplay Vision**: Relatively stable - core word-chain typing mechanic will remain, but presentation/meta-game may evolve
+### Reference
+- `CLAUDE_SESSION_HISTORY.md` - Detailed session logs (v0.0.0 through v0.0.11)
+- `README.md` - Project overview
+- `GEMINI.md` - Multi-agent development approach
+- `Clarity.txt` - Director's vision document
 
-#### Research Insights (Phase 2 - In Progress)
+---
 
-**Market Research** (Active):
-- Claude agent currently analyzing competitive landscape
-- Results will inform: target demographics, pricing strategy, feature prioritization, visual design direction
+## Navigation
 
-**Technical Performance Targets** (Established):
-- 60 FPS on mid-range devices (iPhone 11, Samsung Galaxy A52)
-- <2MB initial bundle for optimal user acquisition
-- <150MB RAM usage through object pooling
-- Texture atlases for asset optimization
-- Lazy loading for 120 lands (12 groups of 10)
-
-**Open Questions**:
-- Mobile keyboard UX for typing gameplay (critical challenge)
-- Monetization model: F2P with IAP? Premium? Hybrid?
-- Story integration depth: light theming vs. deep narrative?
-
-#### Creative Strategy (Under Revision)
-
-**Current State**:
-- Art direction goal: Native app feel on par with Candy Crush, Wordscapes
-- Animation stack: GSAP or Anime.js for UI; Phaser particles for effects
-- Theming system: 120 lands with cohesive visual identity
-- Character: 2.5D "Ruut" character climbs word ladder
-
-**Pending Design Work**:
-- Story/lore development will inform visual direction
-- Market research will validate art direction choices
-- Design system needs overhaul aligned with quality-first philosophy
-
-#### Production Notes (Phase 4 - Paused)
-- **Current Version**: 0.0.01 (prototype with component extraction partial)
-- **Technical State**: Functional but needs strategic design before continuing development
-- **Component Work**: 4 of 5 components extracted (ComboBar, RuutCharacter, HintSystem, PowerUpInventory); integration paused
-- **Technical Debt**: GameplayScene.ts at 4,539 lines; asset optimization pending; test coverage incomplete
-- **Dev Flags**: GAME_CONFIG.dev.enabled = true (development mode active)
-
-### Session History
-
-#### Session 2026-01-13 (GitHub SSH Authentication Setup)
-- **Phase**: Pre-Production - Infrastructure Setup
-- **Accomplishments**:
-  - Successfully configured SSH key-based authentication for GitHub repository
-  - Generated ED25519 SSH key pair for 9thbreed@gmail.com
-  - Added public key to GitHub account (9thbreed-collab)
-  - Verified SSH connection with GitHub servers
-  - Updated Git remote to use SSH protocol (git@github.com:nathanielgiddens/WordRunProject.git)
-  - Enabled secure push/pull operations without password prompts
-- **Infrastructure Context**:
-  - Attempted GitHub CLI installation via Homebrew (failed due to macOS 11 compatibility)
-  - Attempted direct binary installation (failed due to OS version constraints)
-  - SSH authentication chosen as platform-agnostic, reliable solution
-  - ED25519 selected over RSA for modern cryptographic standards
-- **Session Type**: Pure infrastructure work; no game development changes
-- **Next Steps**:
-  - Resume Story & Lore Integration (Pillar 2)
-  - Create Land Distribution Matrix (120 lands → 9 nations mapping)
-  - Design NPC roster using national-language-designer agent
-  - Expand 8 story beats into 120 land-specific sub-beats
-
-#### Session 2026-01-13 (Story Route Refinement & Agent Creation)
-- **Phase**: Pre-Production - Story & Lore Integration (Pillar 2 continued)
-- **Accomplishments**:
-  - Expanded protagonist travel routes from 4-nation simple paths to comprehensive 9-nation tours
-  - Revised WorldState_And_TravelRoutes.md with detailed journey narrative
-  - Created permanent national-language-designer agent (.claude/agents/national-language-designer.md)
-  - Configured agent with Gemini research tools, trigger conditions, and context document loading
-- **Travel Route Transformations**:
-  - First Half: "The Convoluted Delivery" - 10-stop mystery-driven journey through all 9 nations (Corinthia → Carnea → Patmos → Gilead → Kanaan → Aethelgard → Corinthia North Port → Niridia → Salomia → Tobin)
-  - Second Half: "The Gauntlet of Restoration" - 8-stop purposeful crusade using language power to force passage through enemy borders (Tobin → Gilead → Kanaan → Aethelgard → Patmos → Niridia → Salomia → Carnea → Corinthia)
-  - Narrative justifications: Failing international relations force detours, Corinthia internal blockade traps protagonist, second half becomes deliberate crusade
-- **Agent Specifications**:
-  - Name: national-language-designer (Opus model)
-  - Capabilities: Fictional language design mapping Fruit of Spirit + Works of Flesh to linguistic features
-  - Tools: Gemini headless research access, word pool generation, dialect pattern creation
-  - Triggers: Language/dialect/linguistics mentions, themed word pool requests, NPC dialogue creation
-- **Story Integration Impact**:
-  - All 9 nations now have narrative presence justifying 120 lands (13-14 lands per nation)
-  - Creates story beats for every nation across both acts
-  - First half focuses on mystery and forced diversions; second half on purposeful crusade and restoration
-- **Next Steps**:
-  - Create Land Distribution Matrix (120 lands → 9 nations with story beat assignments)
-  - Design NPC roster using national-language-designer agent
-  - Expand 8 core story beats into 120 land-specific sub-beats
-  - Develop first 5 lands full content with linguistic flavor
-
-#### Session 2026-01-12 (Story & Lore Integration - Narrative Foundation Complete)
-- **Phase**: Pre-Production - Story & Lore Integration (Pillar 2 of Four Pillars)
-- **Accomplishments**:
-  - Created complete story framework with 9 nations and dual spiritual attributes (Fruit of Spirit + Works of Flesh)
-  - Wrote Lore&StoryDraft1.md: Ancient language discovery, 9 explorers, antagonist setup, protagonist's journey
-  - Documented AlignedStorySynopsisBeats_v2.md: Detective-Thriller-Myth genre integration with 8 story beats
-  - Created WorldState_And_TravelRoutes.md: Political dynamics (Normal vs Aggressive states), protagonist's routes
-  - Produced WORDRUN-AI-DEVELOPMENT-PLAN.md: 65-page (1,960 lines) multi-agent MVP execution strategy
-  - Defined 9 nations with attributes: Aethelgard (Love/Hatred), Carnea (Joy/Drunkenness), Salomia (Peace/Strife), Gilead (Longsuffering/Wrath), Niridia (Gentleness/Murders), Tobin (Goodness/Envyings), Kanaan (Faith/Idolatry), Patmos (Meekness/Witchcraft), Corinthia (Temperance/Adultery)
-  - Documented character animation specs in IdleAnimationPrompts.md with 8 regional skin variations
-  - Analyzed genre_analysis_detective_thriller_myth.md for story construction patterns
-  - Organized RuutCharacter/ visual assets: 3D models, animations, run cycles, skins
-- **Key Story Decisions**:
-  - Two-act structure: Act 1 (package delivery/mystery) → Midpoint (antagonist reveal) → Act 2 (fugitive spreading truth)
-  - World state evolution: Normal (8 enemies, 5 allies, 23 neutral) → Aggressive (17 enemies, 11 tense, 8 neutral)
-  - Protagonist routes: First half (Corinthia → Carnea → Salomia → Tobin), Second half (reverse with degraded relations)
-  - Cliffhanger ending: 3 nations sever relations despite victory, ongoing conflict
-  - Universal language reveals both loving attributes and destructive attributes
-  - Word puzzles aligned with each nation's spiritual "accent"
-- **Development Plan Components**:
-  - 5-agent coordination: StoryAgent, DesignAgent, CodingAgent, TestAgent, PolishAgent + Human Orchestrator
-  - 5-hour MVP timeline: Hour 0-1 (story foundation), Hour 1-3 (parallel build), Hour 3-4 (integration), Hour 4-5 (polish)
-  - Story integration framework: LandTheme schema, CharacterProfile schema, DialogueTrigger system, placeholder strategy
-  - Template-based expansion: LevelTemplate, LandTemplate, TemplateValidator (target: 50 levels/hour)
-  - AI monitoring architecture: PlayerSession tracking, BugDetectionService, CheatDetectionService, PersonalizationService
-  - Quality baseline definition: Comprehensive checklist for visual polish, gameplay feel, audio, story integration, performance, emotional design
-- **Technical Specifications**:
-  - Story data structures (TypeScript interfaces): LandTheme, CharacterProfile, DialogueTrigger, PlayerSession, PlayerProfile
-  - StoryIntegration service methods: getLevelNarrative(), showNPCDialogue(), applyLandTheme(), getThemedWordPool(), shouldShowNPCDuringLevel()
-  - Handoff directory structure: /01_story/, /02_design/, /03_code/, /04_test/, /05_polish/, /sync/
-  - Validation system: Level template validation, Land template validation, quality baseline comparison
-- **Next Steps**:
-  - Create specialized agent for developing in-game national languages based on cultural attributes (NEXT SESSION PRIORITY)
-  - Finalize first 5 lands' story content (or quality placeholders)
-  - Develop detailed Ruut character profile with backstory and growth arc
-  - Execute 5-hour multi-agent MVP sprint (5 fully polished levels from Land 1)
-  - Begin Pillar 3 (Monetization Strategy) and Pillar 4 (Design Excellence) in parallel
-
-#### Session 2026-01-09 (Emotional Design Research - Psychology of Player Engagement)
-- **Phase**: Pre-Production - Design Excellence Support (Phase 2)
-- **Accomplishments**:
-  - Created comprehensive 58,000-word emotional design research report synthesizing Don Norman and Tim Gabe principles
-  - Produced Top 10 prioritized actions document (impact × feasibility ranking)
-  - Applied Norman's three levels (visceral, behavioral, reflective) specifically to WordRun gameplay
-  - Documented specific implementation patterns: typing microinteractions, chain celebrations, Ruut animations, story integration
-  - Established ethical monetization framework with emotional framing
-  - Defined success metrics (behavioral, engagement, emotional, quality)
-  - Created high-schooler friendly design audit checklist
-  - Developed 4-phase implementation roadmap (Core Feel → Emotional Anchor → Retention → Differentiation)
-- **Key Findings**:
-  - WordRun's emotional core: Accomplishment + Curiosity + Calm Confidence + Delight
-  - Typing microinteraction is CRITICAL (500-600ms celebration for correct, 400ms recovery for incorrect)
-  - Ruut requires 3-4 varied celebration animations to prevent repetition fatigue
-  - Story integration pattern: 3-5 sec NPC dialogues (skippable), 30-60 sec cutscenes (replayable)
-  - Streak system with loss aversion proven retention driver (Duolingo model)
-  - 60fps non-negotiable for typing responsiveness (<16ms input lag)
-  - Ethical monetization never gates story/progression; monetizes convenience and self-expression
-- **Design Patterns Documented**:
-  - Microinteraction timing: Start <100ms, complete 300-500ms, vary each time
-  - Feedback loops: Visual + audio + haptic working together
-  - Retention mechanisms: Daily/weekly/long-term engagement loops
-  - Character design: Ruut personality (determined, expressive, encouraging, shows effort)
-  - Performance targets: 60fps >95%, D1 >40%, D7 >20%, D30 >10%
-- **Next Steps**:
-  - Story & Lore Integration (Pillar 2) now informed by reflective design principles (identity, storytelling, memory)
-  - Character development with emotional design specs (Ruut animations, NPC personalities)
-  - World-building with visceral design (color palettes per land, emotional progression)
-  - Design system development using competitive benchmarking (Playwright MCP)
-
-#### Session 2026-01-08 (Playwright MCP Integration Test - AI Tooling Optimization)
-- **Phase**: Pre-Production - AI Tooling Optimization (Phase 2 support)
-- **Accomplishments**:
-  - Successfully validated Playwright MCP integration with Claude Code
-  - Confirmed browser automation capabilities: navigation, snapshots, screenshots, interaction, JavaScript execution
-  - Identified 5 high-leverage use cases for Four Pillars development
-  - Created v0.0.03-session-summary.md documenting AI tooling strategy
-- **Key Findings**:
-  - Playwright MCP operational and ready for Design Excellence (Pillar 4)
-  - Use cases: competitive visual benchmarking, design prototyping, visual regression testing, web research, typing UX research
-  - Browser environment suitable for design research; native mobile testing required for final validation
-  - Ethical guidelines needed for competitive analysis (respect ToS, focus on design patterns not asset copying)
-- **Tooling Applications Identified**:
-  - Competitive benchmarking: Screenshot capture from Candy Crush, Wordscapes, Words With Friends
-  - Design prototyping: Rapid HTML/CSS mockups before Phaser implementation
-  - Typing UX research: Simulate mobile keyboard interactions to solve critical UX challenge
-  - Visual regression: Automated screenshot comparison across design iterations
-  - Market intelligence: Extract competitor pricing, feature data, design patterns
-- **Next Steps**:
-  - Story & Lore Integration (Pillar 2) remains critical path priority
-  - Use Playwright for competitive visual benchmarking when Design Excellence begins
-  - Create inspiration board with annotated competitor screenshots
-  - Prototype typing UX solutions in browser before native implementation
-
-#### Session 2026-01-06 (Project Reboot - Strategic Pivot)
-- **Phase**: Pre-Production - Research & Strategy
-- **Key Decision**: Strategic reboot from technical refactoring to design/market-driven development
-- **Accomplishments**:
-  - Documented project reboot decision and rationale
-  - Updated CLAUDE.md with new strategic priorities
-  - Identified "Four Pillars of Redevelopment": Market Research, Monetization, Story/Lore, Design Excellence
-  - Launched market research Claude agent (in progress)
-- **Philosophy Shift**:
-  - From: "Make it work" → "Make it great"
-  - From: Technical-first → Strategy/Design-first
-  - From: Linear development → Research-informed design
-- **Current Activities**:
-  - Market research agent analyzing competitive landscape
-  - Planning story/lore integration (next priority)
-  - Evaluating AI tooling improvements (Playwright MCP integration)
-- **Next Steps**:
-  - Complete market research analysis
-  - Develop story/lore framework
-  - Design monetization strategy
-  - Create design system aligned with market insights
-  - Resume technical development with strategic clarity
-
-#### Session 2026-01-05 (Component Extraction & Testing Infrastructure)
-- **Phase**: Production - Code Refactoring (Week 1-2 of DevTec.md roadmap)
-- **Accomplishments**:
-  - Extracted 4 components from GameplayScene.ts: ComboBar, RuutCharacter, HintSystem, PowerUpInventory
-  - Created 4 test files with comprehensive test cases
-  - Implemented dependency injection pattern for testability
-  - Added proper lifecycle management (init/shutdown) to prevent memory leaks
-  - Established component architecture patterns (UI vs gameplay separation)
-  - Created "Text docs/" directory with extraction planning materials
-- **Key Decisions**:
-  - Use dependency injection for components (not singleton managers)
-  - Separate UI components (src/ui/) from gameplay components (src/gameplay/)
-  - Implement callback-based integration for separation of concerns
-  - Defer GameplayScene.ts integration to next session (test components first)
-  - Keep DOM approach with improved cleanup (revisit Phaser canvas later if needed)
-- **Next Steps**:
-  - Extract WordBox component (most complex, ~500+ lines)
-  - Integrate all 5 components into GameplayScene.ts
-  - Run test coverage report (`npm run test:coverage`)
-  - Memory leak testing with Chrome DevTools
-
-#### Session 2026-01-05 (Documentation & Research)
-- **Phase**: Pre-production (Code Architecture Review)
-- **Accomplishments**:
-  - Created comprehensive CLAUDE.md (255 lines) documenting architecture, systems, and patterns
-  - Researched mobile game optimization using mobile-game-dev-expert agent
-  - Created DevTec.md with 8-week implementation roadmap
-  - Analyzed codebase: 19 scenes, 4,539-line GameplayScene.ts, DataManager singleton pattern
-  - Documented current technical debt and optimization priorities
-- **Key Decisions**:
-  - Prioritize component-based refactoring before asset optimization
-  - Use texture atlases exclusively for production builds
-  - Implement lazy loading for 120 lands in 12 groups
-  - Target 60 FPS, <2MB bundle, <150MB RAM for mobile performance
-- **Next Steps**:
-  - Week 1-2: Extract components from GameplayScene.ts (WordBox, ComboBar, RuutCharacter, PowerUpInventory, HintSystem)
-  - Week 3-4: Create texture atlases and implement lazy loading
-  - Week 5-6: Mobile testing setup with real iOS/Android devices
-
-### Working Instructions
-
-#### Navigation Structure
-
-**Default Main Menu** (The Four Pillars):
+**Primary Menu** (Four Pillars):
 1. Market Research & Positioning
 2. Story & Lore Integration
 3. Monetization Strategy
 4. Design Excellence
-5. Alt Menu (previous production/architecture navigation)
+5. Alt Menu (technical/production)
 
-**Alt Menu** (Legacy/Technical Navigation):
-1. Production Status (component extraction, integration, testing)
-2. Architecture (scenes, data management, systems)
-3. Content & Design (puzzle data, lands, theming)
-4. Testing (coverage, performance, memory)
-5. Documentation (CLAUDE.md, DevTec.md, session summaries)
-6. Next Actions (immediate technical tasks)
+**Alt Menu** (Technical):
+1. Production Status
+2. Architecture
+3. Content & Design
+4. Testing
+5. Documentation
+6. Next Actions
 
-**Presentation Rule**: When offering navigation options, present the Four Pillars as the primary menu. Always offer "Alt Menu" as the last option to access legacy/technical navigation.
+---
 
-#### Current Focus
-**Phase**: Pre-Production - Research & Strategy
+#### Session 2026-01-15 (Multi-Agent UI Analysis Pipeline - Design Excellence)
+- **Phase**: Pre-Production - Design Excellence (Pillar 4 of Four Pillars)
+- **Accomplishments**:
+  - Executed 3-agent pipeline for comprehensive UI analysis of archived prototype (wordrun-vite/src_archive_2026-01-06)
+  - Created UI Stack Inventory (Agent 1): 22 components catalogued (AL-001 through AL-022), 12 of 19 screenshots analyzed
+  - Extracted 10 Emotional Design Principles (Agent 2) from project documentation
+  - Designed 3 testable UI configuration options (Agent 2): Conservative Balance, Progressive Delight, Experimental Flow
+  - Generated ChatGPT Images mockup prompts (Main Claude) for all three options
+  - Created implementation reference materials: AL registry, testing checklist, change points, decision matrix
+  - Produced 3 deliverable files: WR_UI_A_B_inventory.md (926 lines), WR_UI_C_D1-D4_options.md (721 lines), WR_UI_FINAL_D5_E.md (273 lines)
+- **Key Findings**:
+  - 22 existing components identified in archived codebase (Phaser 3, DataManager, UI components, gameplay systems)
+  - 10 emotional design principles distilled: Instant Juicy Feedback, Epic Accomplishment Moments, Character-Driven Emotional Anchor, etc.
+  - Three distinct UI approaches: minimal/stable (A), enhanced/juicy (B), cinematic/immersive (C)
+  - Option A recommended as baseline (2-3 weeks, low risk, no new components)
+  - Option B requires JuiceManager component (AL-023), 3-4 weeks, medium risk
+  - Option C requires VisualEffectsManager (AL-024) + PerspectiveCamera (AL-025), 6-8 weeks, high risk
+- **Technical Specifications**:
+  - Layout modes: stacked/flat (A), asymmetric/layered (B), perspective/central (C)
+  - Animation timing: <100ms start, 300-500ms complete, varying each iteration
+  - Feedback escalation: scale/flash (A) → particles/expressions (B) → environmental reactions (C)
+  - Performance targets: 60 FPS maintained across all options (C requires extensive optimization)
+- **A/B Testing Framework**:
+  - Engagement metrics: session length, levels per session, combo tier frequency, retry rate
+  - Emotional response: positive interaction rate, error recovery speed, celebration duration
+  - Technical metrics: average FPS, frame drops, interaction latency, crash rate
+  - Retention metrics: D1/D7/D30 retention, streak continuation, session frequency
+- **Next Steps**:
+  - Review the 3 UI options and select one for implementation (Option A recommended as baseline)
+  - Create Land Distribution Matrix (still highest priority for content pipeline)
+  - Implement Option A as baseline for A/B testing
+  - Generate ChatGPT mockups for visual validation
+  - A/B test Option A vs. Option B after baseline is stable
 
-**Strategic Context**: The project is in a reboot phase, shifting from technical implementation to strategic design. Technical work (component extraction) is paused until market research, story development, and design strategy are complete.
-
-**The Four Pillars** (Priority Order):
-
-1. **Market Research & Positioning** (IN PROGRESS)
-   - Claude agent currently analyzing competitive landscape
-   - Deliverables: Market analysis report, competitive positioning, target demographics
-   - Timeline: Await agent completion
-   - Next actions: Review findings, validate assumptions, identify unique value proposition
-
-2. **Story & Lore Integration** (NEXT PRIORITY)
-   - Develop narrative framework that enhances engagement
-   - Define: Character backstories (Ruut), world-building (120 lands), progression narrative
-   - Integration points: Level themes, character progression, meta-game context
-   - Deliverables: Lore document, story integration plan, narrative design spec
-
-3. **Monetization Strategy**
-   - Design revenue model informed by market research
-   - Options to evaluate: F2P + IAP, premium, hybrid, ad-supported
-   - Consider: Player psychology, competitive landscape, development resources
-   - Deliverables: Monetization design document, IAP catalog, pricing strategy
-
-4. **Design Excellence**
-   - Overhaul UI/UX based on market insights and story integration
-   - Areas: Visual design system, animation strategy, player feedback loops, onboarding
-   - Tools: Playwright MCP for rapid design-to-code workflow
-   - Deliverables: Design system, style guide, component library mockups
-
-**AI Tooling Optimization**:
-- Evaluate Playwright MCP integration for design workflow
-- Multi-agent coordination: Research, design, development running in parallel
-- Documentation: Capture decisions, maintain context across sessions
-
-**Workflow Philosophy**:
-- **Quality over speed**: Take time to design right, then build once
-- **Research-informed decisions**: Let data and strategy guide technical choices
-- **Iterative refinement**: Rapid prototyping with AI tools, validate, iterate
-- **Context preservation**: Document all decisions for future sessions
-
-**When to Resume Technical Work**:
-Technical development (component integration, optimization, testing) will resume after:
-1. Market research complete with actionable insights
-2. Story/lore framework established
-3. Monetization strategy designed
-4. Design system approved
-
-**Success Criteria for Current Phase**:
-- Market research report completed and reviewed
-- Story/lore framework documented with integration plan
-- Monetization strategy defined with implementation roadmap
-- Design system created aligned with market positioning
-- Clear technical roadmap informed by strategic decisions
-
-## Context Documents
-
-- **README.md**: Project overview and getting started guide
-- **GEMINI.md**: Project assessment and planned multi-agent development approach
-- **DevTec.md**: Mobile game optimization best practices and 8-week roadmap
-- **WordRunContext.txt**: Original game design document with mechanics, scoring formulas, and mode descriptions
-- **Clarity.txt**: Director's vision document outlining priorities and development philosophy
-- **Market-Research-Brief-2026.md**: Comprehensive 73,000-word competitive landscape analysis (v0.0.02)
-- **emotional-design-research-report.md**: 58,000-word emotional design principles synthesis (v0.0.04)
-- **WORDRUN-TOP-10-EMOTIONAL-DESIGN-ACTIONS.md**: Prioritized implementation guide with 4-phase roadmap (v0.0.04)
-- **EMOTIONAL_DESIGN_CHECKLIST.md**: High-schooler friendly design audit tool (v0.0.04)
-- **WORDRUN-AI-DEVELOPMENT-PLAN.md**: 65-page multi-agent MVP execution strategy with 5-hour timeline (v0.0.05)
-- **Lore&StoryDraft1.md**: Core narrative concept with 9 nations and universal language (v0.0.05)
-- **AlignedStorySynopsisBeats_v2.md**: Detective-Thriller-Myth story structure with 8 beats (v0.0.05)
-- **WorldState_And_TravelRoutes.md**: Political dynamics and protagonist's journey across 9 nations (v0.0.07 - expanded routes)
-- **NationalLanguageDesignSystem.md**: Comprehensive fictional language specifications for all 9 nations (v0.0.06)
-- **NationalWordPools.md**: Ready-to-use vocabulary pools organized by nation and mode (v0.0.06)
-- **genre_analysis_detective_thriller_myth.md**: Genre construction guide and story patterns (v0.0.05)
-- **IdleAnimationPrompts.md**: Character animation specifications for Ruut and regional skins (v0.0.05)
-- **v0.0.0-session-summary.md**: Documentation & Research session (2026-01-05)
-- **v0.0.01-session-summary.md**: Component Extraction & Testing Infrastructure session (2026-01-05)
-- **v0.0.02-session-summary.md**: Strategic Reboot - Market Research session (2026-01-07)
-- **v0.0.03-session-summary.md**: AI Tooling Optimization - Playwright MCP Integration session (2026-01-08)
-- **v0.0.04-session-summary.md**: Emotional Design Research session (2026-01-09)
-- **v0.0.05-session-summary.md**: Story & Lore Integration session (2026-01-12)
-- **v0.0.06-session-summary.md**: National Language Design System session (2026-01-12)
-- **v0.0.07-session-summary.md**: Story Route Refinement & Agent Creation session (2026-01-13)
-- **v0.0.08-session-summary.md**: GitHub SSH Authentication Setup session (2026-01-13)
+*For detailed session history, see `CLAUDE_SESSION_HISTORY.md`*
+*Last updated: 2026-01-15*
