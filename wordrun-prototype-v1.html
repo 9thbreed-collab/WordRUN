@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=390, height=844, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>WordRun - Gameplay Prototype v1</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: #1a1a2e;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .game-container {
+            width: 390px;
+            height: 844px;
+            background: linear-gradient(180deg, #0e0e12 0%, #1a1a2e 50%, #0e0e12 100%);
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Top Bar */
+        .top-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .settings-btn {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            transition: transform 0.15s ease;
+        }
+
+        .settings-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .level-indicator {
+            color: #fff;
+            font-size: 16px;
+            font-weight: 700;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px 16px;
+            border-radius: 20px;
+        }
+
+        .currency-display {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 215, 0, 0.2);
+            padding: 8px 14px;
+            border-radius: 20px;
+            color: #FFD700;
+            font-weight: 700;
+        }
+
+        /* Word Grid */
+        .word-grid-container {
+            position: absolute;
+            top: 80px;
+            left: 25px;
+            width: 340px;
+            height: 370px;
+            background: linear-gradient(135deg, #F5F5DC 0%, #FFFACD 100%);
+            border-radius: 20px;
+            padding: 15px;
+            box-shadow:
+                0 4px 15px rgba(0, 0, 0, 0.3),
+                inset 0 2px 4px rgba(255, 255, 255, 0.5);
+            overflow-y: auto;
+            scrollbar-width: none;
+        }
+
+        .word-grid-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .word-rung {
+            background: linear-gradient(135deg, #ccc 0%, #b0b0b0 100%);
+            border-radius: 12px;
+            padding: 10px 20px;
+            margin: 6px 0;
+            font-size: 22px;
+            font-weight: 800;
+            color: #666;
+            text-transform: uppercase;
+            text-align: center;
+            letter-spacing: 2px;
+            transition: all 0.15s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .word-rung.completed {
+            background: linear-gradient(135deg, #FFB6C1 0%, #FF69B4 100%);
+            color: #fff;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 3px 10px rgba(255, 105, 180, 0.4);
+        }
+
+        .word-rung.current {
+            background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%);
+            border: 3px solid #4CAF50;
+            color: #2E7D32;
+            box-shadow:
+                0 0 15px rgba(76, 175, 80, 0.5),
+                0 0 30px rgba(76, 175, 80, 0.3);
+            animation: pulse-glow 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 15px rgba(76, 175, 80, 0.5), 0 0 30px rgba(76, 175, 80, 0.3); }
+            50% { box-shadow: 0 0 20px rgba(76, 175, 80, 0.7), 0 0 40px rgba(76, 175, 80, 0.5); }
+        }
+
+        .word-rung.locked {
+            background: linear-gradient(135deg, #ddd 0%, #ccc 100%);
+            color: #999;
+        }
+
+        .word-rung.correct-flash {
+            animation: correct-scale 0.15s ease-out;
+        }
+
+        @keyframes correct-scale {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* Combo Display */
+        .combo-display {
+            position: absolute;
+            top: 460px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .combo-text {
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #FF8C00 0%, #FFD700 50%, #FF6347 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: none;
+            filter: drop-shadow(0 2px 4px rgba(255, 140, 0, 0.5));
+            transition: transform 0.25s ease;
+        }
+
+        .combo-text.pop {
+            animation: combo-pop 0.25s ease-out;
+        }
+
+        @keyframes combo-pop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+            100% { transform: scale(1); }
+        }
+
+        /* Input Area */
+        .input-area {
+            position: absolute;
+            top: 520px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            padding: 0 20px;
+        }
+
+        .word-input {
+            width: 260px;
+            height: 60px;
+            background: #fff;
+            border: 3px solid #4CAF50;
+            border-radius: 30px;
+            padding: 0 24px;
+            font-size: 24px;
+            font-weight: 700;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            outline: none;
+            transition: all 0.15s ease;
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+        }
+
+        .word-input:focus {
+            border-color: #2E7D32;
+            box-shadow: 0 4px 20px rgba(76, 175, 80, 0.5);
+        }
+
+        .word-input.shake {
+            animation: shake 0.15s ease-out;
+            border-color: #FF6B6B;
+        }
+
+        .word-input.correct {
+            border-color: #4CAF50;
+            box-shadow: 0 0 20px rgba(76, 175, 80, 0.7);
+        }
+
+        .word-input.wrong {
+            border-color: #FF6B6B;
+            box-shadow: 0 0 20px rgba(255, 107, 107, 0.7);
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-4px); }
+            75% { transform: translateX(4px); }
+        }
+
+        .submit-btn {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #fff;
+            transition: all 0.15s ease;
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4);
+        }
+
+        .submit-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(76, 175, 80, 0.6);
+        }
+
+        .submit-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            position: absolute;
+            top: 600px;
+            left: 40px;
+            right: 40px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #8BC34A, #CDDC39);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+
+        .progress-text {
+            position: absolute;
+            top: 615px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        /* Bottom Bar */
+        .bottom-bar {
+            position: absolute;
+            bottom: 34px;
+            left: 0;
+            right: 0;
+            height: 130px;
+            padding: 0 20px;
+        }
+
+        /* Ruut Character */
+        .ruut-container {
+            position: absolute;
+            bottom: 50px;
+            left: 20px;
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #FFE4B5 0%, #DEB887 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            box-shadow:
+                0 4px 15px rgba(0, 0, 0, 0.3),
+                inset 0 -2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        .ruut-container:hover {
+            transform: scale(1.05);
+        }
+
+        .ruut-container.happy {
+            animation: ruut-bounce 0.5s ease;
+        }
+
+        .ruut-container.sad {
+            animation: ruut-sad 0.5s ease;
+        }
+
+        @keyframes ruut-bounce {
+            0%, 100% { transform: translateY(0) scale(1); }
+            25% { transform: translateY(-10px) scale(1.1); }
+            50% { transform: translateY(-5px) scale(1.05); }
+        }
+
+        @keyframes ruut-sad {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(5px) rotate(-5deg); }
+            75% { transform: translateY(5px) rotate(5deg); }
+        }
+
+        .ruut-label {
+            position: absolute;
+            bottom: 155px;
+            left: 20px;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            position: absolute;
+            bottom: 50px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .action-btn {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: #fff;
+            transition: all 0.15s ease;
+        }
+
+        .action-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.05);
+        }
+
+        .hint-btn {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.2) 0%, rgba(255, 193, 7, 0.3) 100%);
+            border-color: rgba(255, 215, 0, 0.4);
+        }
+
+        .bonus-display {
+            position: absolute;
+            bottom: 10px;
+            right: 20px;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* Level Complete Overlay */
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.85);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .overlay.show {
+            display: flex;
+            opacity: 1;
+        }
+
+        .overlay-title {
+            font-size: 36px;
+            font-weight: 800;
+            color: #FFD700;
+            text-shadow: 0 2px 10px rgba(255, 215, 0, 0.5);
+            margin-bottom: 20px;
+        }
+
+        .overlay-stats {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px 40px;
+            text-align: center;
+        }
+
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 40px;
+            margin: 10px 0;
+            color: #fff;
+            font-size: 18px;
+        }
+
+        .stat-value {
+            font-weight: 700;
+            color: #4CAF50;
+        }
+
+        .play-again-btn {
+            margin-top: 30px;
+            padding: 15px 40px;
+            font-size: 20px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+            color: #fff;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4);
+        }
+
+        .play-again-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(76, 175, 80, 0.6);
+        }
+
+        /* Floating Feedback */
+        .feedback-float {
+            position: absolute;
+            font-size: 24px;
+            font-weight: 800;
+            pointer-events: none;
+            opacity: 0;
+            transition: all 0.5s ease-out;
+        }
+
+        .feedback-float.show {
+            opacity: 1;
+            transform: translateY(-30px);
+        }
+
+        .feedback-float.correct {
+            color: #4CAF50;
+        }
+
+        .feedback-float.wrong {
+            color: #FF6B6B;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <!-- Top Bar -->
+        <div class="top-bar">
+            <button class="settings-btn">&#9881;</button>
+            <div class="level-indicator">Lv: 1</div>
+            <div class="currency-display">
+                <span>&#128176;</span>
+                <span>1,250</span>
+            </div>
+        </div>
+
+        <!-- Word Grid -->
+        <div class="word-grid-container" id="wordGrid">
+            <!-- Words will be generated by JS -->
+        </div>
+
+        <!-- Combo Display -->
+        <div class="combo-display">
+            <span class="combo-text" id="comboText">COMBO X 1</span>
+        </div>
+
+        <!-- Input Area -->
+        <div class="input-area">
+            <input type="text" class="word-input" id="wordInput" placeholder="TYPE HERE" autocomplete="off" autocapitalize="characters">
+            <button class="submit-btn" id="submitBtn">&#10004;</button>
+        </div>
+
+        <!-- Progress -->
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+        <div class="progress-text" id="progressText">0 / 11 Words</div>
+
+        <!-- Bottom Bar -->
+        <div class="bottom-bar">
+            <span class="ruut-label">RUUT</span>
+            <div class="ruut-container" id="ruutCharacter">
+                &#128075;
+            </div>
+
+            <div class="action-buttons">
+                <button class="action-btn hint-btn" title="Hint">&#128161;</button>
+                <button class="action-btn" title="Shuffle">&#128260;</button>
+            </div>
+
+            <div class="bonus-display">BONUS Words: 0/5</div>
+        </div>
+
+        <!-- Level Complete Overlay -->
+        <div class="overlay" id="overlay">
+            <div class="overlay-title">LEVEL COMPLETE!</div>
+            <div class="overlay-stats">
+                <div class="stat-row">
+                    <span>Words Completed:</span>
+                    <span class="stat-value">11/11</span>
+                </div>
+                <div class="stat-row">
+                    <span>Max Combo:</span>
+                    <span class="stat-value" id="maxComboStat">0</span>
+                </div>
+                <div class="stat-row">
+                    <span>Accuracy:</span>
+                    <span class="stat-value" id="accuracyStat">100%</span>
+                </div>
+            </div>
+            <button class="play-again-btn" id="playAgainBtn">PLAY AGAIN</button>
+        </div>
+
+        <!-- Floating Feedback -->
+        <div class="feedback-float" id="feedbackFloat"></div>
+    </div>
+
+    <script>
+        // Game State
+        const WORDS = ['CAR', 'DOOR', 'STOP', 'SIGN', 'UP', 'START', 'BUTTON', 'NOSE', 'RING', 'BELL', 'TOWER'];
+        let currentWordIndex = 0;
+        let combo = 1;
+        let maxCombo = 1;
+        let correctStreak = 0;
+        let wrongStreak = 0;
+        let totalAttempts = 0;
+        let correctAttempts = 0;
+
+        // DOM Elements
+        const wordGrid = document.getElementById('wordGrid');
+        const wordInput = document.getElementById('wordInput');
+        const submitBtn = document.getElementById('submitBtn');
+        const comboText = document.getElementById('comboText');
+        const progressBar = document.getElementById('progressBar');
+        const progressText = document.getElementById('progressText');
+        const ruutCharacter = document.getElementById('ruutCharacter');
+        const overlay = document.getElementById('overlay');
+        const playAgainBtn = document.getElementById('playAgainBtn');
+        const feedbackFloat = document.getElementById('feedbackFloat');
+        const maxComboStat = document.getElementById('maxComboStat');
+        const accuracyStat = document.getElementById('accuracyStat');
+
+        // Ruut Emojis
+        const RUUT_STATES = {
+            wave: '&#128075;',      // Wave
+            idle: '&#128578;',      // Slight smile
+            happy: '&#127881;',     // Party popper
+            hurray: '&#129395;',    // Star-struck
+            sad: '&#128546;',       // Crying
+            dance: '&#128131;'      // Dancing
+        };
+
+        // Initialize Game
+        function initGame() {
+            renderWordGrid();
+            updateProgress();
+            updateCombo();
+
+            // Initial Ruut wave animation
+            setTimeout(() => {
+                setRuutState('wave');
+                setTimeout(() => setRuutState('idle'), 1000);
+            }, 500);
+
+            wordInput.focus();
+        }
+
+        // Render Word Grid
+        function renderWordGrid() {
+            wordGrid.innerHTML = '';
+            WORDS.forEach((word, index) => {
+                const rung = document.createElement('div');
+                rung.className = 'word-rung';
+                rung.id = `rung-${index}`;
+
+                if (index < currentWordIndex) {
+                    rung.classList.add('completed');
+                    rung.textContent = word;
+                } else if (index === currentWordIndex) {
+                    rung.classList.add('current');
+                    rung.textContent = '_ '.repeat(word.length).trim();
+                } else {
+                    rung.classList.add('locked');
+                    rung.textContent = '? ? ?';
+                }
+
+                wordGrid.appendChild(rung);
+            });
+
+            // Scroll to current word
+            const currentRung = document.getElementById(`rung-${currentWordIndex}`);
+            if (currentRung) {
+                currentRung.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+
+        // Update Progress
+        function updateProgress() {
+            const progress = (currentWordIndex / WORDS.length) * 100;
+            progressBar.style.width = `${progress}%`;
+            progressText.textContent = `${currentWordIndex} / ${WORDS.length} Words`;
+        }
+
+        // Update Combo Display
+        function updateCombo() {
+            comboText.textContent = `COMBO X ${combo}`;
+            comboText.classList.remove('pop');
+            void comboText.offsetWidth; // Trigger reflow
+            comboText.classList.add('pop');
+        }
+
+        // Set Ruut State
+        function setRuutState(state) {
+            ruutCharacter.innerHTML = RUUT_STATES[state] || RUUT_STATES.idle;
+
+            ruutCharacter.classList.remove('happy', 'sad');
+            if (state === 'happy' || state === 'hurray' || state === 'dance') {
+                ruutCharacter.classList.add('happy');
+            } else if (state === 'sad') {
+                ruutCharacter.classList.add('sad');
+            }
+        }
+
+        // Show Floating Feedback
+        function showFeedback(text, isCorrect) {
+            feedbackFloat.textContent = text;
+            feedbackFloat.className = 'feedback-float show ' + (isCorrect ? 'correct' : 'wrong');
+            feedbackFloat.style.left = '50%';
+            feedbackFloat.style.top = '480px';
+            feedbackFloat.style.transform = 'translateX(-50%)';
+
+            setTimeout(() => {
+                feedbackFloat.classList.remove('show');
+            }, 500);
+        }
+
+        // Handle Correct Answer
+        function handleCorrectAnswer() {
+            totalAttempts++;
+            correctAttempts++;
+            correctStreak++;
+
+            // Visual feedback on input
+            wordInput.classList.add('correct');
+            setTimeout(() => wordInput.classList.remove('correct'), 200);
+
+            // Flash the current rung
+            const currentRung = document.getElementById(`rung-${currentWordIndex}`);
+            if (currentRung) {
+                currentRung.classList.add('correct-flash');
+            }
+
+            // Show floating feedback
+            showFeedback('+' + (combo * 100), true);
+
+            // Update combo
+            if (correctStreak > 1) {
+                combo = Math.min(correctStreak, 10);
+                maxCombo = Math.max(maxCombo, combo);
+            }
+            updateCombo();
+
+            // Ruut reaction
+            if (wrongStreak >= 2) {
+                // Recovery!
+                setRuutState('hurray');
+                wrongStreak = 0;
+            } else if (correctStreak % 3 === 0) {
+                // Every 3rd correct
+                setRuutState('happy');
+            }
+            setTimeout(() => setRuutState('idle'), 800);
+
+            wrongStreak = 0;
+
+            // Advance to next word
+            currentWordIndex++;
+            wordInput.value = '';
+
+            // Check for level complete
+            if (currentWordIndex >= WORDS.length) {
+                levelComplete();
+            } else {
+                renderWordGrid();
+                updateProgress();
+            }
+        }
+
+        // Handle Wrong Answer
+        function handleWrongAnswer() {
+            totalAttempts++;
+
+            // Visual feedback on input
+            wordInput.classList.add('shake', 'wrong');
+            setTimeout(() => {
+                wordInput.classList.remove('shake', 'wrong');
+            }, 300);
+
+            // Show floating feedback
+            showFeedback('WRONG!', false);
+
+            // Break combo
+            if (correctStreak >= 2) {
+                setRuutState('sad');
+                setTimeout(() => setRuutState('idle'), 800);
+            }
+
+            wrongStreak++;
+            correctStreak = 0;
+            combo = 1;
+            updateCombo();
+        }
+
+        // Check Answer
+        function checkAnswer() {
+            const userAnswer = wordInput.value.trim().toUpperCase();
+            const correctAnswer = WORDS[currentWordIndex];
+
+            if (!userAnswer) return;
+
+            if (userAnswer === correctAnswer) {
+                handleCorrectAnswer();
+            } else {
+                handleWrongAnswer();
+            }
+
+            wordInput.focus();
+        }
+
+        // Level Complete
+        function levelComplete() {
+            setRuutState('dance');
+
+            // Update stats
+            maxComboStat.textContent = maxCombo;
+            const accuracy = Math.round((correctAttempts / totalAttempts) * 100);
+            accuracyStat.textContent = accuracy + '%';
+
+            // Show overlay
+            setTimeout(() => {
+                overlay.classList.add('show');
+            }, 500);
+        }
+
+        // Reset Game
+        function resetGame() {
+            currentWordIndex = 0;
+            combo = 1;
+            maxCombo = 1;
+            correctStreak = 0;
+            wrongStreak = 0;
+            totalAttempts = 0;
+            correctAttempts = 0;
+
+            overlay.classList.remove('show');
+            wordInput.value = '';
+
+            initGame();
+        }
+
+        // Event Listeners
+        submitBtn.addEventListener('click', checkAnswer);
+
+        wordInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                checkAnswer();
+            }
+        });
+
+        playAgainBtn.addEventListener('click', resetGame);
+
+        // Ruut click for fun
+        ruutCharacter.addEventListener('click', () => {
+            setRuutState('happy');
+            setTimeout(() => setRuutState('idle'), 500);
+        });
+
+        // Start the game
+        initGame();
+    </script>
+</body>
+</html>
