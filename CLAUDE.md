@@ -169,7 +169,21 @@ Brief orientation session with comprehensive handoff preparation:
 - **Handoff Documentation:** v0.0.13-session-summary.md created for seamless continuity
 - **Previous Sessions:** v0.0.12 (documentation cleanup), v0.0.11 (UI analysis with 3 configuration options), v0.0.10 (session summaries created)
 
-### Next Priority: Land Distribution Matrix
+### Next Priority: Component Interface Design (CDD Pivot)
+
+**Decision (v0.0.13)**: Pivoted from Land Distribution Matrix to Component-Driven Development. Matrix moved to Future Work.
+
+**Deliverable**: Define component contracts for GameplayScene before implementation:
+1. List all UI components needed
+2. Define interface contracts (inputs, outputs, boundaries)
+3. Identify event communication patterns
+4. Verify: removing any component won't break others
+
+**Reference**: `CDD_IMPLEMENTATION_GUIDE.md` (implementation checklist and pitfall avoidance)
+
+---
+
+### Future Work: Land Distribution Matrix
 
 **Deliverable**: Create `LandDistributionMatrix.md` mapping all 120 lands to:
 - Nation (Aethelgard, Carnea, Salomia, Gilead, Niridia, Tobin, Kanaan, Patmos, Corinthia)
