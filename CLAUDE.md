@@ -1,5 +1,14 @@
 # CLAUDE.md
 
+Main rules for Claude:
+1.    First think through the problem, read the codebase for relevant files.
+2.    Before you make any major changes, check in with me and I will verify the plan.
+3.    Please every step of the way just give me a high level explanation of what changes you made
+4.    Make every task and code change you do as simple as possible. We want to avoid making any massive or complex changes. Every change should impact as little code as possible. Everything is about simplicity.
+5.    Maintain a documentation file that describes how the architecture of the app works inside and out.
+6.    Never speculate about code you have not opened. If the user references a specific file, you MUST read the file before answering. Make sure to investigate and read relevant files BEFORE answering questions about the codebase. Never make any claims about code before investigating unless you are certain of the correct answer - give grounded and hallucination-free answers.
+
+
 This file provides guidance to Claude Code when working with code in this repository.
 
 ## Project Overview
@@ -161,13 +170,13 @@ Functional prototype exists with 3,000 levels. Focus shifted from "making it wor
 | 3. Monetization | Pending | Awaiting market research integration |
 | 4. Design Excellence | Pending | Emotional design research complete (58K words) |
 
-### Latest Accomplishment (2026-01-16 Session v0.0.13)
-Brief orientation session with comprehensive handoff preparation:
-- **Session Type:** Project state review and context verification
-- **No Active Development:** Orientation-only session following v0.0.12 cleanup
-- **Critical Observation:** Land Distribution Matrix has been "next priority" for 7 consecutive sessions without execution
-- **Handoff Documentation:** v0.0.13-session-summary.md created for seamless continuity
-- **Previous Sessions:** v0.0.12 (documentation cleanup), v0.0.11 (UI analysis with 3 configuration options), v0.0.10 (session summaries created)
+### Latest Accomplishment (2026-01-18 Session v0.0.14)
+Administrative session closure with development principle codification:
+- **Session Type:** Immediate closure request for comprehensive handoff
+- **CLAUDE.md Update:** Added 6 core development principles at file header (simplicity-first, verification checkpoints, grounded answers)
+- **Strategic Confirmation:** CDD pivot finalized - Component Interface Design is clear next priority
+- **Handoff Documentation:** v0.0.14-session-summary.md created for seamless continuity
+- **Previous Sessions:** v0.0.13 (CDD pivot, implementation guides), v0.0.12 (documentation cleanup), v0.0.11 (UI analysis)
 
 ### Next Priority: Component Interface Design (CDD Pivot)
 
@@ -254,7 +263,9 @@ Brief orientation session with comprehensive handoff preparation:
 
 ### Reference
 - `CLAUDE_SESSION_HISTORY.md` - Archived session logs (v0.0.0 through v0.0.09)
-- `v0.0.10-session-summary.md` through `v0.0.13-session-summary.md` - Recent sessions
+- `v0.0.10-session-summary.md` through `v0.0.14-session-summary.md` - Recent sessions
+- `CDD_IMPLEMENTATION_GUIDE.md` - Component-driven development implementation checklist
+- `COMPONENT_DRIVEN_ARCHITECTURE_GUIDE.md` - CDD philosophy and principles
 - `README.md` - Project overview
 - `GEMINI.md` - Multi-agent development approach
 - `Clarity.txt` - Director's vision document
@@ -281,4 +292,4 @@ Brief orientation session with comprehensive handoff preparation:
 ---
 
 *For detailed session history, see `CLAUDE_SESSION_HISTORY.md`*
-*Last updated: 2026-01-16*
+*Last updated: 2026-01-18*
