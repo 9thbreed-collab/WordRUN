@@ -1,0 +1,23 @@
+{
+  "componentId": "MAP-012",
+  "name": "Red Cottage House",
+  "category": "map",
+  "needsInterpolation": true,
+  "status": "needs-work",
+  "dimensions": {"width": 72, "height": 80},
+  "regions": [
+    {
+      "location": "building base/foundation",
+      "boundingBox": {"x": 10, "y": 65, "width": 52, "height": 15},
+      "issue": "foundation occluded by terrain cube",
+      "surroundingContext": "red wooden walls visible above, stone foundation typical",
+      "suggestedFill": "add grey stone foundation, 2-3 stone blocks visible",
+      "priority": "high"
+    }
+  ],
+  "geometryNotes": "Small cottage with red walls, dark roof, window, door. Isometric perspective matching terrain.",
+  "referenceImages": [
+    {"source": "Map1.png", "coords": {"x": 80, "y": 220}, "notes": "Red house on elevated terrain"}
+  ],
+  "notes": "Key landmark building for pastoral zones. Foundation typically hidden by terrain."
+}

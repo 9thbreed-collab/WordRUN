@@ -1,0 +1,38 @@
+{
+  "timestamp": "2026-01-20T13:15:00Z",
+  "agent": "A",
+  "sourceImages": [
+    "GameMapInspo/Image.png",
+    "GameMapInspo/Map1.png",
+    "GameMapInspo/Map2.png",
+    "GameMapInspo/Map3.png"
+  ],
+  "totalComponents": 42,
+  "mapComponents": 32,
+  "uiComponents": 10,
+  "needsInterpolation": 18,
+  "clean": 24,
+  "components": [
+    "MAP-001", "MAP-002", "MAP-003", "MAP-004", "MAP-005",
+    "MAP-006", "MAP-007", "MAP-008", "MAP-009", "MAP-010",
+    "MAP-011", "MAP-012", "MAP-013", "MAP-014", "MAP-015",
+    "MAP-016", "MAP-017", "MAP-018", "MAP-019", "MAP-020",
+    "MAP-021", "MAP-022", "MAP-023", "MAP-024", "MAP-025",
+    "MAP-026", "MAP-027", "MAP-028", "MAP-029", "MAP-030",
+    "MAP-031", "MAP-032",
+    "UI-001", "UI-002", "UI-003", "UI-004", "UI-005",
+    "UI-006", "UI-007", "UI-008", "UI-009", "UI-010"
+  ],
+  "categories": {
+    "landCubes": ["MAP-001", "MAP-002", "MAP-003", "MAP-004", "MAP-005", "MAP-006"],
+    "trees": ["MAP-007", "MAP-008", "MAP-009", "MAP-010", "MAP-011"],
+    "buildings": ["MAP-012", "MAP-013", "MAP-014", "MAP-015", "MAP-016", "MAP-017"],
+    "decorations": ["MAP-018", "MAP-019", "MAP-020", "MAP-021", "MAP-022", "MAP-023", "MAP-024"],
+    "paths": ["MAP-025", "MAP-026"],
+    "water": ["MAP-027", "MAP-028"],
+    "levelMarkers": ["MAP-029", "MAP-030", "MAP-031", "MAP-032"],
+    "headerUI": ["UI-001", "UI-002", "UI-003", "UI-004"],
+    "buttons": ["UI-005", "UI-006", "UI-007"],
+    "indicators": ["UI-008", "UI-009", "UI-010"]
+  }
+}

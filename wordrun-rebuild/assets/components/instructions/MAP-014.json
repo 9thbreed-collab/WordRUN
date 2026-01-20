@@ -1,0 +1,24 @@
+{
+  "componentId": "MAP-014",
+  "name": "Wooden Winter Hut",
+  "category": "map",
+  "needsInterpolation": true,
+  "status": "needs-work",
+  "dimensions": {"width": 56, "height": 64},
+  "regions": [
+    {
+      "location": "building base",
+      "boundingBox": {"x": 8, "y": 52, "width": 40, "height": 12},
+      "issue": "snow and ice cube occludes base",
+      "surroundingContext": "wooden planks visible above, some snow accumulation",
+      "suggestedFill": "continue wooden plank texture, add snow drift at base",
+      "priority": "medium"
+    }
+  ],
+  "geometryNotes": "Small wooden cabin with peaked roof covered in snow. Warm light from windows.",
+  "referenceImages": [
+    {"source": "Map2.png", "coords": {"x": 200, "y": 180}, "notes": "Hut near center"},
+    {"source": "Map2.png", "coords": {"x": 280, "y": 280}, "notes": "Another hut example"}
+  ],
+  "notes": "Secondary building for ice zones. Cozy appearance with snow details."
+}

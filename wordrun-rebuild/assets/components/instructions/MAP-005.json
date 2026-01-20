@@ -1,0 +1,23 @@
+{
+  "componentId": "MAP-005",
+  "name": "Lava-Edge Stone Cube",
+  "category": "map",
+  "needsInterpolation": true,
+  "status": "needs-work",
+  "dimensions": {"width": 64, "height": 48},
+  "regions": [
+    {
+      "location": "top face edge",
+      "boundingBox": {"x": 10, "y": 5, "width": 44, "height": 15},
+      "issue": "orange lava glow overlaps edge, need clean stone texture",
+      "surroundingContext": "dark grey stone texture visible on non-lava sides",
+      "suggestedFill": "continue dark stone texture, remove orange glow bleeding",
+      "priority": "high"
+    }
+  ],
+  "geometryNotes": "Stone cube adjacent to lava pools. Has orange ambient glow on edges near lava.",
+  "referenceImages": [
+    {"source": "Map3.png", "coords": {"x": 150, "y": 280}, "notes": "Cube near lava pool"}
+  ],
+  "notes": "Variant for lava-adjacent placement. Clean version needed for reusability."
+}

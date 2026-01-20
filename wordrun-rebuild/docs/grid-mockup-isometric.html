@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=390, height=844, initial-scale=1.0">
+  <title>Grid Mockup: Isometric (Option A)</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #1a1a2e;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      color: #fff;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    h1 {
+      font-size: 18px;
+      margin-bottom: 10px;
+      color: #4ecdc4;
+    }
+    .subtitle {
+      font-size: 12px;
+      color: #888;
+      margin-bottom: 20px;
+    }
+    .device-frame {
+      width: 390px;
+      height: 844px;
+      background: #16213e;
+      border-radius: 40px;
+      padding: 10px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+    }
+    .screen {
+      width: 100%;
+      height: 100%;
+      background: #0f0f23;
+      border-radius: 32px;
+      overflow: hidden;
+      position: relative;
+    }
+    canvas {
+      display: block;
+    }
+    .legend {
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      background: rgba(0,0,0,0.8);
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 10px;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin: 4px 0;
+    }
+    .legend-color {
+      width: 12px;
+      height: 12px;
+      border-radius: 2px;
+    }
+    .info-panel {
+      margin-top: 20px;
+      max-width: 390px;
+      background: #16213e;
+      padding: 15px;
+      border-radius: 10px;
+      font-size: 12px;
+      line-height: 1.6;
+    }
+    .info-panel h3 {
+      color: #4ecdc4;
+      margin-bottom: 10px;
+    }
+    .info-panel code {
+      background: #0f0f23;
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ff6b6b;
+    }
+  </style>
+</head>
+<body>
+  <h1>Option A: True Isometric Grid</h1>
+  <p class="subtitle">Diamond Coordinates with Height Nudge Demo</p>
+
+  <div class="device-frame">
+    <div class="screen">
+      <canvas id="canvas" width="370" height="824"></canvas>
+      <div class="legend">
+        <div class="legend-item">
+          <div class="legend-color" style="background: #4444ff;"></div>
+          <span>Raised (height > 0)</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color" style="background: #ffffff;"></div>
+          <span>Neutral (height = 0)</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color" style="background: #ff4444;"></div>
+          <span>Lowered (height < 0)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-panel">
+    <h3>Isometric Grid Properties</h3>
+    <p><strong>Tile Size:</strong> 64px wide x 32px tall (2:1 ratio)</p>
+    <p><strong>Axes:</strong> X points upper-right (30deg), Y points upper-left (30deg)</p>
+    <p><strong>Height Nudge:</strong> Range -2.0 to +2.0, 12px per unit</p>
+    <p><strong>Demo:</strong> Cube at (2,1) raised to <code>+1.5</code>, cube at (1,3) lowered to <code>-1.0</code></p>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+
+    // Grid configuration
+    const TILE_WIDTH = 64;
+    const TILE_HEIGHT = 32;
+    const HEIGHT_PIXELS = 12;
+    const GRID_SIZE = 5;
+
+    // Screen center (offset for zones)
+    const CENTER_X = canvas.width / 2;
+    const CENTER_Y = 280; // Below header zone
+
+    // Zone definitions
+    const ZONES = {
+      safeTop: { y: 0, height: 44, color: 'rgba(255,100,100,0.1)', label: 'Safe Area' },
+      header: { y: 44, height: 70, color: 'rgba(78,205,196,0.1)', label: 'Header' },
+      gameplay: { y: 114, height: 550, color: 'rgba(255,255,255,0.05)', label: 'Gameplay' },
+      input: { y: 664, height: 120, color: 'rgba(78,205,196,0.1)', label: 'Input' },
+      footer: { y: 784, height: 40, color: 'rgba(78,205,196,0.1)', label: 'Footer' }
+    };
+
+    // Cube data: [gridX, gridY, height]
+    const cubes = [];
+    for (let x = 0; x < GRID_SIZE; x++) {
+      for (let y = 0; y < GRID_SIZE; y++) {
+        let height = 0;
+        // Raised cube at (2,1)
+        if (x === 2 && y === 1) height = 1.5;
+        // Lowered cube at (1,3)
+        if (x === 1 && y === 3) height = -1.0;
+        cubes.push({ gridX: x, gridY: y, height });
+      }
+    }
+
+    // Sort by render order (back to front)
+    cubes.sort((a, b) => {
+      const depthA = (a.gridX + a.gridY) * 100 + (a.height + 2) * 10;
+      const depthB = (b.gridX + b.gridY) * 100 + (b.height + 2) * 10;
+      return depthA - depthB;
+    });
+
+    // Convert grid to screen coordinates
+    function gridToScreen(gridX, gridY, height = 0) {
+      const screenX = CENTER_X + (gridX - gridY) * (TILE_WIDTH / 2);
+      const screenY = CENTER_Y + (gridX + gridY) * (TILE_HEIGHT / 2) - height * HEIGHT_PIXELS;
+      return { x: screenX, y: screenY };
+    }
+
+    // Get height color
+    function getHeightColor(height) {
+      if (height > 0) {
+        const intensity = Math.min(height / 2, 1);
+        const r = Math.round(68 + (255 - 68) * (1 - intensity));
+        const g = Math.round(68 + (255 - 68) * (1 - intensity));
+        const b = 255;
+        return `rgb(${r},${g},${b})`;
+      } else if (height < 0) {
+        const intensity = Math.min(-height / 2, 1);
+        const r = 255;
+        const g = Math.round(68 + (255 - 68) * (1 - intensity));
+        const b = Math.round(68 + (255 - 68) * (1 - intensity));
+        return `rgb(${r},${g},${b})`;
+      }
+      return '#88aa88';
+    }
+
+    // Draw isometric cube
+    function drawCube(gridX, gridY, height) {
+      const pos = gridToScreen(gridX, gridY, height);
+      const x = pos.x;
+      const y = pos.y;
+
+      const hw = TILE_WIDTH / 2;
+      const hh = TILE_HEIGHT / 2;
+      const cubeHeight = 20;
+
+      // Colors based on height
+      const baseColor = getHeightColor(height);
+
+      // Top face (brightest)
+      ctx.beginPath();
+      ctx.moveTo(x, y - hh);
+      ctx.lineTo(x + hw, y);
+      ctx.lineTo(x, y + hh);
+      ctx.lineTo(x - hw, y);
+      ctx.closePath();
+      ctx.fillStyle = baseColor;
+      ctx.fill();
+      ctx.strokeStyle = '#333';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+
+      // Left face (mid-tone)
+      ctx.beginPath();
+      ctx.moveTo(x - hw, y);
+      ctx.lineTo(x, y + hh);
+      ctx.lineTo(x, y + hh + cubeHeight);
+      ctx.lineTo(x - hw, y + cubeHeight);
+      ctx.closePath();
+      ctx.fillStyle = shadeColor(baseColor, -30);
+      ctx.fill();
+      ctx.strokeStyle = '#333';
+      ctx.stroke();
+
+      // Right face (darkest)
+      ctx.beginPath();
+      ctx.moveTo(x + hw, y);
+      ctx.lineTo(x, y + hh);
+      ctx.lineTo(x, y + hh + cubeHeight);
+      ctx.lineTo(x + hw, y + cubeHeight);
+      ctx.closePath();
+      ctx.fillStyle = shadeColor(baseColor, -50);
+      ctx.fill();
+      ctx.strokeStyle = '#333';
+      ctx.stroke();
+
+      // Height label for non-zero heights
+      if (height !== 0) {
+        ctx.fillStyle = '#fff';
+        ctx.font = 'bold 10px monospace';
+        ctx.textAlign = 'center';
+        ctx.fillText(`h=${height.toFixed(1)}`, x, y - hh - 8);
+      }
+    }
+
+    // Shade color helper
+    function shadeColor(color, percent) {
+      const match = color.match(/rgb\((\d+),(\d+),(\d+)\)/);
+      if (!match) return color;
+      let [, r, g, b] = match.map(Number);
+      r = Math.max(0, Math.min(255, r + percent));
+      g = Math.max(0, Math.min(255, g + percent));
+      b = Math.max(0, Math.min(255, b + percent));
+      return `rgb(${r},${g},${b})`;
+    }
+
+    // Draw grid lines
+    function drawGridLines() {
+      ctx.strokeStyle = 'rgba(255,255,255,0.15)';
+      ctx.lineWidth = 1;
+
+      // Draw diamond grid lines
+      for (let i = 0; i <= GRID_SIZE; i++) {
+        // Lines parallel to Y axis (X constant)
+        const startX = gridToScreen(i, 0, 0);
+        const endX = gridToScreen(i, GRID_SIZE, 0);
+        ctx.beginPath();
+        ctx.moveTo(startX.x, startX.y);
+        ctx.lineTo(endX.x, endX.y);
+        ctx.stroke();
+
+        // Lines parallel to X axis (Y constant)
+        const startY = gridToScreen(0, i, 0);
+        const endY = gridToScreen(GRID_SIZE, i, 0);
+        ctx.beginPath();
+        ctx.moveTo(startY.x, startY.y);
+        ctx.lineTo(endY.x, endY.y);
+        ctx.stroke();
+      }
+    }
+
+    // Draw zone boundaries
+    function drawZones() {
+      ctx.font = '10px sans-serif';
+      for (const [name, zone] of Object.entries(ZONES)) {
+        ctx.fillStyle = zone.color;
+        ctx.fillRect(0, zone.y, canvas.width, zone.height);
+
+        ctx.strokeStyle = 'rgba(255,255,255,0.2)';
+        ctx.setLineDash([4, 4]);
+        ctx.beginPath();
+        ctx.moveTo(0, zone.y);
+        ctx.lineTo(canvas.width, zone.y);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        ctx.fillStyle = 'rgba(255,255,255,0.4)';
+        ctx.textAlign = 'right';
+        ctx.fillText(zone.label, canvas.width - 10, zone.y + 15);
+      }
+    }
+
+    // Draw coordinate labels
+    function drawCoordinateLabels() {
+      ctx.fillStyle = '#4ecdc4';
+      ctx.font = '9px monospace';
+      ctx.textAlign = 'center';
+
+      for (let x = 0; x < GRID_SIZE; x++) {
+        for (let y = 0; y < GRID_SIZE; y++) {
+          const pos = gridToScreen(x, y, 0);
+          ctx.fillText(`${x},${y}`, pos.x, pos.y + 5);
+        }
+      }
+    }
+
+    // Draw axis indicators
+    function drawAxes() {
+      const origin = gridToScreen(0, 0, 0);
+
+      // X axis arrow (toward upper-right)
+      const xEnd = gridToScreen(1.5, 0, 0);
+      ctx.beginPath();
+      ctx.moveTo(origin.x, origin.y);
+      ctx.lineTo(xEnd.x, xEnd.y);
+      ctx.strokeStyle = '#ff6b6b';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      ctx.fillStyle = '#ff6b6b';
+      ctx.font = 'bold 12px sans-serif';
+      ctx.fillText('X', xEnd.x + 10, xEnd.y - 5);
+
+      // Y axis arrow (toward upper-left)
+      const yEnd = gridToScreen(0, 1.5, 0);
+      ctx.beginPath();
+      ctx.moveTo(origin.x, origin.y);
+      ctx.lineTo(yEnd.x, yEnd.y);
+      ctx.strokeStyle = '#4ecdc4';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      ctx.fillStyle = '#4ecdc4';
+      ctx.fillText('Y', yEnd.x - 15, yEnd.y - 5);
+    }
+
+    // Main render
+    function render() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Draw zones
+      drawZones();
+
+      // Draw grid lines
+      drawGridLines();
+
+      // Draw axes
+      drawAxes();
+
+      // Draw cubes (sorted back to front)
+      for (const cube of cubes) {
+        drawCube(cube.gridX, cube.gridY, cube.height);
+      }
+
+      // Draw coordinate labels
+      drawCoordinateLabels();
+
+      // Title
+      ctx.fillStyle = '#fff';
+      ctx.font = 'bold 14px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('ISOMETRIC GRID (Diamond Coordinates)', canvas.width / 2, 70);
+
+      ctx.font = '11px sans-serif';
+      ctx.fillStyle = '#888';
+      ctx.fillText('Height Nudge: Raised +1.5 (blue) | Lowered -1.0 (red)', canvas.width / 2, 90);
+    }
+
+    render();
+  </script>
+</body>
+</html>

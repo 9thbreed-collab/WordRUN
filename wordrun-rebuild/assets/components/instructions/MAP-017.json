@@ -1,0 +1,23 @@
+{
+  "componentId": "MAP-017",
+  "name": "Volcano Forge/Smithy",
+  "category": "map",
+  "needsInterpolation": true,
+  "status": "needs-work",
+  "dimensions": {"width": 64, "height": 72},
+  "regions": [
+    {
+      "location": "base/forge floor",
+      "boundingBox": {"x": 10, "y": 58, "width": 44, "height": 14},
+      "issue": "terrain occludes lower portion",
+      "surroundingContext": "stone structure with anvil, fire glow from opening",
+      "suggestedFill": "continue stone wall texture, add floor stones",
+      "priority": "medium"
+    }
+  ],
+  "geometryNotes": "Small forge building with chimney, anvil visible, orange fire glow inside.",
+  "referenceImages": [
+    {"source": "Map3.png", "coords": {"x": 220, "y": 200}, "notes": "Forge near center"}
+  ],
+  "notes": "Secondary building for volcanic zones. Industrial/craft theme."
+}

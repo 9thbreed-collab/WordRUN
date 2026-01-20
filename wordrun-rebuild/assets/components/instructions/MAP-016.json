@@ -1,0 +1,24 @@
+{
+  "componentId": "MAP-016",
+  "name": "Volcanic Temple/Gate",
+  "category": "map",
+  "needsInterpolation": true,
+  "status": "needs-work",
+  "dimensions": {"width": 80, "height": 88},
+  "regions": [
+    {
+      "location": "base columns",
+      "boundingBox": {"x": 5, "y": 70, "width": 70, "height": 18},
+      "issue": "stone cube terrain occludes column bases",
+      "surroundingContext": "dark stone pillars visible above, carved demon/skull motifs",
+      "suggestedFill": "continue dark stone pillar texture, add base pedestals",
+      "priority": "high"
+    }
+  ],
+  "geometryNotes": "Dark stone gate/temple structure with fire braziers. Ominous carved details, volcanic theming.",
+  "referenceImages": [
+    {"source": "Map3.png", "coords": {"x": 150, "y": 80}, "notes": "Temple structure in volcanic zone"},
+    {"source": "Map3.png", "coords": {"x": 50, "y": 120}, "notes": "Gate structure"}
+  ],
+  "notes": "Major landmark for volcanic zones. Imposing architecture with fire elements."
+}

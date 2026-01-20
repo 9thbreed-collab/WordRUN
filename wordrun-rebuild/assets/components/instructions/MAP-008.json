@@ -1,0 +1,14 @@
+{
+  "componentId": "MAP-008",
+  "name": "Small Bush Tree",
+  "category": "map",
+  "needsInterpolation": false,
+  "status": "clean",
+  "dimensions": {"width": 32, "height": 40},
+  "regions": [],
+  "geometryNotes": "Small rounded bush/shrub. Compact green foliage, no visible trunk. Used as filler vegetation.",
+  "referenceImages": [
+    {"source": "Map1.png", "coords": {"x": 200, "y": 350}, "notes": "Small bushes scattered on terrain"}
+  ],
+  "notes": "Decorative vegetation. Clean examples available, no occlusion issues."
+}

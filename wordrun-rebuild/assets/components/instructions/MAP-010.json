@@ -1,0 +1,15 @@
+{
+  "componentId": "MAP-010",
+  "name": "Ice Crystal Tree",
+  "category": "map",
+  "needsInterpolation": false,
+  "status": "clean",
+  "dimensions": {"width": 36, "height": 64},
+  "regions": [],
+  "geometryNotes": "Crystalline ice formation resembling tree shape. Light blue translucent appearance with bright highlights.",
+  "referenceImages": [
+    {"source": "Map2.png", "coords": {"x": 100, "y": 180}, "notes": "Ice crystals near igloo"},
+    {"source": "Image.png", "coords": {"x": 30, "y": 350}, "notes": "Ice crystal in ice zone"}
+  ],
+  "notes": "Decorative ice formation for winter zones. Clean crystalline edges, no occlusion."
+}

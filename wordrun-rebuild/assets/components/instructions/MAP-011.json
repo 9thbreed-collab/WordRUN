@@ -1,0 +1,14 @@
+{
+  "componentId": "MAP-011",
+  "name": "Dead Volcanic Tree",
+  "category": "map",
+  "needsInterpolation": false,
+  "status": "clean",
+  "dimensions": {"width": 32, "height": 56},
+  "regions": [],
+  "geometryNotes": "Barren tree with no leaves. Dark brown/black trunk, twisted branches. Silhouette style.",
+  "referenceImages": [
+    {"source": "Map3.png", "coords": {"x": 50, "y": 450}, "notes": "Dead trees at map edge"}
+  ],
+  "notes": "Used in volcanic/lava zones. Sparse, atmospheric element."
+}

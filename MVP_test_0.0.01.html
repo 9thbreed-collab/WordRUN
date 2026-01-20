@@ -1,0 +1,1666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>WordRun MVP - Gameplay Prototype</title>
+    <style>
+        /* ============================================
+           WordRun MVP v0.0.01
+           Mobile-First Word-Chain Puzzle Game Prototype
+           Target: 390x844 portrait (mobile)
+
+           Based on WordRun_PRD_MVP.md specifications:
+           - 12 core words per level
+           - 3 bonus streak words (earned)
+           - Story-first integration (lightweight for MVP)
+           - Emotional design principles (microinteractions)
+           ============================================ */
+
+        :root {
+            /* Color Palette - Warm, inviting, game-like */
+            --bg-primary: #1a1a2e;
+            --bg-secondary: #16213e;
+            --bg-card: #0f3460;
+            --accent-primary: #e94560;
+            --accent-secondary: #ff6b6b;
+            --accent-gold: #ffd700;
+            --accent-success: #4ade80;
+            --accent-error: #ef4444;
+            --text-primary: #ffffff;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+
+            /* Typography */
+            --font-main: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            --font-display: Georgia, 'Times New Roman', serif;
+
+            /* Spacing */
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+
+            /* Animation Timing (from emotional design research) */
+            --timing-instant: 50ms;
+            --timing-fast: 100ms;
+            --timing-normal: 200ms;
+            --timing-slow: 300ms;
+            --timing-celebration: 500ms;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: var(--font-main);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+        }
+
+        /* ============================================
+           Game Container - Mobile Portrait Layout
+           ============================================ */
+        #game-container {
+            width: 100%;
+            max-width: 390px;
+            height: 100%;
+            max-height: 844px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* ============================================
+           Header - Score, Streak, Lives
+           ============================================ */
+        #header {
+            padding: var(--spacing-md);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.3);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stat-group {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .stat-value {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--text-primary);
+        }
+
+        #score-value {
+            color: var(--accent-gold);
+        }
+
+        #streak-container {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+        }
+
+        #streak-flame {
+            font-size: 20px;
+            animation: flame-flicker 0.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes flame-flicker {
+            from { transform: scale(1) rotate(-5deg); }
+            to { transform: scale(1.1) rotate(5deg); }
+        }
+
+        #streak-value {
+            color: var(--accent-secondary);
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .streak-inactive #streak-flame {
+            animation: none;
+            opacity: 0.3;
+        }
+
+        #lives-container {
+            display: flex;
+            gap: 4px;
+        }
+
+        .life-heart {
+            font-size: 18px;
+            transition: transform var(--timing-normal), opacity var(--timing-normal);
+        }
+
+        .life-heart.lost {
+            opacity: 0.2;
+            transform: scale(0.8);
+        }
+
+        /* ============================================
+           Combo Meter - Momentum System
+           ============================================ */
+        #combo-container {
+            padding: var(--spacing-sm) var(--spacing-md);
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        #combo-bar-outer {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        #combo-bar-inner {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-gold));
+            border-radius: 4px;
+            transition: width var(--timing-normal) ease-out;
+            position: relative;
+        }
+
+        #combo-bar-inner::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: combo-shimmer 1.5s ease-in-out infinite;
+        }
+
+        @keyframes combo-shimmer {
+            0%, 100% { transform: translateX(-100%); }
+            50% { transform: translateX(100%); }
+        }
+
+        #combo-label {
+            font-size: 10px;
+            color: var(--text-muted);
+            text-align: center;
+            margin-top: 4px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .combo-bonus {
+            color: var(--accent-gold) !important;
+            font-weight: bold;
+        }
+
+        /* ============================================
+           Word Ladder - The Core Display
+           ============================================ */
+        #word-ladder-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: var(--spacing-md);
+            overflow-y: auto;
+            position: relative;
+        }
+
+        #word-ladder {
+            display: flex;
+            flex-direction: column-reverse;
+            gap: var(--spacing-sm);
+            padding-bottom: 60px; /* Space for Ruut */
+        }
+
+        .word-rung {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-sm) var(--spacing-md);
+            background: var(--bg-card);
+            border-radius: 8px;
+            border: 2px solid transparent;
+            transition: all var(--timing-normal) ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .word-rung.current {
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 20px rgba(233, 69, 96, 0.3);
+        }
+
+        .word-rung.completed {
+            background: rgba(74, 222, 128, 0.1);
+            border-color: var(--accent-success);
+        }
+
+        .word-rung.locked {
+            background: rgba(255, 255, 255, 0.05);
+            opacity: 0.6;
+        }
+
+        .word-rung.bonus {
+            border-color: var(--accent-gold);
+            background: linear-gradient(90deg, rgba(255, 215, 0, 0.1), rgba(255, 107, 107, 0.1));
+        }
+
+        .word-rung.bonus::before {
+            content: 'BONUS';
+            position: absolute;
+            top: 2px;
+            right: 8px;
+            font-size: 8px;
+            color: var(--accent-gold);
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .rung-number {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            font-size: 12px;
+            font-weight: bold;
+            color: var(--text-secondary);
+            flex-shrink: 0;
+        }
+
+        .word-rung.completed .rung-number {
+            background: var(--accent-success);
+            color: var(--bg-primary);
+        }
+
+        .word-display {
+            flex: 1;
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .word-display.hidden {
+            color: var(--text-muted);
+        }
+
+        .first-letter {
+            color: var(--accent-primary);
+        }
+
+        .word-display.revealed {
+            color: var(--accent-success);
+        }
+
+        /* Word completion animation */
+        @keyframes word-complete {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .word-rung.just-completed {
+            animation: word-complete var(--timing-celebration) ease;
+        }
+
+        /* ============================================
+           Ruut Character - Emotional Anchor
+           ============================================ */
+        #ruut-container {
+            position: absolute;
+            left: 20px;
+            bottom: 80px;
+            width: 60px;
+            height: 80px;
+            transition: bottom 0.3s ease-out;
+            z-index: 10;
+        }
+
+        #ruut {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        /* Simple CSS Ruut character (placeholder for real assets) */
+        .ruut-body {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 50px;
+            background: linear-gradient(180deg, #8b5cf6, #7c3aed);
+            border-radius: 20px 20px 15px 15px;
+            transition: transform var(--timing-normal);
+        }
+
+        .ruut-head {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(180deg, #a78bfa, #8b5cf6);
+            border-radius: 50%;
+        }
+
+        .ruut-eyes {
+            position: absolute;
+            top: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+        }
+
+        .ruut-eye {
+            width: 6px;
+            height: 8px;
+            background: white;
+            border-radius: 50%;
+            position: relative;
+        }
+
+        .ruut-eye::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 3px;
+            height: 4px;
+            background: #1a1a2e;
+            border-radius: 50%;
+        }
+
+        .ruut-mouth {
+            position: absolute;
+            bottom: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 10px;
+            height: 5px;
+            background: #ff6b6b;
+            border-radius: 0 0 5px 5px;
+        }
+
+        /* Ruut animations */
+        @keyframes ruut-idle {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-3px); }
+        }
+
+        @keyframes ruut-jump {
+            0% { transform: translateX(-50%) translateY(0) scale(1); }
+            30% { transform: translateX(-50%) translateY(-20px) scale(1.1); }
+            50% { transform: translateX(-50%) translateY(-25px) scale(1.1); }
+            100% { transform: translateX(-50%) translateY(0) scale(1); }
+        }
+
+        @keyframes ruut-celebrate {
+            0% { transform: translateX(-50%) translateY(0) rotate(0deg); }
+            25% { transform: translateX(-50%) translateY(-15px) rotate(-10deg); }
+            50% { transform: translateX(-50%) translateY(-20px) rotate(10deg); }
+            75% { transform: translateX(-50%) translateY(-15px) rotate(-5deg); }
+            100% { transform: translateX(-50%) translateY(0) rotate(0deg); }
+        }
+
+        @keyframes ruut-shake {
+            0%, 100% { transform: translateX(-50%) translateX(0); }
+            25% { transform: translateX(-50%) translateX(-3px); }
+            75% { transform: translateX(-50%) translateX(3px); }
+        }
+
+        .ruut-idle .ruut-body {
+            animation: ruut-idle 2s ease-in-out infinite;
+        }
+
+        .ruut-jump .ruut-body {
+            animation: ruut-jump 0.5s ease-out;
+        }
+
+        .ruut-celebrate .ruut-body {
+            animation: ruut-celebrate 0.8s ease-out;
+        }
+
+        .ruut-shake .ruut-body {
+            animation: ruut-shake 0.3s ease-in-out;
+        }
+
+        /* Happy mouth */
+        .ruut-happy .ruut-mouth {
+            height: 8px;
+            border-radius: 0 0 10px 10px;
+        }
+
+        /* Sad mouth */
+        .ruut-sad .ruut-mouth {
+            height: 3px;
+            width: 8px;
+            border-radius: 10px 10px 0 0;
+            transform: translateX(-50%) translateY(5px);
+        }
+
+        /* ============================================
+           Input Area - Text Entry
+           ============================================ */
+        #input-container {
+            padding: var(--spacing-md);
+            background: var(--bg-secondary);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        #hint-display {
+            font-size: 14px;
+            color: var(--text-secondary);
+            text-align: center;
+            margin-bottom: var(--spacing-sm);
+            min-height: 20px;
+        }
+
+        #input-wrapper {
+            display: flex;
+            gap: var(--spacing-sm);
+        }
+
+        #word-input {
+            flex: 1;
+            padding: var(--spacing-md);
+            font-size: 18px;
+            font-weight: 600;
+            text-transform: uppercase;
+            background: var(--bg-card);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            color: var(--text-primary);
+            outline: none;
+            transition: all var(--timing-fast);
+            letter-spacing: 2px;
+        }
+
+        #word-input:focus {
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 15px rgba(233, 69, 96, 0.3);
+        }
+
+        #word-input::placeholder {
+            color: var(--text-muted);
+            text-transform: none;
+            letter-spacing: normal;
+        }
+
+        #word-input.correct {
+            border-color: var(--accent-success);
+            background: rgba(74, 222, 128, 0.1);
+        }
+
+        #word-input.incorrect {
+            border-color: var(--accent-error);
+            animation: shake 0.3s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        /* ============================================
+           Overlays - Pre-game, Post-game
+           ============================================ */
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: var(--spacing-xl);
+            z-index: 100;
+            opacity: 1;
+            transition: opacity var(--timing-slow);
+        }
+
+        .overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .overlay-title {
+            font-family: var(--font-display);
+            font-size: 32px;
+            color: var(--accent-primary);
+            margin-bottom: var(--spacing-md);
+            text-align: center;
+        }
+
+        .overlay-subtitle {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-bottom: var(--spacing-lg);
+            text-align: center;
+            line-height: 1.5;
+        }
+
+        .overlay-stats {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-lg);
+            width: 100%;
+            max-width: 280px;
+        }
+
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            padding: var(--spacing-sm) var(--spacing-md);
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+        }
+
+        .stat-row .label {
+            color: var(--text-secondary);
+        }
+
+        .stat-row .value {
+            font-weight: bold;
+            color: var(--accent-gold);
+        }
+
+        .stars-display {
+            display: flex;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .star {
+            font-size: 36px;
+            color: var(--text-muted);
+            transition: all var(--timing-normal);
+        }
+
+        .star.earned {
+            color: var(--accent-gold);
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+            animation: star-pop 0.3s ease-out;
+        }
+
+        @keyframes star-pop {
+            0% { transform: scale(0); }
+            70% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .btn {
+            padding: var(--spacing-md) var(--spacing-xl);
+            font-size: 18px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all var(--timing-fast);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            box-shadow: 0 4px 15px rgba(233, 69, 96, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(233, 69, 96, 0.5);
+        }
+
+        /* Mobile touch feedback */
+        .btn-primary:active {
+            transform: translateY(0px) scale(0.98);
+            box-shadow: 0 2px 10px rgba(233, 69, 96, 0.4);
+        }
+
+        /* Improve touch responsiveness - remove 300ms delay */
+        .btn, input, button {
+            touch-action: manipulation;
+        }
+
+        /* ============================================
+           Particles - Celebration Effects
+           ============================================ */
+        #particles-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 50;
+        }
+
+        .particle {
+            position: absolute;
+            pointer-events: none;
+            animation: particle-fall 1s ease-out forwards;
+        }
+
+        @keyframes particle-fall {
+            0% {
+                opacity: 1;
+                transform: translateY(0) rotate(0deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(100px) rotate(360deg);
+            }
+        }
+
+        /* Confetti for level complete */
+        .confetti {
+            width: 10px;
+            height: 10px;
+            animation: confetti-fall 2s ease-out forwards;
+        }
+
+        @keyframes confetti-fall {
+            0% {
+                opacity: 1;
+                transform: translateY(-20px) rotate(0deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(300px) rotate(720deg);
+            }
+        }
+
+        /* ============================================
+           NPC Speech - Story Integration (Light)
+           ============================================ */
+        #npc-speech {
+            position: absolute;
+            bottom: 180px;
+            left: var(--spacing-md);
+            right: var(--spacing-md);
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: var(--spacing-md);
+            border: 2px solid var(--accent-primary);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all var(--timing-slow);
+            z-index: 60;
+        }
+
+        #npc-speech.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .npc-name {
+            font-size: 12px;
+            color: var(--accent-primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .npc-text {
+            font-size: 14px;
+            color: var(--text-primary);
+            line-height: 1.5;
+        }
+
+        .npc-tap-hint {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-align: right;
+            margin-top: var(--spacing-xs);
+        }
+
+        /* ============================================
+           Level/Land Info
+           ============================================ */
+        #level-info {
+            position: absolute;
+            top: 70px;
+            left: var(--spacing-md);
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .land-name {
+            color: var(--accent-primary);
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <!-- Header Stats -->
+        <div id="header">
+            <div class="stat-group">
+                <div>
+                    <div class="stat-label">Score</div>
+                    <div class="stat-value" id="score-value">0</div>
+                </div>
+            </div>
+
+            <div class="stat-group" id="streak-container">
+                <span id="streak-flame">&#128293;</span>
+                <span id="streak-value">0</span>
+            </div>
+
+            <div class="stat-group">
+                <div id="lives-container">
+                    <span class="life-heart">&#10084;&#65039;</span>
+                    <span class="life-heart">&#10084;&#65039;</span>
+                    <span class="life-heart">&#10084;&#65039;</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Combo Meter -->
+        <div id="combo-container">
+            <div id="combo-bar-outer">
+                <div id="combo-bar-inner"></div>
+            </div>
+            <div id="combo-label">Combo Meter</div>
+        </div>
+
+        <!-- Level Info -->
+        <div id="level-info">
+            <span class="land-name">Corinthia</span> - Level 1
+        </div>
+
+        <!-- Word Ladder -->
+        <div id="word-ladder-container">
+            <div id="word-ladder">
+                <!-- Words will be generated by JavaScript -->
+            </div>
+
+            <!-- Ruut Character -->
+            <div id="ruut-container">
+                <div id="ruut" class="ruut-idle">
+                    <div class="ruut-head">
+                        <div class="ruut-eyes">
+                            <div class="ruut-eye"></div>
+                            <div class="ruut-eye"></div>
+                        </div>
+                        <div class="ruut-mouth"></div>
+                    </div>
+                    <div class="ruut-body"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Input Area -->
+        <div id="input-container">
+            <div id="hint-display">Type the associated word...</div>
+            <div id="input-wrapper">
+                <input
+                    type="text"
+                    id="word-input"
+                    placeholder="Type here..."
+                    autocomplete="off"
+                    autocapitalize="off"
+                    autocorrect="off"
+                    spellcheck="false"
+                    inputmode="text"
+                    enterkeyhint="go"
+                >
+            </div>
+        </div>
+
+        <!-- Particles Container -->
+        <div id="particles-container"></div>
+
+        <!-- NPC Speech (Story Integration) -->
+        <div id="npc-speech">
+            <div class="npc-name">Village Elder</div>
+            <div class="npc-text">Welcome, traveler. The words you seek are connected like links in a chain...</div>
+            <div class="npc-tap-hint">Tap to continue</div>
+        </div>
+
+        <!-- Pre-game Overlay -->
+        <div class="overlay" id="pregame-overlay">
+            <div class="overlay-title">WordRun</div>
+            <div class="overlay-subtitle">
+                Connect the words in a chain.<br>
+                Each word links to the next!
+            </div>
+            <div style="margin-bottom: var(--spacing-lg); color: var(--text-secondary); font-size: 14px;">
+                <strong>Example:</strong> CAR &rarr; DOOR &rarr; STOP<br>
+                (car DOOR, DOOR stop, stop SIGN...)
+            </div>
+            <button class="btn btn-primary" id="start-btn">TAP TO START</button>
+        </div>
+
+        <!-- Post-game Overlay -->
+        <div class="overlay hidden" id="postgame-overlay">
+            <div class="overlay-title">Level Complete!</div>
+            <div class="stars-display" id="stars-display">
+                <span class="star" data-star="1">&#11088;</span>
+                <span class="star" data-star="2">&#11088;</span>
+                <span class="star" data-star="3">&#11088;</span>
+            </div>
+            <div class="overlay-stats" id="final-stats">
+                <div class="stat-row">
+                    <span class="label">Final Score</span>
+                    <span class="value" id="final-score">0</span>
+                </div>
+                <div class="stat-row">
+                    <span class="label">Time</span>
+                    <span class="value" id="final-time">0:00</span>
+                </div>
+                <div class="stat-row">
+                    <span class="label">Max Streak</span>
+                    <span class="value" id="final-streak">0</span>
+                </div>
+                <div class="stat-row">
+                    <span class="label">Perfect Words</span>
+                    <span class="value" id="final-perfect">0</span>
+                </div>
+            </div>
+            <button class="btn btn-primary" id="next-btn">NEXT LEVEL</button>
+        </div>
+    </div>
+
+    <script>
+        /* ============================================
+           WordRun MVP v0.0.01
+           Core Game Logic
+           ============================================ */
+
+        // ========================================
+        // SAMPLE WORD CHAINS
+        // Each chain is 12 core words (per PRD)
+        // Association rule: natural American-lexicon pairings
+        // ========================================
+        const WORD_CHAINS = [
+            // Chain 1: Classic associations
+            {
+                words: ['CAR', 'DOOR', 'STOP', 'SIGN', 'UP', 'START', 'BUTTON', 'NOSE', 'RING', 'BELL', 'TOWER', 'CLOCK'],
+                bonusWords: ['TOWER', 'WORK', 'OUT'], // Bonus words for streak
+                land: 'Corinthia',
+                level: 1
+            },
+            // Chain 2: Nature theme
+            {
+                words: ['SUN', 'FLOWER', 'POT', 'LUCK', 'CHARM', 'SCHOOL', 'BUS', 'STOP', 'WATCH', 'DOG', 'HOUSE', 'BOAT'],
+                bonusWords: ['RACE', 'CAR', 'POOL'],
+                land: 'Corinthia',
+                level: 2
+            },
+            // Chain 3: Technology theme
+            {
+                words: ['PHONE', 'CALL', 'BACK', 'PACK', 'RAT', 'RACE', 'TRACK', 'FIELD', 'GOAL', 'POST', 'OFFICE', 'SPACE'],
+                bonusWords: ['BAR', 'CODE', 'WORD'],
+                land: 'Corinthia',
+                level: 3
+            }
+        ];
+
+        // ========================================
+        // GAME STATE
+        // ========================================
+        const GameState = {
+            currentChainIndex: 0,
+            currentWordIndex: 0,
+            score: 0,
+            streak: 0,
+            maxStreak: 0,
+            lives: 3,
+            wrongAttempts: 0,
+            perfectWords: 0,
+            combo: 0,
+            maxCombo: 100,
+            startTime: null,
+            isPlaying: false,
+            bonusWordsUnlocked: 0,
+
+            // Get current chain data
+            get chain() {
+                return WORD_CHAINS[this.currentChainIndex];
+            },
+
+            // Get all words including bonus
+            get allWords() {
+                const base = [...this.chain.words];
+                // Add unlocked bonus words
+                for (let i = 0; i < this.bonusWordsUnlocked; i++) {
+                    if (this.chain.bonusWords[i]) {
+                        base.push(this.chain.bonusWords[i]);
+                    }
+                }
+                return base;
+            },
+
+            // Reset for new level
+            reset() {
+                this.currentWordIndex = 0;
+                this.streak = 0;
+                this.wrongAttempts = 0;
+                this.perfectWords = 0;
+                this.combo = 0;
+                this.bonusWordsUnlocked = 0;
+                this.startTime = Date.now();
+            }
+        };
+
+        // ========================================
+        // DOM ELEMENTS
+        // ========================================
+        const DOM = {
+            // Get cached element
+            get(id) {
+                if (!this.cache) this.cache = {};
+                if (!this.cache[id]) {
+                    this.cache[id] = document.getElementById(id);
+                }
+                return this.cache[id];
+            },
+
+            // Shortcuts
+            get input() { return this.get('word-input'); },
+            get ladder() { return this.get('word-ladder'); },
+            get scoreValue() { return this.get('score-value'); },
+            get streakValue() { return this.get('streak-value'); },
+            get streakContainer() { return this.get('streak-container'); },
+            get comboBar() { return this.get('combo-bar-inner'); },
+            get comboLabel() { return this.get('combo-label'); },
+            get hintDisplay() { return this.get('hint-display'); },
+            get ruut() { return this.get('ruut'); },
+            get ruutContainer() { return this.get('ruut-container'); },
+            get particles() { return this.get('particles-container'); },
+            get pregame() { return this.get('pregame-overlay'); },
+            get postgame() { return this.get('postgame-overlay'); },
+            get npcSpeech() { return this.get('npc-speech'); },
+            get livesContainer() { return this.get('lives-container'); }
+        };
+
+        // ========================================
+        // RENDERING
+        // ========================================
+        const Renderer = {
+            // Build the word ladder display
+            renderLadder() {
+                const words = GameState.allWords;
+                const currentIndex = GameState.currentWordIndex;
+
+                let html = '';
+
+                for (let i = 0; i < words.length; i++) {
+                    const word = words[i];
+                    const isCompleted = i < currentIndex;
+                    const isCurrent = i === currentIndex;
+                    const isLocked = i > currentIndex;
+                    const isBonus = i >= GameState.chain.words.length;
+
+                    let classes = 'word-rung';
+                    if (isCompleted) classes += ' completed';
+                    if (isCurrent) classes += ' current';
+                    if (isLocked) classes += ' locked';
+                    if (isBonus) classes += ' bonus';
+
+                    let wordDisplay = '';
+                    if (isCompleted) {
+                        // Show full word
+                        wordDisplay = `<span class="word-display revealed">${word}</span>`;
+                    } else if (isCurrent) {
+                        // Show first letter only (per PRD: "only first letter revealed")
+                        wordDisplay = `<span class="word-display"><span class="first-letter">${word[0]}</span>${'_'.repeat(word.length - 1)}</span>`;
+                    } else {
+                        // Locked - show placeholder
+                        wordDisplay = `<span class="word-display hidden">${'?'.repeat(word.length)}</span>`;
+                    }
+
+                    html += `
+                        <div class="${classes}" data-index="${i}">
+                            <span class="rung-number">${i + 1}</span>
+                            ${wordDisplay}
+                        </div>
+                    `;
+                }
+
+                DOM.ladder.innerHTML = html;
+
+                // Update Ruut position based on current word
+                this.updateRuutPosition();
+            },
+
+            // Update Ruut's vertical position
+            updateRuutPosition() {
+                const currentRung = document.querySelector('.word-rung.current');
+                if (currentRung) {
+                    const rungRect = currentRung.getBoundingClientRect();
+                    const containerRect = DOM.ladder.parentElement.getBoundingClientRect();
+                    const newBottom = containerRect.bottom - rungRect.bottom + 10;
+                    DOM.ruutContainer.style.bottom = `${Math.max(80, newBottom)}px`;
+                }
+            },
+
+            // Update score display with animation
+            updateScore(newScore) {
+                const current = parseInt(DOM.scoreValue.textContent) || 0;
+                const diff = newScore - current;
+
+                // Animate counting up
+                const steps = 10;
+                const stepValue = diff / steps;
+                let step = 0;
+
+                const animate = () => {
+                    step++;
+                    const value = Math.round(current + (stepValue * step));
+                    DOM.scoreValue.textContent = value;
+
+                    if (step < steps) {
+                        requestAnimationFrame(animate);
+                    } else {
+                        DOM.scoreValue.textContent = newScore;
+                    }
+                };
+
+                animate();
+            },
+
+            // Update streak display
+            updateStreak(streak) {
+                DOM.streakValue.textContent = streak;
+
+                if (streak > 0) {
+                    DOM.streakContainer.classList.remove('streak-inactive');
+                } else {
+                    DOM.streakContainer.classList.add('streak-inactive');
+                }
+            },
+
+            // Update combo meter
+            updateCombo(combo) {
+                const percent = (combo / GameState.maxCombo) * 100;
+                DOM.comboBar.style.width = `${percent}%`;
+
+                if (combo >= 80) {
+                    DOM.comboLabel.textContent = 'BONUS READY!';
+                    DOM.comboLabel.classList.add('combo-bonus');
+                } else {
+                    DOM.comboLabel.textContent = 'Combo Meter';
+                    DOM.comboLabel.classList.remove('combo-bonus');
+                }
+            },
+
+            // Update lives display
+            updateLives(lives) {
+                const hearts = DOM.livesContainer.querySelectorAll('.life-heart');
+                hearts.forEach((heart, i) => {
+                    if (i >= lives) {
+                        heart.classList.add('lost');
+                    } else {
+                        heart.classList.remove('lost');
+                    }
+                });
+            },
+
+            // Update hint display
+            updateHint(text) {
+                DOM.hintDisplay.textContent = text;
+            }
+        };
+
+        // ========================================
+        // ANIMATIONS & EFFECTS
+        // ========================================
+        const Effects = {
+            // Ruut celebration animation
+            ruutJump() {
+                DOM.ruut.className = 'ruut-jump ruut-happy';
+                setTimeout(() => {
+                    DOM.ruut.className = 'ruut-idle';
+                }, 500);
+            },
+
+            // Ruut shake on wrong answer
+            ruutShake() {
+                DOM.ruut.className = 'ruut-shake ruut-sad';
+                setTimeout(() => {
+                    DOM.ruut.className = 'ruut-idle';
+                }, 300);
+            },
+
+            // Ruut big celebration for level complete
+            ruutCelebrate() {
+                DOM.ruut.className = 'ruut-celebrate ruut-happy';
+                setTimeout(() => {
+                    DOM.ruut.className = 'ruut-idle ruut-happy';
+                }, 800);
+            },
+
+            // Create particle burst
+            createParticles(x, y, count = 10, type = 'sparkle') {
+                for (let i = 0; i < count; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'particle';
+
+                    // Random properties
+                    const angle = (Math.PI * 2 * i) / count;
+                    const velocity = 50 + Math.random() * 50;
+                    const size = 4 + Math.random() * 6;
+                    const hue = type === 'confetti'
+                        ? Math.random() * 360
+                        : 45 + Math.random() * 20; // Gold-ish
+
+                    particle.style.cssText = `
+                        left: ${x}px;
+                        top: ${y}px;
+                        width: ${size}px;
+                        height: ${size}px;
+                        background: hsl(${hue}, 80%, 60%);
+                        border-radius: ${type === 'confetti' ? '2px' : '50%'};
+                        animation-duration: ${0.5 + Math.random() * 0.5}s;
+                        transform: translate(${Math.cos(angle) * velocity}px, ${Math.sin(angle) * velocity}px);
+                    `;
+
+                    DOM.particles.appendChild(particle);
+
+                    // Clean up
+                    setTimeout(() => particle.remove(), 1000);
+                }
+            },
+
+            // Confetti explosion for level complete
+            confettiExplosion() {
+                for (let i = 0; i < 50; i++) {
+                    setTimeout(() => {
+                        const confetti = document.createElement('div');
+                        confetti.className = 'confetti';
+
+                        const x = Math.random() * window.innerWidth;
+                        const hue = Math.random() * 360;
+                        const delay = Math.random() * 0.5;
+
+                        confetti.style.cssText = `
+                            left: ${x}px;
+                            top: -10px;
+                            width: 10px;
+                            height: 10px;
+                            background: hsl(${hue}, 80%, 60%);
+                            animation-delay: ${delay}s;
+                        `;
+
+                        DOM.particles.appendChild(confetti);
+                        setTimeout(() => confetti.remove(), 2500);
+                    }, i * 30);
+                }
+            },
+
+            // Flash input on correct/incorrect
+            flashInput(correct) {
+                DOM.input.classList.remove('correct', 'incorrect');
+                void DOM.input.offsetWidth; // Trigger reflow
+                DOM.input.classList.add(correct ? 'correct' : 'incorrect');
+
+                setTimeout(() => {
+                    DOM.input.classList.remove('correct', 'incorrect');
+                }, 400);
+            },
+
+            // Mark rung as just completed
+            markRungComplete(index) {
+                const rung = document.querySelector(`.word-rung[data-index="${index}"]`);
+                if (rung) {
+                    rung.classList.add('just-completed');
+                    setTimeout(() => {
+                        rung.classList.remove('just-completed');
+                    }, 500);
+                }
+            }
+        };
+
+        // ========================================
+        // GAME LOGIC
+        // ========================================
+        const Game = {
+            // Start the game
+            start() {
+                GameState.reset();
+                GameState.isPlaying = true;
+
+                // Hide pregame overlay
+                DOM.pregame.classList.add('hidden');
+
+                // Render initial state
+                Renderer.renderLadder();
+                Renderer.updateScore(GameState.score);
+                Renderer.updateStreak(GameState.streak);
+                Renderer.updateCombo(GameState.combo);
+                Renderer.updateLives(GameState.lives);
+
+                // Focus input with mobile-friendly delay and retry
+                setTimeout(() => {
+                    DOM.input.focus();
+                    // Mobile Safari workaround: sometimes needs a second attempt
+                    if (document.activeElement !== DOM.input) {
+                        setTimeout(() => DOM.input.focus(), 50);
+                    }
+                }, 100);
+
+                // Show initial hint
+                const firstWord = GameState.chain.words[0];
+                Renderer.updateHint(`Previous word: START | Think: What word goes with "${firstWord[0]}___"?`);
+
+                // Start combo decay
+                this.startComboDecay();
+            },
+
+            // Process word submission
+            submitWord(input) {
+                if (!GameState.isPlaying) return;
+
+                const targetWord = GameState.allWords[GameState.currentWordIndex];
+                const submitted = input.trim().toUpperCase();
+
+                if (!submitted) return;
+
+                // Check for match (with typo forgiveness)
+                const isCorrect = this.checkWord(submitted, targetWord);
+
+                if (isCorrect) {
+                    this.handleCorrectWord(targetWord);
+                } else {
+                    this.handleWrongWord(submitted);
+                }
+
+                // Clear input
+                DOM.input.value = '';
+            },
+
+            // Typo forgiveness: allow 1 character difference
+            checkWord(submitted, target) {
+                if (submitted === target) return true;
+
+                // Typo forgiveness for words >= 4 characters
+                if (target.length >= 4) {
+                    const distance = this.levenshteinDistance(submitted, target);
+                    if (distance === 1) {
+                        // Show typo forgiveness feedback
+                        Renderer.updateHint(`Close enough! (Typo forgiven: ${target})`);
+                        return true;
+                    }
+                }
+
+                return false;
+            },
+
+            // Levenshtein distance for typo detection
+            levenshteinDistance(a, b) {
+                if (a.length === 0) return b.length;
+                if (b.length === 0) return a.length;
+
+                const matrix = [];
+
+                for (let i = 0; i <= b.length; i++) {
+                    matrix[i] = [i];
+                }
+
+                for (let j = 0; j <= a.length; j++) {
+                    matrix[0][j] = j;
+                }
+
+                for (let i = 1; i <= b.length; i++) {
+                    for (let j = 1; j <= a.length; j++) {
+                        if (b.charAt(i - 1) === a.charAt(j - 1)) {
+                            matrix[i][j] = matrix[i - 1][j - 1];
+                        } else {
+                            matrix[i][j] = Math.min(
+                                matrix[i - 1][j - 1] + 1,
+                                matrix[i][j - 1] + 1,
+                                matrix[i - 1][j] + 1
+                            );
+                        }
+                    }
+                }
+
+                return matrix[b.length][a.length];
+            },
+
+            // Handle correct word
+            handleCorrectWord(word) {
+                // Update state
+                GameState.currentWordIndex++;
+                GameState.streak++;
+                GameState.maxStreak = Math.max(GameState.maxStreak, GameState.streak);
+                GameState.perfectWords++;
+                GameState.wrongAttempts = 0;
+
+                // Calculate score (per PRD scoring)
+                const basePoints = 100;
+                const streakMultiplier = 1 + (GameState.streak * 0.1);
+                const points = Math.round(basePoints * streakMultiplier);
+                GameState.score += points;
+
+                // Update combo
+                GameState.combo = Math.min(GameState.maxCombo, GameState.combo + 20);
+
+                // Check for bonus word unlock (streak >= 3)
+                if (GameState.streak >= 3 && GameState.bonusWordsUnlocked < 3) {
+                    if (GameState.combo >= 80) {
+                        GameState.bonusWordsUnlocked++;
+                        Renderer.updateHint(`BONUS WORD UNLOCKED! Streak x${GameState.streak}`);
+                    }
+                }
+
+                // Visual effects
+                Effects.flashInput(true);
+                Effects.ruutJump();
+                Effects.markRungComplete(GameState.currentWordIndex - 1);
+
+                // Particle burst at completed word
+                const rung = document.querySelector(`.word-rung[data-index="${GameState.currentWordIndex - 1}"]`);
+                if (rung) {
+                    const rect = rung.getBoundingClientRect();
+                    Effects.createParticles(rect.left + rect.width / 2, rect.top + rect.height / 2, 8);
+                }
+
+                // Update displays
+                Renderer.renderLadder();
+                Renderer.updateScore(GameState.score);
+                Renderer.updateStreak(GameState.streak);
+                Renderer.updateCombo(GameState.combo);
+
+                // Check for level complete
+                if (GameState.currentWordIndex >= GameState.allWords.length) {
+                    this.completeLevel();
+                } else {
+                    // Update hint for next word
+                    const nextWord = GameState.allWords[GameState.currentWordIndex];
+                    const prevWord = GameState.allWords[GameState.currentWordIndex - 1];
+                    Renderer.updateHint(`Previous: ${prevWord} | Next starts with: ${nextWord[0]}`);
+                }
+            },
+
+            // Handle wrong word
+            handleWrongWord(submitted) {
+                GameState.streak = 0;
+                GameState.wrongAttempts++;
+                GameState.combo = Math.max(0, GameState.combo - 30);
+
+                // Penalty points
+                GameState.score = Math.max(0, GameState.score - 50);
+
+                // Check for life loss (3 wrong = 1 life)
+                if (GameState.wrongAttempts >= 3) {
+                    GameState.lives--;
+                    GameState.wrongAttempts = 0;
+                    Renderer.updateLives(GameState.lives);
+
+                    if (GameState.lives <= 0) {
+                        this.gameOver();
+                        return;
+                    }
+                }
+
+                // Visual effects
+                Effects.flashInput(false);
+                Effects.ruutShake();
+
+                // Update displays
+                Renderer.updateScore(GameState.score);
+                Renderer.updateStreak(GameState.streak);
+                Renderer.updateCombo(GameState.combo);
+
+                // Helpful hint
+                const targetWord = GameState.allWords[GameState.currentWordIndex];
+                const prevWord = GameState.currentWordIndex > 0
+                    ? GameState.allWords[GameState.currentWordIndex - 1]
+                    : 'START';
+                Renderer.updateHint(`Not quite! Think: "${prevWord}" + "${targetWord[0]}___" (${GameState.wrongAttempts}/3 attempts)`);
+            },
+
+            // Combo decay over time
+            startComboDecay() {
+                if (this.comboDecayInterval) {
+                    clearInterval(this.comboDecayInterval);
+                }
+
+                this.comboDecayInterval = setInterval(() => {
+                    if (GameState.isPlaying && GameState.combo > 0) {
+                        GameState.combo = Math.max(0, GameState.combo - 2);
+                        Renderer.updateCombo(GameState.combo);
+                    }
+                }, 500);
+            },
+
+            // Level complete
+            completeLevel() {
+                GameState.isPlaying = false;
+
+                if (this.comboDecayInterval) {
+                    clearInterval(this.comboDecayInterval);
+                }
+
+                // Calculate time
+                const elapsedMs = Date.now() - GameState.startTime;
+                const seconds = Math.floor(elapsedMs / 1000);
+                const minutes = Math.floor(seconds / 60);
+                const secs = seconds % 60;
+
+                // Calculate stars based on performance
+                let stars = 1;
+                if (GameState.maxStreak >= 5) stars = 2;
+                if (GameState.maxStreak >= 8 && GameState.perfectWords >= 10) stars = 3;
+
+                // Effects
+                Effects.ruutCelebrate();
+                Effects.confettiExplosion();
+
+                // Update postgame overlay
+                document.getElementById('final-score').textContent = GameState.score;
+                document.getElementById('final-time').textContent = `${minutes}:${secs.toString().padStart(2, '0')}`;
+                document.getElementById('final-streak').textContent = GameState.maxStreak;
+                document.getElementById('final-perfect').textContent = GameState.perfectWords;
+
+                // Animate stars
+                setTimeout(() => {
+                    DOM.postgame.classList.remove('hidden');
+
+                    const starElements = document.querySelectorAll('.star');
+                    starElements.forEach((star, i) => {
+                        setTimeout(() => {
+                            if (i < stars) {
+                                star.classList.add('earned');
+                            } else {
+                                star.classList.remove('earned');
+                            }
+                        }, i * 300);
+                    });
+                }, 1000);
+            },
+
+            // Game over
+            gameOver() {
+                GameState.isPlaying = false;
+
+                if (this.comboDecayInterval) {
+                    clearInterval(this.comboDecayInterval);
+                }
+
+                Renderer.updateHint('No lives remaining! Tap to try again.');
+
+                setTimeout(() => {
+                    // For MVP, just restart
+                    GameState.lives = 3;
+                    Renderer.updateLives(GameState.lives);
+                    this.start();
+                }, 2000);
+            },
+
+            // Next level
+            nextLevel() {
+                GameState.currentChainIndex = (GameState.currentChainIndex + 1) % WORD_CHAINS.length;
+
+                // Reset lives for new level
+                GameState.lives = 3;
+
+                // Hide overlay and start
+                DOM.postgame.classList.add('hidden');
+
+                // Show NPC speech (story integration - light touch)
+                this.showNPCMessage();
+
+                setTimeout(() => {
+                    this.start();
+                }, 500);
+            },
+
+            // Show NPC message (story integration)
+            showNPCMessage() {
+                const messages = [
+                    "Well done, traveler. The words flow through you like water...",
+                    "Each connection you make brings us closer to the truth.",
+                    "The ancient language reveals itself to those who listen.",
+                    "Your journey through words shapes the fate of nations."
+                ];
+
+                const message = messages[GameState.currentChainIndex % messages.length];
+                document.querySelector('.npc-text').textContent = message;
+                DOM.npcSpeech.classList.add('visible');
+
+                const hideNPC = (e) => {
+                    if (e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                    }
+                    DOM.npcSpeech.classList.remove('visible');
+                    DOM.npcSpeech.removeEventListener('click', hideNPC);
+                    DOM.npcSpeech.removeEventListener('touchend', hideNPC);
+                };
+
+                // Mobile-friendly: handle both touch and click
+                DOM.npcSpeech.addEventListener('touchend', hideNPC);
+                DOM.npcSpeech.addEventListener('click', hideNPC);
+
+                // Auto-hide after 5 seconds
+                setTimeout(hideNPC, 5000);
+            }
+        };
+
+        // ========================================
+        // INPUT HANDLING
+        // ========================================
+        const InputHandler = {
+            init() {
+                // Word input - submit on Enter or space after word
+                DOM.input.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        Game.submitWord(DOM.input.value);
+                    }
+                });
+
+                // Auto-submit on space if word is complete
+                DOM.input.addEventListener('input', (e) => {
+                    const value = DOM.input.value;
+
+                    // Check if space was typed (potential word submit)
+                    if (value.endsWith(' ') && value.trim().length > 0) {
+                        Game.submitWord(value);
+                    }
+
+                    // Microinteraction: letter typed feedback
+                    if (value.length > 0) {
+                        // Subtle scale animation could go here
+                    }
+                });
+
+                // Mobile-friendly button handlers (touchend + click for compatibility)
+                const startBtn = document.getElementById('start-btn');
+                const nextBtn = document.getElementById('next-btn');
+
+                // Start button - handle both touch and click
+                const handleStart = (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    Game.start();
+                };
+                startBtn.addEventListener('touchend', handleStart);
+                startBtn.addEventListener('click', handleStart);
+
+                // Next level button - handle both touch and click
+                const handleNext = (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    Game.nextLevel();
+                };
+                nextBtn.addEventListener('touchend', handleNext);
+                nextBtn.addEventListener('click', handleNext);
+
+                // Touch input handling for mobile
+                document.addEventListener('touchstart', (e) => {
+                    // Ensure keyboard stays up on mobile during gameplay
+                    if (GameState.isPlaying && e.target !== DOM.input && e.target.tagName !== 'BUTTON') {
+                        e.preventDefault();
+                        DOM.input.focus();
+                    }
+                });
+
+                // Better mobile input focus on game container tap
+                document.getElementById('game-container').addEventListener('touchend', (e) => {
+                    if (GameState.isPlaying && e.target.tagName !== 'INPUT' && e.target.tagName !== 'BUTTON') {
+                        setTimeout(() => DOM.input.focus(), 100);
+                    }
+                });
+            }
+        };
+
+        // ========================================
+        // INITIALIZATION
+        // ========================================
+        document.addEventListener('DOMContentLoaded', () => {
+            InputHandler.init();
+
+            // Initial render
+            Renderer.renderLadder();
+            Renderer.updateLives(GameState.lives);
+
+            // Show streak as inactive initially
+            DOM.streakContainer.classList.add('streak-inactive');
+
+            console.log('WordRun MVP v0.0.01 initialized');
+            console.log('Word chains loaded:', WORD_CHAINS.length);
+            console.log('PRD Reference: 12 core words + 3 bonus streak words');
+        });
+    </script>
+</body>
+</html>

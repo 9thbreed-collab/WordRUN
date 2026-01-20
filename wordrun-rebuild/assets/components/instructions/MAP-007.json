@@ -1,0 +1,24 @@
+{
+  "componentId": "MAP-007",
+  "name": "Green Deciduous Tree",
+  "category": "map",
+  "needsInterpolation": true,
+  "status": "needs-work",
+  "dimensions": {"width": 48, "height": 80},
+  "regions": [
+    {
+      "location": "trunk base",
+      "boundingBox": {"x": 18, "y": 65, "width": 12, "height": 15},
+      "issue": "trunk often occluded by grass cube beneath",
+      "surroundingContext": "brown bark texture visible above occlusion, trunk widens at base",
+      "suggestedFill": "continue brown bark texture, slight widening toward base, maintain cylindrical shading",
+      "priority": "high"
+    }
+  ],
+  "geometryNotes": "Round canopy tree with brown trunk. Canopy is bright green with highlight/shadow variation. Trunk has bark texture.",
+  "referenceImages": [
+    {"source": "Map1.png", "coords": {"x": 100, "y": 150}, "notes": "Tree on elevated platform"},
+    {"source": "Map1.png", "coords": {"x": 250, "y": 120}, "notes": "Tree near treasure chest"}
+  ],
+  "notes": "Primary tree for pastoral zones. Multiple examples but trunk bases often occluded."
+}

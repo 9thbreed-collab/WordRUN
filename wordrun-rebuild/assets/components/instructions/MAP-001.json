@@ -1,0 +1,15 @@
+{
+  "componentId": "MAP-001",
+  "name": "Grass Land Cube",
+  "category": "map",
+  "needsInterpolation": false,
+  "status": "clean",
+  "dimensions": {"width": 64, "height": 48},
+  "regions": [],
+  "geometryNotes": "Isometric cube with grass texture on top face, tan/stone sides. Top face is brightest green, left face mid-tone tan, right face darker tan. 30-degree isometric angles.",
+  "referenceImages": [
+    {"source": "Map1.png", "coords": {"x": 180, "y": 450}, "notes": "Clean example near bottom-center"},
+    {"source": "Image.png", "coords": {"x": 150, "y": 680}, "notes": "Start area - multiple clean cubes"}
+  ],
+  "notes": "Primary terrain tile for pastoral/green zones. Multiple clean examples available in Map1.png."
+}

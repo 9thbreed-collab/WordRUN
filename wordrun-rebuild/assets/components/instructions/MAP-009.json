@@ -1,0 +1,24 @@
+{
+  "componentId": "MAP-009",
+  "name": "Snow-Covered Pine Tree",
+  "category": "map",
+  "needsInterpolation": true,
+  "status": "needs-work",
+  "dimensions": {"width": 40, "height": 72},
+  "regions": [
+    {
+      "location": "trunk base",
+      "boundingBox": {"x": 15, "y": 60, "width": 10, "height": 12},
+      "issue": "trunk base occluded by ice cube",
+      "surroundingContext": "dark brown trunk visible above, snow pile at base typical",
+      "suggestedFill": "continue dark trunk, add small snow pile at base",
+      "priority": "medium"
+    }
+  ],
+  "geometryNotes": "Coniferous tree with snow on branches. Triangular silhouette, white snow caps on dark green needles.",
+  "referenceImages": [
+    {"source": "Map2.png", "coords": {"x": 280, "y": 200}, "notes": "Pine trees around buildings"},
+    {"source": "Map2.png", "coords": {"x": 50, "y": 350}, "notes": "Pine near water edge"}
+  ],
+  "notes": "Primary tree for ice/winter zones."
+}

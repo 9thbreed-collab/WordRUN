@@ -1,0 +1,15 @@
+{
+  "componentId": "MAP-015",
+  "name": "Ice Tower/Spire",
+  "category": "map",
+  "needsInterpolation": false,
+  "status": "clean",
+  "dimensions": {"width": 40, "height": 96},
+  "regions": [],
+  "geometryNotes": "Tall crystalline ice tower with pointed top. Light blue translucent, bright glow at peak. Fantasy architecture.",
+  "referenceImages": [
+    {"source": "Map2.png", "coords": {"x": 40, "y": 80}, "notes": "Ice tower upper left"},
+    {"source": "Image.png", "coords": {"x": 180, "y": 50}, "notes": "Boss area tower"}
+  ],
+  "notes": "Landmark structure. Clean edges, dramatic silhouette."
+}

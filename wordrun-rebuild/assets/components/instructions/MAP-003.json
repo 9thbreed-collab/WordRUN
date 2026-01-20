@@ -1,0 +1,15 @@
+{
+  "componentId": "MAP-003",
+  "name": "Stone Land Cube",
+  "category": "map",
+  "needsInterpolation": false,
+  "status": "clean",
+  "dimensions": {"width": 64, "height": 48},
+  "regions": [],
+  "geometryNotes": "Isometric cube with dark stone/volcanic texture. Top face is dark grey, sides are darker grey-brown. Same 30-degree isometric angles.",
+  "referenceImages": [
+    {"source": "Map3.png", "coords": {"x": 180, "y": 350}, "notes": "Clean example in volcanic zone"},
+    {"source": "Image.png", "coords": {"x": 180, "y": 150}, "notes": "Boss area - stone cubes"}
+  ],
+  "notes": "Primary terrain tile for volcanic/lava zones. Clean examples in Map3.png."
+}

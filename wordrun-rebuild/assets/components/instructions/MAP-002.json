@@ -1,0 +1,15 @@
+{
+  "componentId": "MAP-002",
+  "name": "Ice Land Cube",
+  "category": "map",
+  "needsInterpolation": false,
+  "status": "clean",
+  "dimensions": {"width": 64, "height": 48},
+  "regions": [],
+  "geometryNotes": "Isometric cube with ice/snow texture. Top face is light blue-white, sides are medium blue with ice/frost texture. Same 30-degree isometric angles as grass cube.",
+  "referenceImages": [
+    {"source": "Map2.png", "coords": {"x": 200, "y": 400}, "notes": "Clean example in center area"},
+    {"source": "Image.png", "coords": {"x": 50, "y": 300}, "notes": "Ice zone on left side"}
+  ],
+  "notes": "Primary terrain tile for ice/winter zones. Clean examples in Map2.png."
+}

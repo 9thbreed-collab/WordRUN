@@ -1,0 +1,23 @@
+{
+  "componentId": "MAP-006",
+  "name": "Water-Edge Grass Cube",
+  "category": "map",
+  "needsInterpolation": true,
+  "status": "needs-work",
+  "dimensions": {"width": 64, "height": 48},
+  "regions": [
+    {
+      "location": "bottom-left quadrant",
+      "boundingBox": {"x": 0, "y": 30, "width": 25, "height": 18},
+      "issue": "water edge overlaps cube base, need clean cube edge",
+      "surroundingContext": "tan stone texture visible above water line",
+      "suggestedFill": "continue tan stone texture, maintain sharp cube edge at 30 degrees",
+      "priority": "medium"
+    }
+  ],
+  "geometryNotes": "Grass cube at water boundary. Water partially occludes lower edges.",
+  "referenceImages": [
+    {"source": "Map1.png", "coords": {"x": 80, "y": 520}, "notes": "Cubes at water edge"}
+  ],
+  "notes": "Used where land meets water. Need clean base for proper layering."
+}

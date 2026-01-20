@@ -1,0 +1,14 @@
+{
+  "componentId": "MAP-013",
+  "name": "Igloo",
+  "category": "map",
+  "needsInterpolation": false,
+  "status": "clean",
+  "dimensions": {"width": 64, "height": 56},
+  "regions": [],
+  "geometryNotes": "Domed ice structure with entrance. White/light blue with dark entrance opening. Snow texture on surface.",
+  "referenceImages": [
+    {"source": "Map2.png", "coords": {"x": 60, "y": 150}, "notes": "Large igloo in upper left"}
+  ],
+  "notes": "Key landmark for ice zones. Clean dome shape, no occlusion issues."
+}

@@ -1,0 +1,23 @@
+{
+  "componentId": "MAP-004",
+  "name": "Elevated Grass Cube",
+  "category": "map",
+  "needsInterpolation": true,
+  "status": "needs-work",
+  "dimensions": {"width": 64, "height": 72},
+  "regions": [
+    {
+      "location": "bottom portion - extended height",
+      "boundingBox": {"x": 0, "y": 48, "width": 64, "height": 24},
+      "issue": "taller cube variation with extended sides, may be occluded by lower cubes",
+      "surroundingContext": "same tan/stone texture as MAP-001 sides, continues downward",
+      "suggestedFill": "extend side faces downward maintaining same texture and shading gradient",
+      "priority": "medium"
+    }
+  ],
+  "geometryNotes": "Taller variant of grass cube for elevated terrain. Height 1.5x standard cube.",
+  "referenceImages": [
+    {"source": "Map1.png", "coords": {"x": 120, "y": 300}, "notes": "Elevated section near red house"}
+  ],
+  "notes": "Used for terrain height variation. May need interpolation where lower cubes overlap."
+}
