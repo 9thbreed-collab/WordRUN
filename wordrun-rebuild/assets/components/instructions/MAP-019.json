@@ -1,0 +1,12 @@
+{
+  "componentId": "MAP-019",
+  "name": "Flower Cluster",
+  "category": "map",
+  "needsInterpolation": false,
+  "status": "clean",
+  "dimensions": {"width": 24, "height": 20},
+  "regions": [],
+  "geometryNotes": "Small cluster of colorful flowers - white, pink, yellow variants. Ground-level decoration.",
+  "referenceImages": [{"source": "Map1.png", "coords": {"x": 150, "y": 400}}],
+  "notes": "Scattered decoration for grass terrain."
+}

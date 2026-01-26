@@ -1,20 +1,20 @@
 # WordRun Development Scratchpad
 
-## Last Updated: 2026-01-20 01:00
+## Last Updated: 2026-01-22 10:30
 ## Updated By: W1 (Imagination Layer)
 
 ---
 
-## CURRENT PHASE: Phase 1 - Visual Extraction & Grid Design
+## CURRENT PHASE: Phase 1 - EXTRACTION & INDEXING COMPLETE ✓
 
 ## ACTIVE TASKS
 | Window | Task | Status | Blocked By |
 |--------|------|--------|------------|
-| W1 | Monitor progress, resolve escalations | active | none |
-| W2 | Extract (A) → Interpolate Map (A2) + UI (A3) in parallel | ready | none |
-| W3 | Generate grid mockups with snap+nudge (Agent B) | in_progress | none |
-| W4 | Review GameplayScene.ts reference | in-progress | W2, W3 (for assembly) |
-| W5 | Start dev server, maintain browser | ready | none |
+| W1 | Phase 1 wrap-up, prepare for A2/A3 interpolation | active | none |
+| W2 | A2+A3 interpolation pending (11 MAP components) | ready | User decision |
+| W3 | GridSystem.ts COMPLETE | complete | none |
+| W4 | Ready for Phase 2 when components ready | ready | A2/A3 |
+| W5 | Start dev server, view ComponentCatalog | ready | none |
 
 ## COMPLETED TASKS
 - 2026-01-20 00:10 W1: Created wordrun-rebuild/ directory structure
@@ -25,22 +25,73 @@
 - 2026-01-20 00:28 W1: Verified GameMapInspo/ has source images (Image.jpg, Map1.png, Map2.png, Map3.png)
 - 2026-01-20 00:30 W1: Phase 0 COMPLETE - Ready for Phase 1
 - 2026-01-20 01:00 W1: Split interpolation into A2 (Map) + A3 (UI) for parallel processing
+- 2026-01-20 01:30 W3: Grid mockups COMPLETE (Agent B)
+- 2026-01-20 01:45 W4: GameplayScene logic reference COMPLETE (14-section doc)
+- 2026-01-20 23:50 W2: Agent A COMPLETE - 42 instruction files created (32 MAP + 10 UI)
+- 2026-01-20 23:55 W3: User DECISION - Isometric Grid (Option A) selected, Phase 2 started
+- 2026-01-21 00:05 W3: GridSystem.ts COMPLETE - 4 files created (types, config, system, index)
+- 2026-01-22 10:00 W1: Python extraction script (extract_components.py) - extracted ALL 42 components
+- 2026-01-22 10:15 W1: Python index script (create_index.py) - created thumbnails + ComponentCatalog.html
+- 2026-01-22 10:20 W1: components.json generated with 42 components (32 MAP + 10 UI)
+- 2026-01-22 10:25 W1: ComponentCatalog.html ready to view at localhost:5176/index/ComponentCatalog.html
+
+## EXTRACTION SUMMARY
+- **Total Components:** 42 (32 MAP + 10 UI)
+- **Clean (no interpolation needed):** 31 components
+- **Needs Interpolation:** 11 MAP components
+  - MAP-004 (Elevated Grass Cube)
+  - MAP-005 (Lava-Edge Stone Cube)
+  - MAP-006 (Water-Edge Grass Cube)
+  - MAP-007 (Green Deciduous Tree)
+  - MAP-009 (Snow-Covered Pine Tree)
+  - MAP-012 (Red Cottage House)
+  - MAP-014 (Wooden Winter Hut)
+  - MAP-016 (Volcanic Temple/Gate)
+  - MAP-017 (Volcano Forge/Smithy)
+  - MAP-023 (Lava Pool)
+  - MAP-026 (Wooden Bridge)
+- **UI Components:** All 10 are CLEAN (no interpolation needed)
 
 ## PENDING HANDOFFS
-(none yet)
+- **FROM W3 TO W4**: GridSystem.ts ready for scene assembly
+  - Files: `src/grid/types.ts`, `src/grid/GridConfig.ts`, `src/grid/GridSystem.ts`, `src/grid/index.ts`
+  - Import: `import { GridSystem, getGridSystem } from './grid';`
+- FROM W3 TO W5: Mockup HTML files ready for browser preview
 
 ## BLOCKERS / ISSUES
-(none yet)
+- **GEMINI RATE LIMIT (W2)**: gemini-2.5-pro returning 429 "MODEL_CAPACITY_EXHAUSTED" errors
+  - Affects: Agent A2 (Map interpolation) and Agent A3 (UI interpolation)
+  - Agent A instruction files are COMPLETE and ready for A2/A3 when capacity returns
+  - Workaround: Wait for capacity or use alternative image processing approach
+  - Escalated to W1 for resolution
 
 ## DECISIONS NEEDED (for Imagination Layer)
-(none yet)
+- ~~**GRID TYPE SELECTION (W3)**~~ **RESOLVED**: User chose **Option A: True Isometric Grid**
+  - Decision recorded: 2026-01-20 23:55
+  - W3 now implementing GridSystem.ts with isometric coordinates
 
 ## NEXT ACTIONS (per window)
-- W1: Coordinate Phase 1 kickoff
-- W2: Run Agent A (extraction), then A2 + A3 in parallel
-- W3: Run Agent B (grid mockups)
-- W4: Wait for W2, W3 outputs
-- W5: Start dev server, maintain browser
+- W1: Coordinate Phase 1 kickoff, review W3 grid completion
+- W2: BLOCKED by Gemini rate limit - A2+A3 ready when capacity returns
+- W3: **COMPLETE** - GridSystem.ts delivered. Available for support if needed.
+- W4: READY for Phase 2 - GridSystem.ts available, awaiting W2 components. Reference: `docs/GameplaySceneLogicReference.md`
+- W5: Start dev server on **PORT 5176**, render grid mockups in browser for user review
+
+---
+
+## DEV SERVER CONFIGURATION
+
+| Server | Port | Directory | Status |
+|--------|------|-----------|--------|
+| OLD (legacy) | 5175 | wordrun-vite/ | Running (ignore) |
+| **NEW (rebuild)** | **5176** | wordrun-rebuild/ | **Use this one** |
+
+**To start fresh server (W5):**
+```bash
+cd /Users/nathanielgiddens/WordRunProject/wordrun-rebuild
+npm run dev
+# Opens at http://localhost:5176
+```
 
 ---
 
@@ -346,16 +397,25 @@ wordrun-rebuild/index/
 ## CHECKPOINT CRITERIA
 
 ### Phase 1 Complete When:
-- [ ] All components extracted with instruction files (Agent A)
-- [ ] All MAP components interpolated (Agent A2)
-- [ ] All UI components interpolated (Agent A3)
+- [x] All components extracted with instruction files (Agent A) ✓ 42 files created
+- [x] Raw images extracted via Python PIL ✓ 42 PNG files in assets/components/raw/
+- [x] Thumbnails generated ✓ 42 PNG files in assets/components/thumbnails/
+- [x] Grid mockups generated with height nudge demo (Agent B) ✓
+- [x] User chooses isometric vs orthogonal ✓ ISOMETRIC selected
+- [x] Index documents (HTML + JSON) generated ✓ ComponentCatalog.html + components.json
+- [ ] All MAP components interpolated (Agent A2) - 11 components pending
+- [ ] All UI components interpolated (Agent A3) - NOT NEEDED (all clean)
 - [ ] No `failed` entries in interpolation logs
-- [ ] Grid mockups generated with height nudge demo (Agent B)
-- [ ] User chooses isometric vs orthogonal
-- [ ] Index documents (HTML + JSON) generated
+
+### OPTIONAL: Interpolation (11 MAP components)
+The 11 MAP components marked needsInterpolation=true have occlusion artifacts.
+Options:
+1. Run A2 interpolation (when Gemini available)
+2. Skip for now - use raw images, interpolate later
+3. Manual touch-up in image editor
 
 ---
 
-*Scratchpad Version: 1.2*
+*Scratchpad Version: 1.3*
 *Created: 2026-01-20*
-*Key Update: Split interpolation into A2 (Map) + A3 (UI) with explicit instruction handoff*
+*Key Update: Extraction & indexing COMPLETE via Python. 42 components extracted, thumbnails + catalog generated.*

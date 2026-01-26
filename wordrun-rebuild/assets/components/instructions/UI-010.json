@@ -1,0 +1,12 @@
+{
+  "componentId": "UI-010",
+  "name": "Lock Icon Overlay",
+  "category": "ui",
+  "needsInterpolation": false,
+  "status": "clean",
+  "dimensions": {"width": 32, "height": 36},
+  "regions": [],
+  "geometryNotes": "Padlock icon in grey/silver. Used as overlay on locked levels.",
+  "referenceImages": [{"source": "Image.png", "coords": {"x": 200, "y": 350}}],
+  "notes": "Locked state indicator. Can overlay on level markers."
+}

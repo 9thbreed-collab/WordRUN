@@ -1,0 +1,637 @@
+{
+  "version": "1.0",
+  "generated": "2026-01-22",
+  "totalComponents": 42,
+  "components": [
+    {
+      "id": "MAP-001",
+      "name": "Grass Land Cube",
+      "category": "map",
+      "thumbnail": "assets/components/thumbnails/MAP-001.png",
+      "fullImage": "assets/components/raw/MAP-001.png",
+      "dimensions": {
+        "width": 64,
+        "height": 48
+      },
+      "needsInterpolation": false,
+      "status": "clean",
+      "notes": "Primary terrain tile for pastoral/green zones. Multiple clean examples available in Map1.png.",
+      "codingApproach": ""
+    },
+    {
+      "id": "MAP-002",
+      "name": "Ice Land Cube",
+      "category": "map",
+      "thumbnail": "assets/components/thumbnails/MAP-002.png",
+      "fullImage": "assets/components/raw/MAP-002.png",
+      "dimensions": {
+        "width": 64,
+        "height": 48
+      },
+      "needsInterpolation": false,
+      "status": "clean",
+      "notes": "Primary terrain tile for ice/winter zones. Clean examples in Map2.png.",
+      "codingApproach": ""
+    },
+    {
+      "id": "MAP-003",
+      "name": "Stone Land Cube",
+      "category": "map",
+      "thumbnail": "assets/components/thumbnails/MAP-003.png",
+      "fullImage": "assets/components/raw/MAP-003.png",
+      "dimensions": {
+        "width": 64,
+        "height": 48
+      },
+      "needsInterpolation": false,
+      "status": "clean",
+      "notes": "Primary terrain tile for volcanic/lava zones. Clean examples in Map3.png.",
+      "codingApproach": ""
+    },
+    {
+      "id": "MAP-004",
+      "name": "Elevated Grass Cube",
+      "category": "map",
+      "thumbnail": "assets/components/thumbnails/MAP-004.png",
+      "fullImage": "assets/components/raw/MAP-004.png",
+      "dimensions": {
+        "width": 64,
+        "height": 72
+      },
+      "needsInterpolation": true,
+      "status": "needs-work",
+      "notes": "Used for terrain height variation. May need interpolation where lower cubes overlap.",
+      "codingApproach": ""
+    },
+    {
+      "id": "MAP-005",
+      "name": "Lava-Edge Stone Cube",
+      "category": "map",
+      "thumbnail": "assets/components/thumbnails/MAP-005.png",
+      "fullImage": "assets/components/raw/MAP-005.png",
+      "dimensions": {
+        "width": 64,
+        "height": 48
+      },
+      "needsInterpolation": true,
+      "status": "needs-work",
+      "notes": "Variant for lava-adjacent placement. Clean version needed for reusability.",
+      "codingApproach": ""
+    },
+    {
+      "id": "MAP-006",
+      "name": "Water-Edge Grass Cube",
+      "category": "map",
+      "thumbnail": "assets/components/thumbnails/MAP-006.png",
+      "fullImage": "assets/components/raw/MAP-006.png",
+      "dimensions": {
+        "width": 64,
+        "height": 48
+      },
+      "needsInterpolation": true,
+      "status": "needs-work",
+      "notes": "Used where land meets water. Need clean base for proper layering.",
+      "codingApproach": ""
+    },
+    {
+      "id": "MAP-007",
+      "name": "Green Deciduous Tree",
+      "category": "map",
+      "thumbnail": "assets/components/thumbnails/MAP-007.png",
+      "fullImage": "assets/components/raw/MAP-007.png",
+      "dimensions": {
+        "width": 48,
+        "height": 80
+      },
+      "needsInterpolation": true,
+      "status": "needs-work",
+      "notes": "Primary tree for pastoral zones. Multiple examples but trunk bases often occluded.",
+      "codingApproach": ""
+    },
+    {
+      "id": "MAP-008",
+      "name": "Small Bush Tree",
+      "category": "map",
+      "thumbnail": "assets/components/thumbnails/MAP-008.png",
+      "fullImage": "assets/components/raw/MAP-008.png",
+      "dimensions": {
+        "width": 32,
+        "height": 40
+      },
+      "needsInterpolation": false,
+      "status": "clean",
+      "notes": "Decorative vegetation. Clean examples available, no occlusion issues.",
+      "codingApproach": ""
+    },
+    {
+      "id": "MAP-009",
+      "name": "Snow-Covered Pine Tree",
+      "category": "map",
+      "thumbnail": "assets/components/thumbnails/MAP-009.png",
+      "fullImage": "assets/components/raw/MAP-009.png",
+      "dimensions": {
+        "width": 40,
+        "height": 72
+      },
+      "needsInterpolation": true,
+      "status": "needs-work",
+      "notes": "Primary tree for ice/winter zones.",
+      "codingApproach": ""
+    },
+    {
+      "id": "MAP-010",
+      "name": "Ice Crystal Tree",
+      "category": "map",
+      "thumbnail": "assets/components/thumbnails/MAP-010.png",
+      "fullImage": "assets/components/raw/MAP-010.png",
+      "dimensions": {
+        "width": 36,
+        "height": 64
+      },
+      "needsInterpolation": false,
+      "status": "clean",
+      "notes": "Decorative ice formation for winter zones. Clean crystalline edges, no occlusion.",
+      "codingApproach": ""
+    },
+    {
+      "id": "MAP-011",
+      "name": "Dead Volcanic Tree",
+      "category": "map",
+      "thumbnail": "assets/components/thumbnails/MAP-011.png",
+      "fullImage": "assets/components/raw/MAP-011.png",
+      "dimensions": {
+        "width": 32,
+        "height": 56
+      },
+      "needsInterpolation": false,
+      "status": "clean",
+      "notes": "Used in volcanic/lava zones. Sparse, atmospheric element.",
+      "codingApproach": ""
+    },
+    {
+      "id": "MAP-012",
+      "name": "Red Cottage House",
+      "category": "map",
+      "thumbnail": "assets/components/thumbnails/MAP-012.png",
+      "fullImage": "assets/components/raw/MAP-012.png",
+      "dimensions": {
+        "width": 72,
+        "height": 80
+      },
+      "needsInterpolation": true,
+      "status": "needs-work",
+      "notes": "Key landmark building for pastoral zones. Foundation typically hidden by terrain.",
+      "codingApproach": ""
+    },
+    {
+      "id": "MAP-013",
+      "name": "Igloo",
+      "category": "map",
+      "thumbnail": "assets/components/thumbnails/MAP-013.png",
+      "fullImage": "assets/components/raw/MAP-013.png",
+      "dimensions": {
+        "width": 64,
+        "height": 56
+      },
+      "needsInterpolation": false,
+      "status": "clean",
+      "notes": "Key landmark for ice zones. Clean dome shape, no occlusion issues.",
+      "codingApproach": ""
+    },
+    {
+      "id": "MAP-014",
+      "name": "Wooden Winter Hut",
+      "category": "map",
+      "thumbnail": "assets/components/thumbnails/MAP-014.png",
+      "fullImage": "assets/components/raw/MAP-014.png",
+      "dimensions": {
+        "width": 56,
+        "height": 64
+      },
+      "needsInterpolation": true,
+      "status": "needs-work",
+      "notes": "Secondary building for ice zones. Cozy appearance with snow details.",
+      "codingApproach": ""
+    },
+    {
+      "id": "MAP-015",
+      "name": "Ice Tower/Spire",
+      "category": "map",
+      "thumbnail": "assets/components/thumbnails/MAP-015.png",
+      "fullImage": "assets/components/raw/MAP-015.png",
+      "dimensions": {
+        "width": 40,
+        "height": 96
+      },
+      "needsInterpolation": false,
+      "status": "clean",
+      "notes": "Landmark structure. Clean edges, dramatic silhouette.",
+      "codingApproach": ""
+    },
+    {
+      "id": "MAP-016",
+      "name": "Volcanic Temple/Gate",
+      "category": "map",
+      "thumbnail": "assets/components/thumbnails/MAP-016.png",
+      "fullImage": "assets/components/raw/MAP-016.png",
+      "dimensions": {
+        "width": 80,
+        "height": 88
+      },
+      "needsInterpolation": true,
+      "status": "needs-work",
+      "notes": "Major landmark for volcanic zones. Imposing architecture with fire elements.",
+      "codingApproach": ""
+    },
+    {
+      "id": "MAP-017",
+      "name": "Volcano Forge/Smithy",
+      "category": "map",
+      "thumbnail": "assets/components/thumbnails/MAP-017.png",
+      "fullImage": "assets/components/raw/MAP-017.png",
+      "dimensions": {
+        "width": 64,
+        "height": 72
+      },
+      "needsInterpolation": true,
+      "status": "needs-work",
+      "notes": "Secondary building for volcanic zones. Industrial/craft theme.",
+      "codingApproach": ""
+    },
+    {
+      "id": "MAP-018",
+      "name": "Campfire",
+      "category": "map",
+      "thumbnail": "assets/components/thumbnails/MAP-018.png",
+      "fullImage": "assets/components/raw/MAP-018.png",
+      "dimensions": {
+        "width": 32,
+        "height": 40
+      },
+      "needsInterpolation": false,
+      "status": "clean",
+      "notes": "Decorative element for pastoral zones. Clean extraction available.",
+      "codingApproach": ""
+    },
+    {
+      "id": "MAP-019",
+      "name": "Flower Cluster",
+      "category": "map",
+      "thumbnail": "assets/components/thumbnails/MAP-019.png",
+      "fullImage": "assets/components/raw/MAP-019.png",
+      "dimensions": {
+        "width": 24,
+        "height": 20
+      },
+      "needsInterpolation": false,
+      "status": "clean",
+      "notes": "Scattered decoration for grass terrain.",
+      "codingApproach": ""
+    },
+    {
+      "id": "MAP-020",
+      "name": "Ice Crystal Formation",
+      "category": "map",
+      "thumbnail": "assets/components/thumbnails/MAP-020.png",
+      "fullImage": "assets/components/raw/MAP-020.png",
+      "dimensions": {
+        "width": 28,
+        "height": 36
+      },
+      "needsInterpolation": false,
+      "status": "clean",
+      "notes": "Decorative element for ice zones.",
+      "codingApproach": ""
+    },
+    {
+      "id": "MAP-021",
+      "name": "Snowman",
+      "category": "map",
+      "thumbnail": "assets/components/thumbnails/MAP-021.png",
+      "fullImage": "assets/components/raw/MAP-021.png",
+      "dimensions": {
+        "width": 32,
+        "height": 48
+      },
+      "needsInterpolation": false,
+      "status": "clean",
+      "notes": "Character decoration for ice zones.",
+      "codingApproach": ""
+    },
+    {
+      "id": "MAP-022",
+      "name": "Fire Torch/Brazier",
+      "category": "map",
+      "thumbnail": "assets/components/thumbnails/MAP-022.png",
+      "fullImage": "assets/components/raw/MAP-022.png",
+      "dimensions": {
+        "width": 24,
+        "height": 48
+      },
+      "needsInterpolation": false,
+      "status": "clean",
+      "notes": "Light source decoration for volcanic zones. Multiple clean examples.",
+      "codingApproach": ""
+    },
+    {
+      "id": "MAP-023",
+      "name": "Lava Pool",
+      "category": "map",
+      "thumbnail": "assets/components/thumbnails/MAP-023.png",
+      "fullImage": "assets/components/raw/MAP-023.png",
+      "dimensions": {
+        "width": 64,
+        "height": 32
+      },
+      "needsInterpolation": true,
+      "status": "needs-work",
+      "notes": "Hazard element for volcanic zones. Needs clean edges for proper layering.",
+      "codingApproach": ""
+    },
+    {
+      "id": "MAP-024",
+      "name": "Treasure Chest",
+      "category": "map",
+      "thumbnail": "assets/components/thumbnails/MAP-024.png",
+      "fullImage": "assets/components/raw/MAP-024.png",
+      "dimensions": {
+        "width": 40,
+        "height": 36
+      },
+      "needsInterpolation": false,
+      "status": "clean",
+      "notes": "Reward/objective element. May need open/closed state variants.",
+      "codingApproach": ""
+    },
+    {
+      "id": "MAP-025",
+      "name": "Stone Path Segment",
+      "category": "map",
+      "thumbnail": "assets/components/thumbnails/MAP-025.png",
+      "fullImage": "assets/components/raw/MAP-025.png",
+      "dimensions": {
+        "width": 48,
+        "height": 24
+      },
+      "needsInterpolation": false,
+      "status": "clean",
+      "notes": "Connects level markers. Tileable segment.",
+      "codingApproach": ""
+    },
+    {
+      "id": "MAP-026",
+      "name": "Wooden Bridge",
+      "category": "map",
+      "thumbnail": "assets/components/thumbnails/MAP-026.png",
+      "fullImage": "assets/components/raw/MAP-026.png",
+      "dimensions": {
+        "width": 72,
+        "height": 40
+      },
+      "needsInterpolation": true,
+      "status": "needs-work",
+      "notes": "Connects terrain over water. May need clean supports.",
+      "codingApproach": ""
+    },
+    {
+      "id": "MAP-027",
+      "name": "Water Surface",
+      "category": "map",
+      "thumbnail": "assets/components/thumbnails/MAP-027.png",
+      "fullImage": "assets/components/raw/MAP-027.png",
+      "dimensions": {
+        "width": 64,
+        "height": 32
+      },
+      "needsInterpolation": false,
+      "status": "clean",
+      "notes": "Base water tile. Variants for different themes (blue, ice-blue).",
+      "codingApproach": ""
+    },
+    {
+      "id": "MAP-028",
+      "name": "Frozen Water/Ice Sheet",
+      "category": "map",
+      "thumbnail": "assets/components/thumbnails/MAP-028.png",
+      "fullImage": "assets/components/raw/MAP-028.png",
+      "dimensions": {
+        "width": 64,
+        "height": 32
+      },
+      "needsInterpolation": false,
+      "status": "clean",
+      "notes": "Ice zone water variant. Tileable with regular water.",
+      "codingApproach": ""
+    },
+    {
+      "id": "MAP-029",
+      "name": "Level Marker (Numbered)",
+      "category": "map",
+      "thumbnail": "assets/components/thumbnails/MAP-029.png",
+      "fullImage": "assets/components/raw/MAP-029.png",
+      "dimensions": {
+        "width": 40,
+        "height": 40
+      },
+      "needsInterpolation": false,
+      "status": "clean",
+      "notes": "Primary level indicator. Numbers 1-25 per land. States: completed, current, locked.",
+      "codingApproach": ""
+    },
+    {
+      "id": "MAP-030",
+      "name": "Level Marker (Locked)",
+      "category": "map",
+      "thumbnail": "assets/components/thumbnails/MAP-030.png",
+      "fullImage": "assets/components/raw/MAP-030.png",
+      "dimensions": {
+        "width": 40,
+        "height": 40
+      },
+      "needsInterpolation": false,
+      "status": "clean",
+      "notes": "Locked level state. Shows padlock instead of number.",
+      "codingApproach": ""
+    },
+    {
+      "id": "MAP-031",
+      "name": "Boss Marker",
+      "category": "map",
+      "thumbnail": "assets/components/thumbnails/MAP-031.png",
+      "fullImage": "assets/components/raw/MAP-031.png",
+      "dimensions": {
+        "width": 56,
+        "height": 32
+      },
+      "needsInterpolation": false,
+      "status": "clean",
+      "notes": "Marks boss/challenge level. Prominent red color for visibility.",
+      "codingApproach": ""
+    },
+    {
+      "id": "MAP-032",
+      "name": "Start Flag",
+      "category": "map",
+      "thumbnail": "assets/components/thumbnails/MAP-032.png",
+      "fullImage": "assets/components/raw/MAP-032.png",
+      "dimensions": {
+        "width": 24,
+        "height": 40
+      },
+      "needsInterpolation": false,
+      "status": "clean",
+      "notes": "Starting point indicator for each land.",
+      "codingApproach": ""
+    },
+    {
+      "id": "UI-001",
+      "name": "Gem Currency Display",
+      "category": "ui",
+      "thumbnail": "assets/components/thumbnails/UI-001.png",
+      "fullImage": "assets/components/raw/UI-001.png",
+      "dimensions": {
+        "width": 80,
+        "height": 32
+      },
+      "needsInterpolation": false,
+      "status": "clean",
+      "notes": "Primary currency display in header. Shows gem count (1250 in reference).",
+      "codingApproach": ""
+    },
+    {
+      "id": "UI-002",
+      "name": "Coin Currency Display",
+      "category": "ui",
+      "thumbnail": "assets/components/thumbnails/UI-002.png",
+      "fullImage": "assets/components/raw/UI-002.png",
+      "dimensions": {
+        "width": 72,
+        "height": 32
+      },
+      "needsInterpolation": false,
+      "status": "clean",
+      "notes": "Secondary currency display. Shows coin count (45 in reference).",
+      "codingApproach": ""
+    },
+    {
+      "id": "UI-003",
+      "name": "Energy Bar Display",
+      "category": "ui",
+      "thumbnail": "assets/components/thumbnails/UI-003.png",
+      "fullImage": "assets/components/raw/UI-003.png",
+      "dimensions": {
+        "width": 88,
+        "height": 32
+      },
+      "needsInterpolation": false,
+      "status": "clean",
+      "notes": "Energy/lives display. Shows current/max with visual bar.",
+      "codingApproach": ""
+    },
+    {
+      "id": "UI-004",
+      "name": "Header Bar Background",
+      "category": "ui",
+      "thumbnail": "assets/components/thumbnails/UI-004.png",
+      "fullImage": "assets/components/raw/UI-004.png",
+      "dimensions": {
+        "width": 390,
+        "height": 60
+      },
+      "needsInterpolation": false,
+      "status": "clean",
+      "notes": "Container for all header UI elements. May be transparent overlay.",
+      "codingApproach": ""
+    },
+    {
+      "id": "UI-005",
+      "name": "Start Button",
+      "category": "ui",
+      "thumbnail": "assets/components/thumbnails/UI-005.png",
+      "fullImage": "assets/components/raw/UI-005.png",
+      "dimensions": {
+        "width": 120,
+        "height": 48
+      },
+      "needsInterpolation": false,
+      "status": "clean",
+      "notes": "Primary action button to begin level. High visibility green.",
+      "codingApproach": ""
+    },
+    {
+      "id": "UI-006",
+      "name": "Settings Button",
+      "category": "ui",
+      "thumbnail": "assets/components/thumbnails/UI-006.png",
+      "fullImage": "assets/components/raw/UI-006.png",
+      "dimensions": {
+        "width": 44,
+        "height": 44
+      },
+      "needsInterpolation": false,
+      "status": "clean",
+      "notes": "Opens settings/options menu. Standard gear icon.",
+      "codingApproach": ""
+    },
+    {
+      "id": "UI-007",
+      "name": "Back/Home Button",
+      "category": "ui",
+      "thumbnail": "assets/components/thumbnails/UI-007.png",
+      "fullImage": "assets/components/raw/UI-007.png",
+      "dimensions": {
+        "width": 44,
+        "height": 44
+      },
+      "needsInterpolation": false,
+      "status": "clean",
+      "notes": "Returns to previous screen or main menu.",
+      "codingApproach": ""
+    },
+    {
+      "id": "UI-008",
+      "name": "Star Rating Display",
+      "category": "ui",
+      "thumbnail": "assets/components/thumbnails/UI-008.png",
+      "fullImage": "assets/components/raw/UI-008.png",
+      "dimensions": {
+        "width": 64,
+        "height": 24
+      },
+      "needsInterpolation": false,
+      "status": "clean",
+      "notes": "Shows level completion rating (0-3 stars).",
+      "codingApproach": ""
+    },
+    {
+      "id": "UI-009",
+      "name": "Progress Indicator",
+      "category": "ui",
+      "thumbnail": "assets/components/thumbnails/UI-009.png",
+      "fullImage": "assets/components/raw/UI-009.png",
+      "dimensions": {
+        "width": 48,
+        "height": 48
+      },
+      "needsInterpolation": false,
+      "status": "clean",
+      "notes": "Level objectives or collection progress.",
+      "codingApproach": ""
+    },
+    {
+      "id": "UI-010",
+      "name": "Lock Icon Overlay",
+      "category": "ui",
+      "thumbnail": "assets/components/thumbnails/UI-010.png",
+      "fullImage": "assets/components/raw/UI-010.png",
+      "dimensions": {
+        "width": 32,
+        "height": 36
+      },
+      "needsInterpolation": false,
+      "status": "clean",
+      "notes": "Locked state indicator. Can overlay on level markers.",
+      "codingApproach": ""
+    }
+  ]
+}

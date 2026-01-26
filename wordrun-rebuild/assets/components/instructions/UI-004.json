@@ -1,0 +1,12 @@
+{
+  "componentId": "UI-004",
+  "name": "Header Bar Background",
+  "category": "ui",
+  "needsInterpolation": false,
+  "status": "clean",
+  "dimensions": {"width": 390, "height": 60},
+  "regions": [],
+  "geometryNotes": "Semi-transparent dark gradient bar spanning full width. Houses currency displays.",
+  "referenceImages": [{"source": "Image.png", "coords": {"x": 0, "y": 0}}],
+  "notes": "Container for all header UI elements. May be transparent overlay."
+}

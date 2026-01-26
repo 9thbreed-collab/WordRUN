@@ -1,0 +1,12 @@
+{
+  "componentId": "MAP-022",
+  "name": "Fire Torch/Brazier",
+  "category": "map",
+  "needsInterpolation": false,
+  "status": "clean",
+  "dimensions": {"width": 24, "height": 48},
+  "regions": [],
+  "geometryNotes": "Standing torch with metal stand, orange-red flames, glow effect around fire.",
+  "referenceImages": [{"source": "Map3.png", "coords": {"x": 100, "y": 250}}, {"source": "Map3.png", "coords": {"x": 220, "y": 150}}],
+  "notes": "Light source decoration for volcanic zones. Multiple clean examples."
+}

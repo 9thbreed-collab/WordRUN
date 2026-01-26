@@ -1,0 +1,12 @@
+{
+  "componentId": "UI-001",
+  "name": "Gem Currency Display",
+  "category": "ui",
+  "needsInterpolation": false,
+  "status": "clean",
+  "dimensions": {"width": 80, "height": 32},
+  "regions": [],
+  "geometryNotes": "Pill-shaped container with blue gem icon and white number. Dark semi-transparent background.",
+  "referenceImages": [{"source": "Image.png", "coords": {"x": 30, "y": 20}}],
+  "notes": "Primary currency display in header. Shows gem count (1250 in reference)."
+}

@@ -1,0 +1,12 @@
+{
+  "componentId": "UI-008",
+  "name": "Star Rating Display",
+  "category": "ui",
+  "needsInterpolation": false,
+  "status": "clean",
+  "dimensions": {"width": 64, "height": 24},
+  "regions": [],
+  "geometryNotes": "Three stars in a row. States: empty (grey), filled (gold), with count badge.",
+  "referenceImages": [{"source": "Image.png", "coords": {"x": 150, "y": 380}}],
+  "notes": "Shows level completion rating (0-3 stars)."
+}

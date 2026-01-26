@@ -1,0 +1,12 @@
+{
+  "componentId": "MAP-020",
+  "name": "Ice Crystal Formation",
+  "category": "map",
+  "needsInterpolation": false,
+  "status": "clean",
+  "dimensions": {"width": 28, "height": 36},
+  "regions": [],
+  "geometryNotes": "Cluster of light blue ice crystals emerging from ground. Translucent with bright highlights.",
+  "referenceImages": [{"source": "Map2.png", "coords": {"x": 120, "y": 300}}, {"source": "Image.png", "coords": {"x": 40, "y": 320}}],
+  "notes": "Decorative element for ice zones."
+}

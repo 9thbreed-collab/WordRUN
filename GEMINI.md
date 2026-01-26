@@ -34,6 +34,26 @@ The story is infused directly into gameplay, not an add-on. The goal is an exper
 
 ---
 
+## Gemini CLI Usage
+
+When to use `gemini -p`:
+- Analyzing entire codebases or large directories
+- Comparing multiple large files
+- Need to understand project-wide patterns or architecture
+- Current context window is insufficient for the task
+- Working with files totaling more than 100KB
+- Verifying if specific features, patterns, or security measures are implemented
+- Checking for the presence of certain coding patterns across the entire codebase
+
+**Important Notes:**
+- Paths in @ syntax are relative to your current working directory when invoking gemini
+- The CLI will include file contents directly in the context
+- No need for -yolo flag for read-only analysis
+- Gemini's context window can handle entire codebases that would overflow Claude's context
+- When checking implementations, be specific about what you're looking for to get accurate results
+
+---
+
 ## Development Commands
 
 All commands run from `wordrun-vite/`:
@@ -170,24 +190,34 @@ Functional prototype exists with 3,000 levels. Focus shifted from "making it wor
 | 3. Monetization | Pending | Awaiting market research integration |
 | 4. Design Excellence | Pending | Emotional design research complete (58K words) |
 
-### Latest Accomplishment (2026-01-20 Session v0.0.15)
-Administrative checkpoint session with zero active development:
-- **Session Type:** Pure administrative closure for documentation synchronization
-- **Status:** Git hygiene maintained, session summary created, handoff prepared
-- **Next Priority Confirmed:** CDD Phase 1 - Component Interface Design remains top priority
-- **Recent Sessions:** v0.0.14 (development principles), v0.0.13 (CDD pivot, implementation guides), v0.0.12 (documentation cleanup), v0.0.11 (UI analysis)
+### Latest Accomplishment (2026-01-26 Session v0.0.16)
+VGD implementation sprint - multi-agent visual development workflow:
+- **Session Type:** Visual Game Development (VGD) Phase 1 execution
+- **Assets Created:** 42 game components extracted and cataloged (32 MAP + 10 UI)
+- **Architecture:** Isometric grid system implemented (GridSystem.ts with coordinate conversion)
+- **Tools:** Component catalog HTML, Python extraction scripts, Gemini agent prompts
+- **Status:** VGD Phase 1 complete, ready for CDD Phase 1 (Component Interface Contracts)
+- **Next Priority:** Define TypeScript interfaces for all 42 components using catalog as input
+- **Recent Sessions:** v0.0.15 (admin checkpoint), v0.0.14 (dev principles), v0.0.13 (CDD pivot)
 
-### Next Priority: Component Interface Design (CDD Pivot)
+### Next Priority: Component Interface Contracts (CDD Phase 1)
 
 **Decision (v0.0.13)**: Pivoted from Land Distribution Matrix to Component-Driven Development. Matrix moved to Future Work.
 
-**Deliverable**: Define component contracts for GameplayScene before implementation:
-1. List all UI components needed
-2. Define interface contracts (inputs, outputs, boundaries)
-3. Identify event communication patterns
-4. Verify: removing any component won't break others
+**Accomplishment (v0.0.16)**: VGD Phase 1 complete - 42 components extracted and cataloged. Component inventory now exists as concrete foundation for interface design.
 
-**Reference**: `CDD_IMPLEMENTATION_GUIDE.md` (implementation checklist and pitfall avoidance)
+**Deliverable**: Define TypeScript interface contracts for all 42 extracted components:
+1. Read `index/components.json` for complete component inventory (DONE - 42 components)
+2. Group components by type (terrain, vegetation, buildings, water, props, UI)
+3. Define interface contracts (inputs, outputs, boundaries, events) for each group
+4. Identify event communication patterns
+5. Verify: removing any component won't break others
+
+**Reference**:
+- `index/ComponentCatalog.html` (visual component reference - NEW)
+- `index/components.json` (component inventory data - NEW)
+- `CDD_IMPLEMENTATION_GUIDE.md` (implementation checklist and pitfall avoidance)
+- `COMPONENT_DRIVEN_ARCHITECTURE_GUIDE.md` (CDD philosophy)
 
 ---
 

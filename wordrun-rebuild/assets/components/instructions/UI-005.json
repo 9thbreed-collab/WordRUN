@@ -1,0 +1,12 @@
+{
+  "componentId": "UI-005",
+  "name": "Start Button",
+  "category": "ui",
+  "needsInterpolation": false,
+  "status": "clean",
+  "dimensions": {"width": 120, "height": 48},
+  "regions": [],
+  "geometryNotes": "Large green pill-shaped button with 'START' text in white. Glossy 3D effect, slight glow.",
+  "referenceImages": [{"source": "Image.png", "coords": {"x": 135, "y": 730}}],
+  "notes": "Primary action button to begin level. High visibility green."
+}

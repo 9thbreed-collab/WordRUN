@@ -1,0 +1,12 @@
+{
+  "componentId": "MAP-024",
+  "name": "Treasure Chest",
+  "category": "map",
+  "needsInterpolation": false,
+  "status": "clean",
+  "dimensions": {"width": 40, "height": 36},
+  "regions": [],
+  "geometryNotes": "Wooden chest with gold trim, closed lid. Possible open state with gold coins visible.",
+  "referenceImages": [{"source": "Map1.png", "coords": {"x": 260, "y": 150}}, {"source": "Image.png", "coords": {"x": 200, "y": 220}}],
+  "notes": "Reward/objective element. May need open/closed state variants."
+}

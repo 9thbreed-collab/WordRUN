@@ -1,0 +1,12 @@
+{
+  "componentId": "UI-007",
+  "name": "Back/Home Button",
+  "category": "ui",
+  "needsInterpolation": false,
+  "status": "clean",
+  "dimensions": {"width": 44, "height": 44},
+  "regions": [],
+  "geometryNotes": "Circular button with left arrow or house icon. Navigation button style.",
+  "referenceImages": [{"source": "Image.png", "coords": {"x": 15, "y": 15}}],
+  "notes": "Returns to previous screen or main menu."
+}

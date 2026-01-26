@@ -1,0 +1,12 @@
+{
+  "componentId": "MAP-018",
+  "name": "Campfire",
+  "category": "map",
+  "needsInterpolation": false,
+  "status": "clean",
+  "dimensions": {"width": 32, "height": 40},
+  "regions": [],
+  "geometryNotes": "Small campfire with logs, orange flames, smoke particles. Glowing light effect around base.",
+  "referenceImages": [{"source": "Map1.png", "coords": {"x": 180, "y": 380}}],
+  "notes": "Decorative element for pastoral zones. Clean extraction available."
+}

@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=390, height=844, initial-scale=1.0">
+  <title>Grid Mockup: Orthogonal + Rotation (Option B)</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #1a1a2e;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      color: #fff;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    h1 {
+      font-size: 18px;
+      margin-bottom: 10px;
+      color: #ff6b6b;
+    }
+    .subtitle {
+      font-size: 12px;
+      color: #888;
+      margin-bottom: 20px;
+    }
+    .device-frame {
+      width: 390px;
+      height: 844px;
+      background: #16213e;
+      border-radius: 40px;
+      padding: 10px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+    }
+    .screen {
+      width: 100%;
+      height: 100%;
+      background: #0f0f23;
+      border-radius: 32px;
+      overflow: hidden;
+      position: relative;
+    }
+    canvas {
+      display: block;
+    }
+    .legend {
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      background: rgba(0,0,0,0.8);
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 10px;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin: 4px 0;
+    }
+    .legend-color {
+      width: 12px;
+      height: 12px;
+      border-radius: 2px;
+    }
+    .info-panel {
+      margin-top: 20px;
+      max-width: 390px;
+      background: #16213e;
+      padding: 15px;
+      border-radius: 10px;
+      font-size: 12px;
+      line-height: 1.6;
+    }
+    .info-panel h3 {
+      color: #ff6b6b;
+      margin-bottom: 10px;
+    }
+    .info-panel code {
+      background: #0f0f23;
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #4ecdc4;
+    }
+    .comparison {
+      background: #2a2a4e;
+      padding: 10px;
+      border-radius: 6px;
+      margin-top: 10px;
+    }
+    .comparison h4 {
+      color: #ffd93d;
+      font-size: 11px;
+      margin-bottom: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Option B: Orthogonal Grid + Camera Rotation</h1>
+  <p class="subtitle">Square Coordinates with 45deg Rotation + Height Nudge Demo</p>
+
+  <div class="device-frame">
+    <div class="screen">
+      <canvas id="canvas" width="370" height="824"></canvas>
+      <div class="legend">
+        <div class="legend-item">
+          <div class="legend-color" style="background: #4444ff;"></div>
+          <span>Raised (height > 0)</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color" style="background: #ffffff;"></div>
+          <span>Neutral (height = 0)</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color" style="background: #ff4444;"></div>
+          <span>Lowered (height < 0)</span>
+        </div>
+        <div class="legend-item" style="margin-top: 8px; border-top: 1px solid #444; padding-top: 8px;">
+          <div class="legend-color" style="background: transparent; border: 1px dashed #888;"></div>
+          <span>Original square grid (faded)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-panel">
+    <h3>Orthogonal Grid Properties</h3>
+    <p><strong>Base Tile Size:</strong> 32x32 pixels (square)</p>
+    <p><strong>Rotation:</strong> 45 degrees with Y-scale 0.5</p>
+    <p><strong>Rendered Size:</strong> ~64x32 (diamond appearance)</p>
+    <p><strong>Height Nudge:</strong> Range -2.0 to +2.0, 12px per unit</p>
+    <p><strong>Demo:</strong> Cube at (2,1) raised to <code>+1.5</code>, cube at (1,3) lowered to <code>-1.0</code></p>
+
+    <div class="comparison">
+      <h4>Key Difference from Option A:</h4>
+      <p>Coordinates are standard X/Y squares. The isometric look comes from rotating the entire view 45deg and compressing vertically by 50%.</p>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+
+    // Grid configuration - SQUARE base
+    const TILE_SIZE = 32;
+    const HEIGHT_PIXELS = 12;
+    const GRID_SIZE = 5;
+
+    // Screen center (offset for zones)
+    const CENTER_X = canvas.width / 2;
+    const CENTER_Y = 280;
+
+    // Zone definitions (same as isometric)
+    const ZONES = {
+      safeTop: { y: 0, height: 44, color: 'rgba(255,100,100,0.1)', label: 'Safe Area' },
+      header: { y: 44, height: 70, color: 'rgba(255,107,107,0.1)', label: 'Header' },
+      gameplay: { y: 114, height: 550, color: 'rgba(255,255,255,0.05)', label: 'Gameplay' },
+      input: { y: 664, height: 120, color: 'rgba(255,107,107,0.1)', label: 'Input' },
+      footer: { y: 784, height: 40, color: 'rgba(255,107,107,0.1)', label: 'Footer' }
+    };
+
+    // Cube data: [gridX, gridY, height]
+    const cubes = [];
+    for (let x = 0; x < GRID_SIZE; x++) {
+      for (let y = 0; y < GRID_SIZE; y++) {
+        let height = 0;
+        // Raised cube at (2,1) - same position as isometric demo
+        if (x === 2 && y === 1) height = 1.5;
+        // Lowered cube at (1,3)
+        if (x === 1 && y === 3) height = -1.0;
+        cubes.push({ gridX: x, gridY: y, height });
+      }
+    }
+
+    // Sort by render order
+    cubes.sort((a, b) => {
+      const depthA = (a.gridX + a.gridY) * 100 + (a.height + 2) * 10;
+      const depthB = (b.gridX + b.gridY) * 100 + (b.height + 2) * 10;
+      return depthA - depthB;
+    });
+
+    // Orthogonal grid to screen (with rotation transformation)
+    function gridToScreen(gridX, gridY, height = 0) {
+      // First: standard square grid position
+      const squareX = gridX * TILE_SIZE;
+      const squareY = gridY * TILE_SIZE;
+
+      // Then: apply 45-degree rotation + vertical compression
+      // This simulates camera rotation
+      const rotatedX = (squareX - squareY);
+      const rotatedY = (squareX + squareY) * 0.5;
+
+      // Center on screen and apply height offset
+      const screenX = CENTER_X + rotatedX;
+      const screenY = CENTER_Y + rotatedY - height * HEIGHT_PIXELS;
+
+      return { x: screenX, y: screenY };
+    }
+
+    // Original square position (for showing the "source" grid)
+    function gridToSquare(gridX, gridY) {
+      return {
+        x: 50 + gridX * 20,
+        y: 650 + gridY * 20
+      };
+    }
+
+    // Get height color (same as isometric)
+    function getHeightColor(height) {
+      if (height > 0) {
+        const intensity = Math.min(height / 2, 1);
+        const r = Math.round(68 + (255 - 68) * (1 - intensity));
+        const g = Math.round(68 + (255 - 68) * (1 - intensity));
+        const b = 255;
+        return `rgb(${r},${g},${b})`;
+      } else if (height < 0) {
+        const intensity = Math.min(-height / 2, 1);
+        const r = 255;
+        const g = Math.round(68 + (255 - 68) * (1 - intensity));
+        const b = Math.round(68 + (255 - 68) * (1 - intensity));
+        return `rgb(${r},${g},${b})`;
+      }
+      return '#88aa88';
+    }
+
+    // Draw isometric-style cube (rendered from orthogonal coords)
+    function drawCube(gridX, gridY, height) {
+      const pos = gridToScreen(gridX, gridY, height);
+      const x = pos.x;
+      const y = pos.y;
+
+      // Diamond dimensions (after rotation)
+      const hw = TILE_SIZE; // Half-width of diamond
+      const hh = TILE_SIZE / 2; // Half-height of diamond
+      const cubeHeight = 20;
+
+      const baseColor = getHeightColor(height);
+
+      // Top face
+      ctx.beginPath();
+      ctx.moveTo(x, y - hh);
+      ctx.lineTo(x + hw, y);
+      ctx.lineTo(x, y + hh);
+      ctx.lineTo(x - hw, y);
+      ctx.closePath();
+      ctx.fillStyle = baseColor;
+      ctx.fill();
+      ctx.strokeStyle = '#333';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+
+      // Left face
+      ctx.beginPath();
+      ctx.moveTo(x - hw, y);
+      ctx.lineTo(x, y + hh);
+      ctx.lineTo(x, y + hh + cubeHeight);
+      ctx.lineTo(x - hw, y + cubeHeight);
+      ctx.closePath();
+      ctx.fillStyle = shadeColor(baseColor, -30);
+      ctx.fill();
+      ctx.strokeStyle = '#333';
+      ctx.stroke();
+
+      // Right face
+      ctx.beginPath();
+      ctx.moveTo(x + hw, y);
+      ctx.lineTo(x, y + hh);
+      ctx.lineTo(x, y + hh + cubeHeight);
+      ctx.lineTo(x + hw, y + cubeHeight);
+      ctx.closePath();
+      ctx.fillStyle = shadeColor(baseColor, -50);
+      ctx.fill();
+      ctx.strokeStyle = '#333';
+      ctx.stroke();
+
+      // Height label
+      if (height !== 0) {
+        ctx.fillStyle = '#fff';
+        ctx.font = 'bold 10px monospace';
+        ctx.textAlign = 'center';
+        ctx.fillText(`h=${height.toFixed(1)}`, x, y - hh - 8);
+      }
+    }
+
+    function shadeColor(color, percent) {
+      const match = color.match(/rgb\((\d+),(\d+),(\d+)\)/);
+      if (!match) return color;
+      let [, r, g, b] = match.map(Number);
+      r = Math.max(0, Math.min(255, r + percent));
+      g = Math.max(0, Math.min(255, g + percent));
+      b = Math.max(0, Math.min(255, b + percent));
+      return `rgb(${r},${g},${b})`;
+    }
+
+    // Draw the rotated grid lines
+    function drawGridLines() {
+      ctx.strokeStyle = 'rgba(255,255,255,0.15)';
+      ctx.lineWidth = 1;
+
+      for (let i = 0; i <= GRID_SIZE; i++) {
+        // Lines along X (Y constant)
+        const startX = gridToScreen(0, i, 0);
+        const endX = gridToScreen(GRID_SIZE, i, 0);
+        ctx.beginPath();
+        ctx.moveTo(startX.x, startX.y);
+        ctx.lineTo(endX.x, endX.y);
+        ctx.stroke();
+
+        // Lines along Y (X constant)
+        const startY = gridToScreen(i, 0, 0);
+        const endY = gridToScreen(i, GRID_SIZE, 0);
+        ctx.beginPath();
+        ctx.moveTo(startY.x, startY.y);
+        ctx.lineTo(endY.x, endY.y);
+        ctx.stroke();
+      }
+    }
+
+    // Draw mini square grid reference (shows "source" coordinates)
+    function drawSquareGridReference() {
+      const offsetX = 280;
+      const offsetY = 720;
+      const cellSize = 15;
+
+      ctx.fillStyle = 'rgba(255,107,107,0.1)';
+      ctx.fillRect(offsetX - 5, offsetY - 5, GRID_SIZE * cellSize + 10, GRID_SIZE * cellSize + 25);
+
+      ctx.font = '8px sans-serif';
+      ctx.fillStyle = '#888';
+      ctx.textAlign = 'center';
+      ctx.fillText('Source Grid (before rotation)', offsetX + (GRID_SIZE * cellSize) / 2, offsetY - 10);
+
+      // Draw square grid
+      ctx.strokeStyle = 'rgba(255,255,255,0.3)';
+      ctx.lineWidth = 1;
+
+      for (let i = 0; i <= GRID_SIZE; i++) {
+        ctx.beginPath();
+        ctx.moveTo(offsetX + i * cellSize, offsetY);
+        ctx.lineTo(offsetX + i * cellSize, offsetY + GRID_SIZE * cellSize);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(offsetX, offsetY + i * cellSize);
+        ctx.lineTo(offsetX + GRID_SIZE * cellSize, offsetY + i * cellSize);
+        ctx.stroke();
+      }
+
+      // Highlight special cubes
+      // Raised cube (2,1)
+      ctx.fillStyle = 'rgba(68,68,255,0.5)';
+      ctx.fillRect(offsetX + 2 * cellSize, offsetY + 1 * cellSize, cellSize, cellSize);
+
+      // Lowered cube (1,3)
+      ctx.fillStyle = 'rgba(255,68,68,0.5)';
+      ctx.fillRect(offsetX + 1 * cellSize, offsetY + 3 * cellSize, cellSize, cellSize);
+
+      // Axis labels
+      ctx.fillStyle = '#ff6b6b';
+      ctx.font = 'bold 10px sans-serif';
+      ctx.fillText('X', offsetX + GRID_SIZE * cellSize + 8, offsetY + 5);
+      ctx.fillStyle = '#4ecdc4';
+      ctx.fillText('Y', offsetX - 8, offsetY + GRID_SIZE * cellSize + 5);
+    }
+
+    // Draw zones
+    function drawZones() {
+      ctx.font = '10px sans-serif';
+      for (const [name, zone] of Object.entries(ZONES)) {
+        ctx.fillStyle = zone.color;
+        ctx.fillRect(0, zone.y, canvas.width, zone.height);
+
+        ctx.strokeStyle = 'rgba(255,255,255,0.2)';
+        ctx.setLineDash([4, 4]);
+        ctx.beginPath();
+        ctx.moveTo(0, zone.y);
+        ctx.lineTo(canvas.width, zone.y);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        ctx.fillStyle = 'rgba(255,255,255,0.4)';
+        ctx.textAlign = 'right';
+        ctx.fillText(zone.label, canvas.width - 10, zone.y + 15);
+      }
+    }
+
+    // Draw coordinate labels on rendered grid
+    function drawCoordinateLabels() {
+      ctx.fillStyle = '#ff6b6b';
+      ctx.font = '9px monospace';
+      ctx.textAlign = 'center';
+
+      for (let x = 0; x < GRID_SIZE; x++) {
+        for (let y = 0; y < GRID_SIZE; y++) {
+          const pos = gridToScreen(x, y, 0);
+          ctx.fillText(`${x},${y}`, pos.x, pos.y + 5);
+        }
+      }
+    }
+
+    // Draw axes
+    function drawAxes() {
+      const origin = gridToScreen(0, 0, 0);
+
+      // X axis (becomes diagonal after rotation)
+      const xEnd = gridToScreen(1.5, 0, 0);
+      ctx.beginPath();
+      ctx.moveTo(origin.x, origin.y);
+      ctx.lineTo(xEnd.x, xEnd.y);
+      ctx.strokeStyle = '#ff6b6b';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      ctx.fillStyle = '#ff6b6b';
+      ctx.font = 'bold 12px sans-serif';
+      ctx.fillText('X', xEnd.x + 10, xEnd.y + 5);
+
+      // Y axis
+      const yEnd = gridToScreen(0, 1.5, 0);
+      ctx.beginPath();
+      ctx.moveTo(origin.x, origin.y);
+      ctx.lineTo(yEnd.x, yEnd.y);
+      ctx.strokeStyle = '#4ecdc4';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      ctx.fillStyle = '#4ecdc4';
+      ctx.fillText('Y', yEnd.x - 15, yEnd.y + 5);
+    }
+
+    // Draw rotation indicator
+    function drawRotationIndicator() {
+      ctx.save();
+      ctx.translate(60, 180);
+
+      // Square representing original grid
+      ctx.strokeStyle = 'rgba(255,255,255,0.3)';
+      ctx.lineWidth = 1;
+      ctx.strokeRect(-20, -20, 40, 40);
+
+      // Arrow showing rotation
+      ctx.beginPath();
+      ctx.arc(0, 0, 30, -Math.PI / 4, Math.PI / 4);
+      ctx.strokeStyle = '#ffd93d';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      // Arrow head
+      ctx.beginPath();
+      ctx.moveTo(21, 21);
+      ctx.lineTo(25, 15);
+      ctx.lineTo(18, 18);
+      ctx.fillStyle = '#ffd93d';
+      ctx.fill();
+
+      ctx.fillStyle = '#888';
+      ctx.font = '9px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('45deg + 0.5 Y-scale', 0, 50);
+
+      ctx.restore();
+    }
+
+    // Main render
+    function render() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Draw zones
+      drawZones();
+
+      // Draw rotation indicator
+      drawRotationIndicator();
+
+      // Draw grid lines
+      drawGridLines();
+
+      // Draw axes
+      drawAxes();
+
+      // Draw cubes
+      for (const cube of cubes) {
+        drawCube(cube.gridX, cube.gridY, cube.height);
+      }
+
+      // Draw coordinate labels
+      drawCoordinateLabels();
+
+      // Draw mini reference grid
+      drawSquareGridReference();
+
+      // Title
+      ctx.fillStyle = '#fff';
+      ctx.font = 'bold 14px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('ORTHOGONAL GRID + ROTATION', canvas.width / 2, 70);
+
+      ctx.font = '11px sans-serif';
+      ctx.fillStyle = '#888';
+      ctx.fillText('Height Nudge: Raised +1.5 (blue) | Lowered -1.0 (red)', canvas.width / 2, 90);
+    }
+
+    render();
+  </script>
+</body>
+</html>

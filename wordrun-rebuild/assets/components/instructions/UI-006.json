@@ -1,0 +1,12 @@
+{
+  "componentId": "UI-006",
+  "name": "Settings Button",
+  "category": "ui",
+  "needsInterpolation": false,
+  "status": "clean",
+  "dimensions": {"width": 44, "height": 44},
+  "regions": [],
+  "geometryNotes": "Circular button with gear/cog icon. Semi-transparent dark background.",
+  "referenceImages": [{"source": "Image.png", "coords": {"x": 350, "y": 15}}],
+  "notes": "Opens settings/options menu. Standard gear icon."
+}

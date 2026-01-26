@@ -1,0 +1,12 @@
+{
+  "componentId": "MAP-031",
+  "name": "Boss Marker",
+  "category": "map",
+  "needsInterpolation": false,
+  "status": "clean",
+  "dimensions": {"width": 56, "height": 32},
+  "regions": [],
+  "geometryNotes": "Red banner/flag with 'BOSS' text in white. Positioned above boss level area.",
+  "referenceImages": [{"source": "Image.png", "coords": {"x": 160, "y": 120}}],
+  "notes": "Marks boss/challenge level. Prominent red color for visibility."
+}

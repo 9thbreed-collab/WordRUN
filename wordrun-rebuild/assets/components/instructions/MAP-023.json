@@ -1,0 +1,21 @@
+{
+  "componentId": "MAP-023",
+  "name": "Lava Pool",
+  "category": "map",
+  "needsInterpolation": true,
+  "status": "needs-work",
+  "dimensions": {"width": 64, "height": 32},
+  "regions": [
+    {
+      "location": "pool edges",
+      "boundingBox": {"x": 0, "y": 0, "width": 64, "height": 32},
+      "issue": "edges often overlap with adjacent stone cubes",
+      "surroundingContext": "orange-red glowing liquid, darker crust at edges",
+      "suggestedFill": "clean circular/organic pool shape with crisp edge definition",
+      "priority": "medium"
+    }
+  ],
+  "geometryNotes": "Glowing orange-red lava pool with bubbling surface, darker cooled crust at edges.",
+  "referenceImages": [{"source": "Map3.png", "coords": {"x": 150, "y": 350}}],
+  "notes": "Hazard element for volcanic zones. Needs clean edges for proper layering."
+}

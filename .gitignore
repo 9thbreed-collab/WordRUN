@@ -51,3 +51,10 @@ coverage/
 *.bak
 *.tmp
 *.temp
+
+# VGD extraction sample iterations
+extract_sample*.py
+wordrun-rebuild/assets/components/sample*/
+.playwright-mcp/
+GEMINI_SAMPLE_PROMPT.txt
+GeminiCliAddition.txt

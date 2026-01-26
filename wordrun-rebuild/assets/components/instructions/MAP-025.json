@@ -1,0 +1,12 @@
+{
+  "componentId": "MAP-025",
+  "name": "Stone Path Segment",
+  "category": "map",
+  "needsInterpolation": false,
+  "status": "clean",
+  "dimensions": {"width": 48, "height": 24},
+  "regions": [],
+  "geometryNotes": "Flat stone path tiles following isometric perspective. Light grey cobblestone texture.",
+  "referenceImages": [{"source": "Map1.png", "coords": {"x": 160, "y": 450}}],
+  "notes": "Connects level markers. Tileable segment."
+}

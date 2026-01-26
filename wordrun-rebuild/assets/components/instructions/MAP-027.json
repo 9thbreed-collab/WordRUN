@@ -1,0 +1,12 @@
+{
+  "componentId": "MAP-027",
+  "name": "Water Surface",
+  "category": "map",
+  "needsInterpolation": false,
+  "status": "clean",
+  "dimensions": {"width": 64, "height": 32},
+  "regions": [],
+  "geometryNotes": "Blue water surface with subtle wave texture. Light reflection highlights. Tileable.",
+  "referenceImages": [{"source": "Map1.png", "coords": {"x": 80, "y": 550}}, {"source": "Map2.png", "coords": {"x": 100, "y": 480}}],
+  "notes": "Base water tile. Variants for different themes (blue, ice-blue)."
+}

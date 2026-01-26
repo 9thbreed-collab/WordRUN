@@ -1,0 +1,12 @@
+{
+  "componentId": "MAP-032",
+  "name": "Start Flag",
+  "category": "map",
+  "needsInterpolation": false,
+  "status": "clean",
+  "dimensions": {"width": 24, "height": 40},
+  "regions": [],
+  "geometryNotes": "Red triangular flag on wooden pole. Marks starting position.",
+  "referenceImages": [{"source": "Map1.png", "coords": {"x": 140, "y": 520}}],
+  "notes": "Starting point indicator for each land."
+}

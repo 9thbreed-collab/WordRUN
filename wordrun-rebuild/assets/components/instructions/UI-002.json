@@ -1,0 +1,12 @@
+{
+  "componentId": "UI-002",
+  "name": "Coin Currency Display",
+  "category": "ui",
+  "needsInterpolation": false,
+  "status": "clean",
+  "dimensions": {"width": 72, "height": 32},
+  "regions": [],
+  "geometryNotes": "Pill-shaped container with gold coin icon and white number. Similar style to gem display.",
+  "referenceImages": [{"source": "Image.png", "coords": {"x": 100, "y": 20}}],
+  "notes": "Secondary currency display. Shows coin count (45 in reference)."
+}

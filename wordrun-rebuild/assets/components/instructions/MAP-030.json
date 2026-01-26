@@ -1,0 +1,12 @@
+{
+  "componentId": "MAP-030",
+  "name": "Level Marker (Locked)",
+  "category": "map",
+  "needsInterpolation": false,
+  "status": "clean",
+  "dimensions": {"width": 40, "height": 40},
+  "regions": [],
+  "geometryNotes": "Grey/silver circular marker with padlock icon. Dimmed appearance compared to active markers.",
+  "referenceImages": [{"source": "Image.png", "coords": {"x": 200, "y": 350}}, {"source": "Image.png", "coords": {"x": 220, "y": 280}}],
+  "notes": "Locked level state. Shows padlock instead of number."
+}

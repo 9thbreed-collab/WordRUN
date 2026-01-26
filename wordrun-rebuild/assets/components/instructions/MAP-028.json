@@ -1,0 +1,12 @@
+{
+  "componentId": "MAP-028",
+  "name": "Frozen Water/Ice Sheet",
+  "category": "map",
+  "needsInterpolation": false,
+  "status": "clean",
+  "dimensions": {"width": 64, "height": 32},
+  "regions": [],
+  "geometryNotes": "Frozen ice surface with cracks, light blue-white color. Reflective highlights.",
+  "referenceImages": [{"source": "Map2.png", "coords": {"x": 150, "y": 450}}],
+  "notes": "Ice zone water variant. Tileable with regular water."
+}

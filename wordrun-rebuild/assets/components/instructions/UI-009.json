@@ -1,0 +1,12 @@
+{
+  "componentId": "UI-009",
+  "name": "Progress Indicator",
+  "category": "ui",
+  "needsInterpolation": false,
+  "status": "clean",
+  "dimensions": {"width": 48, "height": 48},
+  "regions": [],
+  "geometryNotes": "Circular progress ring around icon. Shows fraction completion (e.g., 3/3).",
+  "referenceImages": [{"source": "Image.png", "coords": {"x": 100, "y": 400}}],
+  "notes": "Level objectives or collection progress."
+}

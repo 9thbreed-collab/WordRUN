@@ -1,0 +1,12 @@
+{
+  "componentId": "MAP-021",
+  "name": "Snowman",
+  "category": "map",
+  "needsInterpolation": false,
+  "status": "clean",
+  "dimensions": {"width": 32, "height": 48},
+  "regions": [],
+  "geometryNotes": "Classic 3-ball snowman with carrot nose, coal eyes, stick arms, hat/scarf accessories.",
+  "referenceImages": [{"source": "Map2.png", "coords": {"x": 200, "y": 320}}],
+  "notes": "Character decoration for ice zones."
+}

@@ -1,0 +1,12 @@
+{
+  "componentId": "UI-003",
+  "name": "Energy Bar Display",
+  "category": "ui",
+  "needsInterpolation": false,
+  "status": "clean",
+  "dimensions": {"width": 88, "height": 32},
+  "regions": [],
+  "geometryNotes": "Pill-shaped container with lightning bolt icon, fraction display (8/20), green progress bar.",
+  "referenceImages": [{"source": "Image.png", "coords": {"x": 220, "y": 20}}],
+  "notes": "Energy/lives display. Shows current/max with visual bar."
+}

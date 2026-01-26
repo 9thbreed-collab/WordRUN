@@ -1,0 +1,21 @@
+{
+  "componentId": "MAP-026",
+  "name": "Wooden Bridge",
+  "category": "map",
+  "needsInterpolation": true,
+  "status": "needs-work",
+  "dimensions": {"width": 72, "height": 40},
+  "regions": [
+    {
+      "location": "bridge supports/posts",
+      "boundingBox": {"x": 5, "y": 30, "width": 62, "height": 10},
+      "issue": "water/terrain may occlude support posts",
+      "surroundingContext": "wooden plank deck, rope railings, vertical posts",
+      "suggestedFill": "continue wooden post texture into water/terrain",
+      "priority": "low"
+    }
+  ],
+  "geometryNotes": "Wooden plank bridge with rope railings. Spans water gaps.",
+  "referenceImages": [{"source": "Map1.png", "coords": {"x": 120, "y": 480}}],
+  "notes": "Connects terrain over water. May need clean supports."
+}

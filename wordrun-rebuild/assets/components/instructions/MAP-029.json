@@ -1,0 +1,12 @@
+{
+  "componentId": "MAP-029",
+  "name": "Level Marker (Numbered)",
+  "category": "map",
+  "needsInterpolation": false,
+  "status": "clean",
+  "dimensions": {"width": 40, "height": 40},
+  "regions": [],
+  "geometryNotes": "Circular golden/yellow marker with number. Glowing border effect when active/accessible.",
+  "referenceImages": [{"source": "Image.png", "coords": {"x": 160, "y": 400}}, {"source": "Image.png", "coords": {"x": 140, "y": 500}}],
+  "notes": "Primary level indicator. Numbers 1-25 per land. States: completed, current, locked."
+}

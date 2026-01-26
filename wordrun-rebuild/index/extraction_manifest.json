@@ -1,6 +1,7 @@
 {
-  "timestamp": "2026-01-20T13:15:00Z",
+  "timestamp": "2026-01-20T23:45:00Z",
   "agent": "A",
+  "status": "complete",
   "sourceImages": [
     "GameMapInspo/Image.png",
     "GameMapInspo/Map1.png",

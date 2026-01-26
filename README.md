@@ -4,14 +4,16 @@
 
 ## Current Development Status
 
-The project is currently in a **Pre-Production - Design Excellence Phase** following a strategic reboot. The focus has shifted from technical prototyping to a comprehensive design and market-driven approach, guided by **The Four Pillars of Redevelopment**: Market Research & Positioning, Monetization Strategy, Story & Lore Integration, and Design Excellence.
+The project is currently in a **Visual Game Development (VGD) + Component-Driven Development (CDD) Phase** following a strategic reboot. The focus combines visual-first asset creation with architectural discipline, guided by **The Four Pillars of Redevelopment**: Market Research & Positioning, Monetization Strategy, Story & Lore Integration, and Design Excellence.
 
-**Latest Accomplishment (2026-01-20):**
-Administrative checkpoint session (v0.0.15):
-- **Session Type:** Pure administrative closure with zero active development
-- **Status:** Documentation synchronized, git hygiene maintained, handoff prepared
-- **Next Priority Confirmed:** CDD Phase 1 - Component Interface Design for GameplayScene
-- **Recent Sessions:** v0.0.14 (development principles), v0.0.13 (CDD pivot), v0.0.12 (documentation cleanup), v0.0.11 (UI analysis)
+**Latest Accomplishment (2026-01-26):**
+VGD implementation sprint (v0.0.16):
+- **Session Type:** Multi-agent visual development workflow
+- **Assets Created:** 42 game components extracted and cataloged (32 MAP + 10 UI)
+- **Architecture:** Isometric grid system implemented (GridSystem.ts)
+- **Tools:** Component catalog HTML, Python extraction scripts, Gemini agent prompts
+- **Status:** VGD Phase 1 complete, ready for CDD Phase 1 (Component Interface Contracts)
+- **Recent Sessions:** v0.0.15 (admin checkpoint), v0.0.14 (dev principles), v0.0.13 (CDD pivot), v0.0.12 (doc cleanup)
 
 **Four Pillars Progress:**
 - **Pillar 1 (Market Research):** Complete - 73K-word competitive landscape analysis
@@ -21,6 +23,7 @@ Administrative checkpoint session (v0.0.15):
 
 ## Key Features Implemented
 
+### Prototype (wordrun-vite/)
 *   **Functional Prototype:** A robust prototype with 3,000 levels and core gameplay mechanics fully implemented (archived in wordrun-vite/src_archive_2026-01-06).
 *   **Word-Chain Gameplay:** Intuitive typing-based word association and chain completion.
 *   **Progression System:** Candy Crush-style level progression across 120 "lands."
@@ -28,9 +31,20 @@ Administrative checkpoint session (v0.0.15):
 *   **Data Management Layer:** Robust Supabase integration (`DataManager`) with in-memory and local storage caching for offline support.
 *   **Phaser 3 Scene-Based Architecture:** Clear separation of concerns for gameplay, UI, and transitions (19 scenes).
 *   **Configurable Gameplay:** Extensive data-driven configuration (`gameConfig.json`) for gameplay parameters, scoring, and penalty systems.
-*   **Responsive UI:** UI components designed for optimal experience on mobile portrait screens (390×844px).
 *   **Developer Tools:** Integrated debugging and diagnostic tools for efficient development.
-*   **Story Integration Framework:** 9 nations with dual spiritual attributes (Fruit of Spirit + Works of Flesh), Detective-Thriller-Myth structure with 8 beats, comprehensive national language design system.
+
+### VGD Rebuild (wordrun-rebuild/)
+*   **Component Catalog:** 42 extracted game components (32 MAP terrain/buildings/props + 10 UI elements) with visual thumbnails and metadata
+*   **Isometric Grid System:** Complete TypeScript grid system with coordinate conversion, snap-to-grid, and height nudging
+*   **Visual Development Workflow:** Multi-agent extraction pipeline with Python automation and Gemini AI integration
+*   **Component Index:** Interactive HTML catalog at `index/ComponentCatalog.html` for asset discovery
+*   **Documentation:** Comprehensive GameplayScene logic reference, extraction prompts, and workflow guides
+
+### Story Integration Framework
+*   **9 Nations:** Each with dual spiritual attributes (Fruit of Spirit + Works of Flesh)
+*   **8-Beat Story Structure:** Detective-Thriller-Myth narrative arc
+*   **National Language Design System:** Mode-specific vocabulary pools and word transformation rules
+*   **Travel Routes:** Political relationships and protagonist journey mapping
 
 ## Technology Stack
 
@@ -44,8 +58,7 @@ Administrative checkpoint session (v0.0.15):
 
 ## How to Run/Test
 
-All commands must be run from the `wordrun-vite/` directory:
-
+### Prototype (wordrun-vite/)
 ```bash
 cd wordrun-vite
 
@@ -62,17 +75,36 @@ npm run test:watch       # Run tests in watch mode
 npm run test:coverage    # Run tests with coverage report
 ```
 
+### VGD Rebuild (wordrun-rebuild/)
+```bash
+cd wordrun-rebuild
+
+# Development
+npm run dev              # Start dev server on port 5176
+
+# View Component Catalog
+# Open browser to: http://localhost:5176/index/ComponentCatalog.html
+
+# Build & Preview
+npm run build            # Production build
+npm run preview          # Preview production build
+```
+
 ## Next Milestones
 
 **Immediate Priorities:**
-*   **Component Interface Design (CDD Phase 1):** Define component contracts for GameplayScene before implementation
-    - List all UI components needed
-    - Define interface contracts (inputs, outputs, boundaries)
-    - Identify event communication patterns
-    - Verify component independence
-*   **Select UI Configuration Baseline:** Choose one of three options (Conservative Balance, Progressive Delight, Experimental Flow) for implementation
-*   **Clean Up Untracked Files:** Review and commit/archive 14+ accumulated artifacts from previous sessions
-*   **Clarify Four Pillars Status:** Confirm Story & Lore completion, decide on monetization strategy timing
+*   **Component Interface Contracts (CDD Phase 1):** Define TypeScript interfaces for all 42 extracted components
+    - Use `index/components.json` as component inventory source
+    - Group components by type (terrain, vegetation, buildings, water, props, UI)
+    - Define inputs, outputs, events for each component type
+    - Document communication patterns and verify component independence
+*   **Scene Assembly (VGD Phase 2):** Implement first map using GridSystem + extracted components
+    - Create MapScene.ts with GridSystem integration
+    - Render terrain tiles using isometric grid
+    - Position buildings/props with height nudging
+    - Test in browser at localhost:5176
+*   **Git Hygiene:** Review and commit 60+ untracked files (scripts, docs, components, catalog)
+*   **Interpolation Decision:** Choose approach for 11 MAP components with minor occlusion artifacts (defer, wait for AI capacity, or manual touch-up)
 
 **Strategic Roadmap:**
 *   Continue competitive analysis to inform feature prioritization and visual design direction
@@ -125,5 +157,5 @@ npm run test:coverage    # Run tests with coverage report
 
 ---
 
-*Last updated: 2026-01-20*
-*Version: 0.0.15*
+*Last updated: 2026-01-26*
+*Version: 0.0.16*
